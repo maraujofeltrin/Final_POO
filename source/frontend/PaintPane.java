@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
+import backend.ShadowType;
 import backend.model.*;
 import frontend.Drawing.*;
 import javafx.geometry.Insets;
@@ -36,7 +37,7 @@ public class PaintPane extends BorderPane {
 	ToggleButton deleteButton = new ToggleButton("Borrar");
 
 
-	ComboBox<String> shadowComboBox = new ComboBox<>();
+	ComboBox<ShadowType> shadowComboBox = new ComboBox<>();
 
 
 	private void SetButtons(){
@@ -67,8 +68,8 @@ public class PaintPane extends BorderPane {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 
-		shadowComboBox.getItems().addAll("Sombra Simple", "Sombra Coloreada", "Sombra Simple Inversa", "Sombra ColoreadaInversa", "Ninguna");
-		shadowComboBox.setValue("Ninguna");  // Valor por defecto
+		shadowComboBox.getItems().addAll(ShadowType.SIMPLE, ShadowType.COLORED, ShadowType.SIMPLE_INVERSED, ShadowType.COLORED_INVERSED, ShadowType.NONE);
+		shadowComboBox.setValue(ShadowType.NONE);  // Valor por defecto
 
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();

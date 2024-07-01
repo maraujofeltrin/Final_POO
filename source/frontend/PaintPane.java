@@ -35,15 +35,11 @@ public class PaintPane extends BorderPane {
 	ToggleButton ellipseButton = new ToggleButton("Elipse");
 	ToggleButton deleteButton = new ToggleButton("Borrar");
 
-<<<<<<< Updated upstream
 
-	 private void SetButtons(){
-=======
 	ComboBox<String> shadowComboBox = new ComboBox<>();
 
 
 	private void SetButtons(){
->>>>>>> Stashed changes
 		 rectangleButton.setUserData(new DrawRectangle());
 		 circleButton.setUserData(new DrawCircle());
 		 squareButton.setUserData(new DrawSquare());

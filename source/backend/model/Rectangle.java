@@ -10,10 +10,13 @@ import java.util.Objects;
 public class Rectangle implements Figure {
 
     private final Point topLeft, bottomRight;
+    private ShadowType type;
+    private Color color;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+        this.type = ShadowType.NONE;
     }
 
     @Override
@@ -52,11 +55,21 @@ public class Rectangle implements Figure {
     }
 
     @Override
-    public void FillFigure(GraphicsContext gc) {
+    public void FillFigure(GraphicsContext gc, Color col) {
+        gc.setFill(type.checkColor(color));
+        gc.fillRect(type.move(topLeft.getX(), MOVEMENT),
+                type.move(topLeft.getY(), MOVEMENT),
+                Math.abs(topLeft.getX() - bottomRight.getX()),
+                Math.abs(topLeft.getY() - bottomRight.getY()));
+
+        gc.setFill(col);
         gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
+                Math.abs(getTopLeft().getX() - getBottomRight().getX()),
+                Math.abs(getTopLeft().getY() - getBottomRight().getY()));
+
         gc.strokeRect(getTopLeft().getX(),getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
+                Math.abs(getTopLeft().getX() - getBottomRight().getX()),
+                Math.abs(getTopLeft().getY() - getBottomRight().getY()));
     }
 
     @Override
@@ -65,13 +78,17 @@ public class Rectangle implements Figure {
                 eventPoint.getY() > getTopLeft().getY() && eventPoint.getY() < getBottomRight().getY();
     }
 
+    private void setType(ShadowType type){
+        this.type =type;
+    }
+
+    private void setColor(Color newColor){
+        this.color = newColor;
+    }
+
     @Override
-    public GraphicsContext setShadow(ShadowType type, Color color, GraphicsContext gc){
-        gc.setFill(type.checkColor(color));
-        gc.fillRect(topLeft.getX() - 10.0,
-                topLeft.getY() - 10.0,
-                Math.abs(topLeft.getX() - bottomRight.getX()),
-                Math.abs(topLeft.getY() - bottomRight.getY()));
-        return gc;
+    public void setShadow(ShadowType newType, Color newColor){
+        setType(newType);
+        setColor(newColor);
     }
 }

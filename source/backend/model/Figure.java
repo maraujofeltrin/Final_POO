@@ -7,11 +7,12 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 public interface Figure {
+    final static double MOVEMENT = 10.0;
     void addDiff(double incX, double incY);
 
-    void FillFigure(GraphicsContext gc);
+    void FillFigure(GraphicsContext gc, Color col);
 
     boolean belongs(Point eventPoint);
 
-    GraphicsContext setShadow(ShadowType type, Color color, GraphicsContext gc);
+    void setShadow(ShadowType type, Color color);
 }

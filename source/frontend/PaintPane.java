@@ -191,17 +191,15 @@ public class PaintPane extends BorderPane {
 		for(Figure figure : canvasState.figures()) {
 			if(figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 				gc.setStroke(Color.RED);
-				if(shadowComboBox.getValue() != ShadowType.NONE){
-					selectedFigure.setShadow(shadowComboBox.getValue(), figureColorMap.get(selectedFigure), gc);
-				}
+				selectedFigure.setShadow(shadowComboBox.getValue(), figureColorMap.get(selectedFigure));
+				
 			} else {
 				gc.setStroke(lineColor);
 			}
-			gc.setFill(figureColorMap.get(figure));
 
 			//ver devuelta
 			if(figure != null) {
-				figure.FillFigure(gc);
+				figure.FillFigure(gc, figureColorMap.get(figure));
 			}
 			/*if(figure instanceof Rectangle) {
 				Rectangle rectangle = (Rectangle) figure;

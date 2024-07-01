@@ -11,11 +11,14 @@ public class Ellipse implements Figure {
 
     protected final Point centerPoint;
     protected final double sMayorAxis, sMinorAxis;
+    protected Color color;
 
+    protected ShadowType type;
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
+        this.type = ShadowType.NONE;
     }
 
     @Override
@@ -55,9 +58,15 @@ public class Ellipse implements Figure {
     }
 
     @Override
-    public void FillFigure(GraphicsContext gc) {
+    public void FillFigure(GraphicsContext gc, Color col) {
+        gc.setFill(type.checkColor(color));
+        gc.fillOval(type.move(getCenterPoint().getX()- sMayorAxis/2, MOVEMENT),
+                type.move(getCenterPoint().getY() - sMinorAxis/2, MOVEMENT), sMayorAxis, sMinorAxis);
+
+        gc.setFill(col);
         gc.strokeOval(getCenterPoint().getX() - (getsMayorAxis() / 2), getCenterPoint().getY() - (getsMinorAxis() / 2), getsMayorAxis(), getsMinorAxis());
         gc.fillOval(getCenterPoint().getX() - (getsMayorAxis() / 2), getCenterPoint().getY() - (getsMinorAxis() / 2), getsMayorAxis(), getsMinorAxis());
+
     }
 
     @Override
@@ -67,10 +76,8 @@ public class Ellipse implements Figure {
     }
 
     @Override
-    public GraphicsContext setShadow(ShadowType type, Color color, GraphicsContext gc){
-        gc.setFill(type.checkColor(color));
-        gc.fillOval(getCenterPoint().getX() - sMayorAxis/2 + 10.0,
-                getCenterPoint().getY() - sMinorAxis/2 + 10.0, sMayorAxis, sMinorAxis);
-        return gc;
+    public void setShadow(ShadowType type, Color color){
+        this.color = color;
+        this.type = type;
     }
 }

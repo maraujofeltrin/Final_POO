@@ -1,6 +1,11 @@
 package backend.model;
 
+import backend.ShadowType;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class Rectangle implements Figure {
 
@@ -9,6 +14,19 @@ public class Rectangle implements Figure {
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rectangle rectangle = (Rectangle) o;
+        return Objects.equals(topLeft, rectangle.topLeft) && Objects.equals(bottomRight, rectangle.bottomRight);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(topLeft, bottomRight);
     }
 
     public Point getTopLeft() {
@@ -45,5 +63,15 @@ public class Rectangle implements Figure {
     public boolean belongs(Point eventPoint) {
         return eventPoint.getX() > getTopLeft().getX() && eventPoint.getX() < getBottomRight().getX() &&
                 eventPoint.getY() > getTopLeft().getY() && eventPoint.getY() < getBottomRight().getY();
+    }
+
+    @Override
+    public GraphicsContext setShadow(ShadowType type, Color color, GraphicsContext gc){
+        gc.setFill(type.checkColor(color));
+        gc.fillRect(topLeft.getX() - 10.0,
+                topLeft.getY() - 10.0,
+                Math.abs(topLeft.getX() - bottomRight.getX()),
+                Math.abs(topLeft.getY() - bottomRight.getY()));
+        return gc;
     }
 }

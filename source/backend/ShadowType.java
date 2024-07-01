@@ -10,7 +10,7 @@ public enum ShadowType {
     },
     COLORED{
         public Color checkColor(Color color){
-            return color;
+            return color.darker();
         }
     },
     SIMPLE_INVERSED{
@@ -20,7 +20,7 @@ public enum ShadowType {
     },
     COLORED_INVERSED{
         public Color checkColor(Color color){
-            return color;
+            return color.darker();
         }
     },
     NONE{

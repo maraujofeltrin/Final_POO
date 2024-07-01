@@ -164,7 +164,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(selectionButton.isSelected()) {
+			if(selectionButton.isSelected() && selectedFigure != null) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
@@ -189,8 +189,11 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
+			if(figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 				gc.setStroke(Color.RED);
+				if(shadowComboBox.getValue() != ShadowType.NONE){
+					selectedFigure.setShadow(shadowComboBox.getValue(), figureColorMap.get(selectedFigure), gc);
+				}
 			} else {
 				gc.setStroke(lineColor);
 			}
@@ -226,7 +229,10 @@ public class PaintPane extends BorderPane {
 	}
 
 	boolean figureBelongs(Figure figure, Point eventPoint) {
-		return figure.belongs(eventPoint);
+		if(figure != null){
+			return figure.belongs(eventPoint);
+		}
+		return false;
 		/*if(figure instanceof Rectangle) {
 			Rectangle rectangle = (Rectangle) figure;
 			found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&

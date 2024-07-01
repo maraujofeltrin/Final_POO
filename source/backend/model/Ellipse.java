@@ -1,6 +1,11 @@
 package backend.model;
 
+import backend.ShadowType;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class Ellipse implements Figure {
 
@@ -16,6 +21,19 @@ public class Ellipse implements Figure {
     @Override
     public String toString() {
         return String.format("Elipse [Centro: %s, DMayor: %.2f, DMenor: %.2f]", centerPoint, sMayorAxis, sMinorAxis);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ellipse ellipse = (Ellipse) o;
+        return Double.compare(sMayorAxis, ellipse.sMayorAxis) == 0 && Double.compare(sMinorAxis, ellipse.sMinorAxis) == 0 && Objects.equals(centerPoint, ellipse.centerPoint);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(centerPoint, sMayorAxis, sMinorAxis);
     }
 
     public Point getCenterPoint() {
@@ -46,5 +64,13 @@ public class Ellipse implements Figure {
     public boolean belongs(Point eventPoint) {
         return ((Math.pow(eventPoint.getX() - getCenterPoint().getX(), 2) / Math.pow(getsMayorAxis(), 2)) +
                 (Math.pow(eventPoint.getY() - getCenterPoint().getY(), 2) / Math.pow(getsMinorAxis(), 2))) <= 0.30;
+    }
+
+    @Override
+    public GraphicsContext setShadow(ShadowType type, Color color, GraphicsContext gc){
+        gc.setFill(type.checkColor(color));
+        gc.fillOval(getCenterPoint().getX() - sMayorAxis/2 + 10.0,
+                getCenterPoint().getY() - sMinorAxis/2 + 10.0, sMayorAxis, sMinorAxis);
+        return gc;
     }
 }

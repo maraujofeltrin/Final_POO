@@ -16,4 +16,6 @@ public class DrawEllipse extends DrawFigure{
         double sMinorAxis = Math.abs(endPoint.y - startPoint.y);
        return new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
     }
+
+
 }

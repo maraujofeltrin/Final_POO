@@ -13,4 +13,5 @@ public class DrawRectangle extends DrawFigure {
         canDraw(startPoint,endPoint);
         return new Rectangle(startPoint, endPoint);
     }
+
 }

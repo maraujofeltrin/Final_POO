@@ -38,6 +38,7 @@ public class PaintPane extends BorderPane {
 	ToggleButton ellipseButton = new ToggleButton("Elipse");
 	ToggleButton deleteButton = new ToggleButton("Borrar");
 
+
 	 private void SetButtons(){
 		 rectangleButton.setUserData(new DrawRectangle());
 		 circleButton.setUserData(new DrawCircle());
@@ -99,6 +100,7 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY() || tools.getSelectedToggle()==null) {
 				return ;
 			}
+			//CORREGIR ERRORES
 			try{
 				Toggle selected= tools.getSelectedToggle();
 				Buttons aux=(Buttons) selected.getUserData();
@@ -157,6 +159,9 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+
+				selectedFigure.addDiff(diffX,diffY);
+				/*
 				if(selectedFigure instanceof Rectangle) {
 					Rectangle rectangle = (Rectangle) selectedFigure;
 					rectangle.getTopLeft().x += diffX;
@@ -177,7 +182,7 @@ public class PaintPane extends BorderPane {
 					Ellipse ellipse = (Ellipse) selectedFigure;
 					ellipse.getCenterPoint().x += diffX;
 					ellipse.getCenterPoint().y += diffY;
-				}
+				}*/
 				redrawCanvas();
 			}
 		});

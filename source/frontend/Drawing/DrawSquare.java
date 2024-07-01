@@ -14,4 +14,6 @@ public class DrawSquare extends DrawFigure {
         double size = Math.abs(endPoint.getX() - startPoint.getX());
         return new Square(startPoint, size);
     }
+
+
 }

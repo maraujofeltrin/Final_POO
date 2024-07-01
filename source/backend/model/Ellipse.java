@@ -28,4 +28,9 @@ public class Ellipse implements Figure {
         return sMinorAxis;
     }
 
+    @Override
+    public void addDiff(double diffX, double diffY) {
+        getCenterPoint().x += diffX;
+        getCenterPoint().y += diffY;
+    }
 }

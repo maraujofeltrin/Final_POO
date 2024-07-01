@@ -22,4 +22,12 @@ public class Rectangle implements Figure {
         return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
     }
 
+
+    @Override
+    public void addDiff(double diffX, double diffY) {
+        getTopLeft().x += diffX;
+        getBottomRight().x += diffX;
+        getTopLeft().y += diffY;
+        getBottomRight().y += diffY;
+    }
 }

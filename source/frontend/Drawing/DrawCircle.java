@@ -14,4 +14,5 @@ public class DrawCircle extends DrawFigure{
         double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
         return new Circle(startPoint, circleRadius);
     }
+
 }

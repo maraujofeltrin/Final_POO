@@ -7,10 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -38,8 +35,15 @@ public class PaintPane extends BorderPane {
 	ToggleButton ellipseButton = new ToggleButton("Elipse");
 	ToggleButton deleteButton = new ToggleButton("Borrar");
 
+<<<<<<< Updated upstream
 
 	 private void SetButtons(){
+=======
+	ComboBox<String> shadowComboBox = new ComboBox<>();
+
+
+	private void SetButtons(){
+>>>>>>> Stashed changes
 		 rectangleButton.setUserData(new DrawRectangle());
 		 circleButton.setUserData(new DrawCircle());
 		 squareButton.setUserData(new DrawSquare());
@@ -66,6 +70,10 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+
+		shadowComboBox.getItems().addAll("Sombra Simple", "Sombra Coloreada", "Sombra Simple Inversa", "Sombra ColoreadaInversa", "Ninguna");
+		shadowComboBox.setValue("Ninguna");  // Valor por defecto
+
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
@@ -75,11 +83,15 @@ public class PaintPane extends BorderPane {
 		}
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
+
+		buttonsBox.getChildren().add(shadowComboBox);
+
 		buttonsBox.getChildren().add(fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(1);
+
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());

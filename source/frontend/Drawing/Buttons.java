@@ -3,12 +3,11 @@ package frontend.Drawing;
 import backend.model.Figure;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
+
 
 public interface Buttons {
 
-
-
-    Figure draw(Point startPoint, Point endPoint, javafx.scene.paint.Color color, GraphicsContext gc);
+    Figure draw(Point startPoint, Point endPoint, Color color, GraphicsContext gc);
 }

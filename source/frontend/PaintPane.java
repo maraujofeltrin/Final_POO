@@ -92,17 +92,20 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseReleased(event -> {
+			SetButtons();
 			Point endPoint = new Point(event.getX(), event.getY());
 			Figure newFigure = null;
 			//HAY QUE CAMBIARLO IMPERATIVO
 			if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY() || tools.getSelectedToggle()==null) {
 				return ;
 			}
-			Toggle selected= tools.getSelectedToggle();
-			Buttons aux=(Buttons) selected.getUserData();
-
-
-			 newFigure=aux.draw(startPoint, endPoint, fillColorPicker.getValue(), gc);
+			try{
+				Toggle selected= tools.getSelectedToggle();
+				Buttons aux=(Buttons) selected.getUserData();
+				newFigure = aux.draw(startPoint, endPoint, fillColorPicker.getValue(), gc);
+			}catch (Exception ex){
+				System.out.println("No hay figura selecionada para su creacion");
+			}
 			//FALTAN CHEQUEOS
 			figureColorMap.put(newFigure, fillColorPicker.getValue());
 			canvasState.addFigure(newFigure);

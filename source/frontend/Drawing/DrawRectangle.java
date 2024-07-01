@@ -10,6 +10,7 @@ public class DrawRectangle extends DrawFigure {
 
     @Override
     public Figure draw(Point startPoint, Point endPoint, Color color, GraphicsContext gc) {
+        canDraw(startPoint,endPoint);
         return new Rectangle(startPoint, endPoint);
     }
 }

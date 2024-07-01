@@ -9,5 +9,9 @@ import javafx.scene.paint.Color;
      Color color;
      GraphicsContext gc;
 
-
+    protected void canDraw(Point startPoint, Point endPoint){
+        if( startPoint == null || endPoint == null){
+            throw new IllegalArgumentException();
+        }
+    }
 }

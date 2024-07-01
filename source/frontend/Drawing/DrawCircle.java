@@ -10,6 +10,7 @@ public class DrawCircle extends DrawFigure{
 
     @Override
     public Figure draw(Point startPoint, Point endPoint, Color color, GraphicsContext gc) {
+        canDraw(startPoint,endPoint);
         double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
         return new Circle(startPoint, circleRadius);
     }

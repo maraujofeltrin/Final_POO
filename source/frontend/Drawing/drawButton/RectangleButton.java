@@ -9,9 +9,9 @@ import javafx.scene.paint.Color;
 public class RectangleButton implements Buttons{
 
     @Override
-    public DrawFigure ButtonToAction(Point startPoint, Point endPoint, Color color, GraphicsContext gc) {
+    public DrawFigure ButtonToAction(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc) {
         canDraw(startPoint,endPoint);
-        DrawRectangle rectangle = new DrawRectangle(startPoint, endPoint, color, gc);
+        DrawRectangle rectangle = new DrawRectangle(startPoint, endPoint, color, secColor, gc);
         return rectangle;
     }
 

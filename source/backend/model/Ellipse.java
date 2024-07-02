@@ -11,7 +11,7 @@ public class Ellipse implements Figure {
 
     protected final Point centerPoint;
     protected final double sMayorAxis, sMinorAxis;
-    protected Color color;
+    protected Color color, secondaryColor;
 
     protected ShadowType type;
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
@@ -96,5 +96,17 @@ public class Ellipse implements Figure {
         setColor(color);
         setType(type);
 
+    }
+
+    public void setSecondaryColor(Color secColor) {
+        this.secondaryColor = secColor;
+    }
+
+    public Color getSecondColor() {
+        return secondaryColor;
+    }
+
+    public void setSecondColor(Color newCol){
+        this.secondaryColor = newCol;
     }
 }

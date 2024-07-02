@@ -11,7 +11,7 @@ public class Rectangle implements Figure {
 
     private final Point topLeft, bottomRight;
     private ShadowType type;
-    private Color color;
+    private Color color, secondaryColor;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
@@ -21,6 +21,10 @@ public class Rectangle implements Figure {
 
     public Color getColor() {
         return color;
+    }
+
+    public Color getSecondColor() {
+        return secondaryColor;
     }
 
     @Override
@@ -96,5 +100,9 @@ public class Rectangle implements Figure {
     public void setShadow(ShadowType newType, Color newColor){
         setType(newType);
         setColor(newColor);
+    }
+
+    public void setSecondColor(Color secColor) {
+        this.secondaryColor = secColor;
     }
 }

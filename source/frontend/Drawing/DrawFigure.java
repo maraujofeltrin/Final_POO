@@ -17,17 +17,25 @@ import javafx.scene.paint.Color;
      public Color getColor(){
          return figure.getColor();
      }
+     public Color getSecondColor(){
+         return figure.getSecondColor();
+     }
      public  boolean belongs(Point eventPoint){
          return figure.belongs(eventPoint);
      }
-     public void FillFigure(Color col) {
+     public void FillFigure(Color col, Color col2) {
          double difX = figure.DiffX();
          double difY = figure.DiffY();
          setFill(figure.getShadowColor());
          ShadowFigure(difX, difY);
-         setFill(col);
+
+         setGradiant(col, col2);
          FillFigureAux(difX,difY);
+
+
      }
+
+     protected abstract void setGradiant(Color col1, Color col2);
      protected abstract void ShadowFigure(double difX, double difY);
      protected abstract void FillFigureAux(double difX, double difY);
      public void setFill(Color color){
@@ -46,4 +54,11 @@ import javafx.scene.paint.Color;
          figure.addDiff(num1, num2);
      }
 
-}
+     public void setSecondaryColor(Color color) {
+         figure.setSecondColor(color);
+     }
+
+     public void setPrimaryColor(Color col) {
+         figure.setColor(col);
+     }
+ }

@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 
 public interface Buttons {
 
-    DrawFigure ButtonToAction(Point startPoint, Point endPoint, Color color, GraphicsContext gc);
+    DrawFigure ButtonToAction(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc);
     default void canDraw(Point startPoint, Point endPoint){
         if( startPoint == null || endPoint == null){
             throw new IllegalArgumentException();

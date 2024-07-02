@@ -142,8 +142,9 @@ public class PaintPane extends BorderPane {
 			try{
 				Toggle selected= tools.getSelectedToggle();
 				Buttons aux=(Buttons) selected.getUserData();
-				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), gc);
+				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(),gc);
 				figureColorMap.put(newFigure, fillColorPicker.getValue());
+
 				canvasState.addFigure(newFigure);
 			}catch (Exception ex){
 				System.out.println("No hay figura selecionada para su creacion");
@@ -223,7 +224,9 @@ public class PaintPane extends BorderPane {
 		for(DrawFigure figure : canvasState.figures()) {
 			if(figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 				gc.setStroke(Color.RED);
-				selectedFigure.setShadow(shadowComboBox.getValue(), figureColorMap.get(selectedFigure));
+				figure.setPrimaryColor(fillColorPicker.getValue());
+				figure.setSecondaryColor(secondFillColor.getValue());
+				selectedFigure.setShadow(shadowComboBox.getValue(), figure.getColor());
 
 			} else {
 				gc.setStroke(lineColor);
@@ -231,7 +234,7 @@ public class PaintPane extends BorderPane {
 
 			//ver devuelta
 			if(figure != null) {
-				figure.FillFigure(figureColorMap.get(figure));
+				figure.FillFigure(figure.getColor(), figure.getSecondColor());
 			}
 			/*if(figure instanceof Rectangle) {
 				Rectangle rectangle = (Rectangle) figure;

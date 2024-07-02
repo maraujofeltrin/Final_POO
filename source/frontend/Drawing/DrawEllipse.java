@@ -6,6 +6,9 @@ import backend.model.Figure;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 
 import java.util.Objects;
 
@@ -13,11 +16,12 @@ public class DrawEllipse extends DrawFigure{
 
     private Ellipse ellipse;
 
-    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, GraphicsContext gc){
+    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc){
         super(gc);
         figure = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
         ellipse=(Ellipse) figure;
         ellipse.setColor(color);
+        ellipse.setSecondColor(secColor);
     }
 
     //CHEQUEAR SI LO USAMOS
@@ -48,4 +52,15 @@ public class DrawEllipse extends DrawFigure{
     public int hashCode() {
         return Objects.hash(ellipse);
     }
+
+    @Override
+    protected void setGradiant(Color col1, Color col2){
+        RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, col1),
+                new Stop(1, col2));
+        gc.setFill(radialGradient);
+    }
+
+
 }

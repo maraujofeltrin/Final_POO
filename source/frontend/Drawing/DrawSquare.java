@@ -6,17 +6,21 @@ import backend.model.Point;
 import backend.model.Square;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 
 import java.util.Objects;
 
 public class DrawSquare extends DrawFigure {
     private Square square;
-   public DrawSquare(Point startPoint, Point endPoint, Color color, GraphicsContext gc){
+   public DrawSquare(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc){
        super(gc);
        double size = Math.abs(endPoint.getX() - startPoint.getX());
        figure=new Square(startPoint, size);
        square=(Square)figure;
        square.setColor(color);
+       square.setSecondColor(secColor);
    }
 
        @Override
@@ -48,5 +52,14 @@ public class DrawSquare extends DrawFigure {
     @Override
     public int hashCode() {
         return Objects.hash(square);
+    }
+
+    @Override
+    protected void setGradiant(Color col1, Color col2){
+        LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, col1),
+                new Stop(1, col2));
+        gc.setFill(linearGradient);
     }
 }

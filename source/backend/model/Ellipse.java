@@ -43,6 +43,9 @@ public class Ellipse implements Figure {
         return centerPoint;
     }
 
+    public Color getColor(){
+        return color;
+    }
     public double getsMayorAxis() {
         return sMayorAxis;
     }

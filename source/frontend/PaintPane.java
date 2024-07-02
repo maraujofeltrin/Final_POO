@@ -176,11 +176,13 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected() && selectedFigure != null) {
+				figureColorMap.remove(selectedFigure);
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
 
 				selectedFigure.addDiff(diffX,diffY);
+				figureColorMap.put(selectedFigure, selectedFigure.getColor());
 				redrawCanvas();
 			}
 		});

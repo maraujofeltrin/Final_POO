@@ -1,5 +1,6 @@
 package frontend.Drawing;
 
+import backend.ShadowType;
 import backend.model.Ellipse;
 import backend.model.Figure;
 import backend.model.Point;
@@ -23,6 +24,15 @@ public class DrawEllipse extends DrawFigure{
     }
     public void addDiff(double diffX, double diffY){
         ellipse.addDiff(diffX, diffY);
+    }
+    public void setShadow(ShadowType type, Color color){
+        ellipse.setShadow(type, color);
+    }
+    public Color getColor(){
+        return ellipse.getColor();
+    }
+    public boolean belongs(Point eventPoint){
+        return ellipse.belongs(eventPoint);
     }
     @Override
     public void FillFigure(Color col) {

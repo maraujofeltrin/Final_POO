@@ -1,5 +1,6 @@
 package frontend.Drawing;
 
+import backend.ShadowType;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
@@ -16,6 +17,18 @@ public class DrawRectangle extends DrawFigure {
        rectangle=new Rectangle(startPoint, endPoint);
        rectangle.setColor(color);
    }
+   public Color getColor(){
+       return rectangle.getColor();
+   }
+    public void addDiff(double diffX, double diffY){
+        rectangle.addDiff(diffX, diffY);
+    }
+    public boolean belongs(Point eventPoint){
+        return rectangle.belongs(eventPoint);
+    }
+    public void setShadow(ShadowType type, Color color){
+        rectangle.setShadow(type, color);
+    }
 
 
     @Override

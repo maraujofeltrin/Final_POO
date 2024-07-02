@@ -9,6 +9,7 @@ import java.util.Map;
 public interface Figure {
 
     void addDiff(double incX, double incY);
+    Color getColor();
 
     boolean belongs(Point eventPoint);
 

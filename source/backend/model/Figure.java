@@ -1,5 +1,6 @@
 package backend.model;
 
+import backend.BorderType;
 import backend.ShadowType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -22,4 +23,10 @@ public interface Figure {
     void setSecondColor(Color newCol);
 
     void setColor(Color col);
+
+    void setBorderType(BorderType type);
+
+    BorderType getBorder();
+
+    void setBorderWidth(double value);
 }

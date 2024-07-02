@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.BorderType;
 import backend.CanvasState;
 import backend.ShadowType;
 import backend.model.*;
@@ -47,7 +48,7 @@ public class PaintPane extends BorderPane {
 	private Label border = new Label("Borde");
 
 	Slider graduationSlider = new Slider(0, 10, 5);
-	private ComboBox<ShadowType> borderComboBox = new ComboBox<>(); //Falta poner esto
+	private ComboBox<BorderType> borderComboBox = new ComboBox<>();
 
 	// Selector de color de relleno
 
@@ -83,6 +84,9 @@ public class PaintPane extends BorderPane {
 		shadowComboBox.getItems().addAll(ShadowType.SIMPLE, ShadowType.COLORED, ShadowType.SIMPLE_INVERSED, ShadowType.COLORED_INVERSED, ShadowType.NONE);
 		shadowComboBox.setValue(ShadowType.NONE);  // Valor por defecto
 
+		borderComboBox.getItems().addAll(BorderType.NORMAL, BorderType.DOTTED_SIMPLE, BorderType.DOTTED_COMPLEX);
+		borderComboBox.setValue(BorderType.NORMAL); //Valor por defecto
+
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
@@ -102,6 +106,7 @@ public class PaintPane extends BorderPane {
 
 		buttonsBox.getChildren().add(border);
 		buttonsBox.getChildren().add(graduationSlider);
+		buttonsBox.getChildren().add(borderComboBox);
 
 		ToggleButton[] advancedTools = {duplicateButton, divideButton, moveButton};
 		ToggleGroup advTools = new ToggleGroup();
@@ -227,7 +232,8 @@ public class PaintPane extends BorderPane {
 				figure.setPrimaryColor(fillColorPicker.getValue());
 				figure.setSecondaryColor(secondFillColor.getValue());
 				selectedFigure.setShadow(shadowComboBox.getValue(), figure.getColor());
-
+				selectedFigure.setBorder(borderComboBox.getValue());
+				selectedFigure.setBorderWidth(graduationSlider.getValue());
 			} else {
 				gc.setStroke(lineColor);
 			}

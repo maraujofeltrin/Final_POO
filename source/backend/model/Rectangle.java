@@ -1,5 +1,6 @@
 package backend.model;
 
+import backend.BorderType;
 import backend.ShadowType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -11,12 +12,16 @@ public class Rectangle implements Figure {
 
     private final Point topLeft, bottomRight;
     private ShadowType type;
+    private BorderType border;
     private Color color, secondaryColor;
+    private double borderWidth;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
         this.type = ShadowType.NONE;
+        this.border = BorderType.NORMAL;
+        this.borderWidth = 1;
     }
 
     public Color getColor() {
@@ -104,5 +109,18 @@ public class Rectangle implements Figure {
 
     public void setSecondColor(Color secColor) {
         this.secondaryColor = secColor;
+    }
+
+    public void setBorderType(BorderType newType){
+        this.border = newType;
+    }
+
+    @Override
+    public BorderType getBorder() {
+        return border;
+    }
+
+    public void setBorderWidth(double value){
+        this.borderWidth = value;
     }
 }

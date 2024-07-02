@@ -1,5 +1,6 @@
 package backend.model;
 
+import backend.BorderType;
 import backend.ShadowType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -12,13 +13,14 @@ public class Ellipse implements Figure {
     protected final Point centerPoint;
     protected final double sMayorAxis, sMinorAxis;
     protected Color color, secondaryColor;
-
+    protected BorderType border;
     protected ShadowType type;
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
         this.type = ShadowType.NONE;
+        this.border = BorderType.NORMAL;
     }
 
     @Override
@@ -98,15 +100,20 @@ public class Ellipse implements Figure {
 
     }
 
-    public void setSecondaryColor(Color secColor) {
-        this.secondaryColor = secColor;
-    }
-
     public Color getSecondColor() {
         return secondaryColor;
     }
 
     public void setSecondColor(Color newCol){
         this.secondaryColor = newCol;
+    }
+
+    public void setBorderType(BorderType newType){
+        this.border = newType;
+    }
+
+    @Override
+    public BorderType getBorder() {
+        return border;
     }
 }

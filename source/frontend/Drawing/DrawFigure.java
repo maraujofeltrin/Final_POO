@@ -1,5 +1,6 @@
 package frontend.Drawing;
 
+import backend.BorderType;
 import backend.ShadowType;
 import backend.model.Figure;
 import backend.model.Point;
@@ -32,7 +33,7 @@ import javafx.scene.paint.Color;
          setGradiant(col, col2);
          FillFigureAux(difX,difY);
 
-
+         figure.getBorder().putBorder(gc);
      }
 
      protected abstract void setGradiant(Color col1, Color col2);
@@ -41,7 +42,7 @@ import javafx.scene.paint.Color;
      public void setFill(Color color){
          gc.setFill(color);
      }
-     public void Diff(){
+     public void Diff(){ //CHEQUEAR PQ NO APARECE EN AZUL
          double difX = figure.DiffX();
          double difY = figure.DiffY();
      }
@@ -60,5 +61,13 @@ import javafx.scene.paint.Color;
 
      public void setPrimaryColor(Color col) {
          figure.setColor(col);
+     }
+
+     public void setBorder(BorderType type) {
+         figure.setBorderType(type);
+     }
+
+     public void setBorderWidth(double value) {
+         figure.setBorderWidth(value);
      }
  }

@@ -15,12 +15,14 @@ public class Ellipse implements Figure {
     protected Color color, secondaryColor;
     protected BorderType border;
     protected ShadowType type;
+    protected double borderWidth;
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
         this.type = ShadowType.NONE;
         this.border = BorderType.NORMAL;
+        borderWidth = 1;
     }
 
     @Override
@@ -115,5 +117,14 @@ public class Ellipse implements Figure {
     @Override
     public BorderType getBorder() {
         return border;
+    }
+
+    public void setBorderWidth(double value){
+        this.borderWidth = value;
+    }
+
+    @Override
+    public double getBorderWidth() {
+        return borderWidth;
     }
 }

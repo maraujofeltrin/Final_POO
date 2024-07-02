@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
          setGradiant(col, col2);
          FillFigureAux(difX,difY);
 
-         figure.getBorder().putBorder(gc);
+         figure.getBorder().putBorder(gc, figure.getBorderWidth());
      }
 
      protected abstract void setGradiant(Color col1, Color col2);

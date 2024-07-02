@@ -29,4 +29,6 @@ public interface Figure {
     BorderType getBorder();
 
     void setBorderWidth(double value);
+
+    double getBorderWidth();
 }

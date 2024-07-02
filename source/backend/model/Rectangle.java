@@ -123,4 +123,9 @@ public class Rectangle implements Figure {
     public void setBorderWidth(double value){
         this.borderWidth = value;
     }
+
+    @Override
+    public double getBorderWidth() {
+        return borderWidth;
+    }
 }

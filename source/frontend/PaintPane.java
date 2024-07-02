@@ -105,6 +105,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(secondFillColor);
 
 		buttonsBox.getChildren().add(border);
+		graduationSlider.setShowTickLabels(true);
 		buttonsBox.getChildren().add(graduationSlider);
 		buttonsBox.getChildren().add(borderComboBox);
 

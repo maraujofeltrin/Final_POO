@@ -41,14 +41,16 @@ public class PaintPane extends BorderPane {
 	private ComboBox<ShadowType> shadowComboBox = new ComboBox<>();
 
 	private Label fillerColor = new Label("Relleno");
+	private ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
+	private ColorPicker secondFillColor = new ColorPicker(defaultFillColor);
 
 	private Label border = new Label("Borde");
 
-	Slider graduationSlider = new Slider(0, 10, 0);
-	private ComboBox<ShadowType> borderComboBox = new ComboBox<>();
+	Slider graduationSlider = new Slider(0, 10, 5);
+	private ComboBox<ShadowType> borderComboBox = new ComboBox<>(); //Falta poner esto
 
 	// Selector de color de relleno
-	private ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
+
 
 	private Label actions = new Label("Acciones");
 
@@ -91,9 +93,26 @@ public class PaintPane extends BorderPane {
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
 
+		buttonsBox.getChildren().add(shadowLabel);
 		buttonsBox.getChildren().add(shadowComboBox);
 
+		buttonsBox.getChildren().add(fillerColor);
 		buttonsBox.getChildren().add(fillColorPicker);
+		buttonsBox.getChildren().add(secondFillColor);
+
+		buttonsBox.getChildren().add(border);
+		buttonsBox.getChildren().add(graduationSlider);
+
+		ToggleButton[] advancedTools = {duplicateButton, divideButton, moveButton};
+		ToggleGroup advTools = new ToggleGroup();
+		for (ToggleButton tool : advancedTools) {
+			tool.setMinWidth(90);
+			tool.setToggleGroup(advTools);
+			tool.setCursor(Cursor.HAND);
+		}
+		buttonsBox.getChildren().add(actions);
+		buttonsBox.getChildren().addAll(advancedTools);
+
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
@@ -205,7 +224,7 @@ public class PaintPane extends BorderPane {
 			if(figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 				gc.setStroke(Color.RED);
 				selectedFigure.setShadow(shadowComboBox.getValue(), figureColorMap.get(selectedFigure));
-				
+
 			} else {
 				gc.setStroke(lineColor);
 			}

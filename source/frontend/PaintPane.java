@@ -193,10 +193,11 @@ public class PaintPane extends BorderPane {
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
-					selectedFigure = null;
+
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
+				selectedFigure = null;
 			}
 		});
 
@@ -227,45 +228,26 @@ public class PaintPane extends BorderPane {
 
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		for(DrawFigure figure : canvasState.figures()) {
-			if(figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
-				gc.setStroke(Color.RED);
-				figure.setPrimaryColor(fillColorPicker.getValue());
-				figure.setSecondaryColor(secondFillColor.getValue());
-				selectedFigure.setShadow(shadowComboBox.getValue(), figure.getColor());
-				selectedFigure.setBorder(borderComboBox.getValue());
-				selectedFigure.setBorderWidth(graduationSlider.getValue());
-			} else {
-				gc.setStroke(lineColor);
+
+			for (DrawFigure figure : canvasState.figures()) {
+				if (figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
+					gc.setStroke(Color.RED);
+					figure.setPrimaryColor(fillColorPicker.getValue());
+					figure.setSecondaryColor(secondFillColor.getValue());
+					selectedFigure.setShadow(shadowComboBox.getValue(), figure.getColor());
+					selectedFigure.setBorder(borderComboBox.getValue());
+					selectedFigure.setBorderWidth(graduationSlider.getValue());
+				} else {
+					gc.setStroke(lineColor);
+				}
+
+				//ver devuelta
+				if (figure != null) {
+					figure.FillFigure(figure.getColor(), figure.getSecondColor());
+				}
+
 			}
 
-			//ver devuelta
-			if(figure != null) {
-				figure.FillFigure(figure.getColor(), figure.getSecondColor());
-			}
-			/*if(figure instanceof Rectangle) {
-				Rectangle rectangle = (Rectangle) figure;
-				gc.fillRect(rectangle.getTopLeft().getX(), rectangle.getTopLeft().getY(),
-						Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-				gc.strokeRect(rectangle.getTopLeft().getX(), rectangle.getTopLeft().getY(),
-						Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-			} else if(figure instanceof Circle) {
-				Circle circle = (Circle) figure;
-				double diameter = circle.getRadius() * 2;
-				gc.fillOval(circle.getCenterPoint().getX() - circle.getRadius(), circle.getCenterPoint().getY() - circle.getRadius(), diameter, diameter);
-				gc.strokeOval(circle.getCenterPoint().getX() - circle.getRadius(), circle.getCenterPoint().getY() - circle.getRadius(), diameter, diameter);
-			} else if(figure instanceof Square) {
-				Square square = (Square) figure;
-				gc.fillRect(square.getTopLeft().getX(), square.getTopLeft().getY(),
-						Math.abs(square.getTopLeft().getX() - square.getBottomRight().getX()), Math.abs(square.getTopLeft().getY() - square.getBottomRight().getY()));
-				gc.strokeRect(square.getTopLeft().getX(), square.getTopLeft().getY(),
-						Math.abs(square.getTopLeft().getX() - square.getBottomRight().getX()), Math.abs(square.getTopLeft().getY() - square.getBottomRight().getY()));
-			} else if(figure instanceof Ellipse) {
-				Ellipse ellipse = (Ellipse) figure;
-				gc.strokeOval(ellipse.getCenterPoint().getX() - (ellipse.getsMayorAxis() / 2), ellipse.getCenterPoint().getY() - (ellipse.getsMinorAxis() / 2), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
-				gc.fillOval(ellipse.getCenterPoint().getX() - (ellipse.getsMayorAxis() / 2), ellipse.getCenterPoint().getY() - (ellipse.getsMinorAxis() / 2), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
-			}*/
-		}
 	}
 
 	boolean figureBelongs(DrawFigure figure, Point eventPoint) {

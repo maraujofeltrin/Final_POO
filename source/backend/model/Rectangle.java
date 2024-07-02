@@ -48,29 +48,13 @@ public class Rectangle implements Figure {
 
     @Override
     public void addDiff(double diffX, double diffY) {
-        getTopLeft().x += diffX;
-        getBottomRight().x += diffX;
-        getTopLeft().y += diffY;
-        getBottomRight().y += diffY;
+        topLeft.x += diffX; //CHEQUEAR QUE X E Y SON PUBLIC
+        bottomRight.x += diffX;
+        topLeft.y += diffY;
+        bottomRight.y += diffY;
     }
 
-    @Override
-    public void FillFigure(GraphicsContext gc, Color col) {
-        gc.setFill(type.checkColor(color));
-        gc.fillRect(type.move(topLeft.getX(), MOVEMENT),
-                type.move(topLeft.getY(), MOVEMENT),
-                Math.abs(topLeft.getX() - bottomRight.getX()),
-                Math.abs(topLeft.getY() - bottomRight.getY()));
 
-        gc.setFill(col);
-        gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()),
-                Math.abs(getTopLeft().getY() - getBottomRight().getY()));
-
-        gc.strokeRect(getTopLeft().getX(),getTopLeft().getY(),
-                Math.abs(getTopLeft().getX() - getBottomRight().getX()),
-                Math.abs(getTopLeft().getY() - getBottomRight().getY()));
-    }
 
     @Override
     public boolean belongs(Point eventPoint) {
@@ -78,12 +62,30 @@ public class Rectangle implements Figure {
                 eventPoint.getY() > getTopLeft().getY() && eventPoint.getY() < getBottomRight().getY();
     }
 
-    private void setType(ShadowType type){
+    public void setType(ShadowType type){
         this.type =type;
     }
 
-    private void setColor(Color newColor){
+
+    public void setColor(Color newColor) {
         this.color = newColor;
+    }
+
+    public Color getShadowColor(){
+        return type.checkColor(color);
+    }
+
+    public ShadowType getType() {
+        return type;
+    }
+
+    public double DiffX(){
+        return Math.abs(getTopLeft().getX() - getBottomRight().getX());
+
+    }
+
+    public double DiffY(){
+        return Math.abs(getTopLeft().getY() - getBottomRight().getY());
     }
 
     @Override

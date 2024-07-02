@@ -5,15 +5,13 @@ import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
- public abstract class DrawFigure implements Buttons{
-     Color color;
-     GraphicsContext gc;
+ public abstract class DrawFigure {
+     final static double MOVEMENT = 10.0;
+     protected GraphicsContext gc;
 
-    protected void canDraw(Point startPoint, Point endPoint){
-        if( startPoint == null || endPoint == null){
-            throw new IllegalArgumentException();
-        }
-    }
-
+     public DrawFigure(GraphicsContext gc){
+         this.gc=gc;
+     }
+    public abstract void FillFigure(Color col);
 
 }

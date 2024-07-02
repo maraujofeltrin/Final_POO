@@ -1,23 +1,24 @@
 package backend;
 
 import backend.model.Figure;
+import frontend.Drawing.DrawFigure;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CanvasState {
 
-    private final List<Figure> list = new ArrayList<>();
+    private final List<DrawFigure> list = new ArrayList<>();
 
-    public void addFigure(Figure figure) {
+    public void addFigure(DrawFigure figure) {
         list.add(figure);
     }
 
-    public void deleteFigure(Figure figure) {
+    public void deleteFigure(DrawFigure figure) {
         list.remove(figure);
     }
 
-    public Iterable<Figure> figures() {
+    public Iterable<DrawFigure> figures() {
         return new ArrayList<>(list);
     }
 

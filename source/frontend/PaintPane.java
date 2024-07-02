@@ -4,6 +4,7 @@ import backend.CanvasState;
 import backend.ShadowType;
 import backend.model.*;
 import frontend.Drawing.*;
+import frontend.Drawing.drawButton.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -19,51 +20,60 @@ import java.util.Map;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	CanvasState canvasState;
+	private CanvasState canvasState;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
-	Color defaultFillColor = Color.YELLOW;
+	private Canvas canvas = new Canvas(800, 600);
+	private GraphicsContext gc = canvas.getGraphicsContext2D();
+	private Color lineColor = Color.BLACK;
+	private Color defaultFillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
+	private ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 
-	ToggleButton circleButton = new ToggleButton("Círculo");
-	ToggleButton squareButton = new ToggleButton("Cuadrado");
-	ToggleButton ellipseButton = new ToggleButton("Elipse");
-	ToggleButton deleteButton = new ToggleButton("Borrar");
+	private ToggleButton circleButton = new ToggleButton("Círculo");
+	private ToggleButton squareButton = new ToggleButton("Cuadrado");
+	private ToggleButton ellipseButton = new ToggleButton("Elipse");
+	private ToggleButton deleteButton = new ToggleButton("Borrar");
 
+	private Label shadowLabel = new Label("Sombras");
+	private ComboBox<ShadowType> shadowComboBox = new ComboBox<>();
 
-	ComboBox<ShadowType> shadowComboBox = new ComboBox<>();
+	private Label fillerColor = new Label("Relleno");
 
+	private Label border = new Label("Borde");
 
-	private void SetButtons(){
-		 rectangleButton.setUserData(new DrawRectangle());
-		 circleButton.setUserData(new DrawCircle());
-		 squareButton.setUserData(new DrawSquare());
-		 ellipseButton.setUserData(new DrawEllipse());
-	 }
-
-
+	Slider graduationSlider = new Slider(0, 10, 0);
+	private ComboBox<ShadowType> borderComboBox = new ComboBox<>();
 
 	// Selector de color de relleno
-	ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
+	private ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
+
+	private Label actions = new Label("Acciones");
+
+	private ToggleButton duplicateButton = new ToggleButton("Duplicar");
+	private ToggleButton divideButton = new ToggleButton("Dividir");
+	private ToggleButton moveButton = new ToggleButton("Mov. Centro");
 
 	// Dibujar una figura
-	Point startPoint;
+	private Point startPoint;
 
 	// Seleccionar una figura
-	Figure selectedFigure;
+	private DrawFigure selectedFigure;
 
 	// StatusBar
-	StatusPane statusPane;
+	private StatusPane statusPane;
 
 	// Colores de relleno de cada figura
-	Map<Figure, Color> figureColorMap = new HashMap<>();
+	private Map<DrawFigure, Color> figureColorMap = new HashMap<>();
 
+	private void SetButtons(){
+		rectangleButton.setUserData(new RectangleButton());
+		circleButton.setUserData(new CircleButton());
+		squareButton.setUserData(new SquareButton());
+		ellipseButton.setUserData(new EllipseButton());
+	}
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
@@ -104,7 +114,7 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseReleased(event -> {
 			SetButtons();
 			Point endPoint = new Point(event.getX(), event.getY());
-			Figure newFigure = null;
+			DrawFigure newFigure = null;
 			//HAY QUE CAMBIARLO IMPERATIVO
 			if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY() || tools.getSelectedToggle()==null) {
 				return ;
@@ -113,13 +123,14 @@ public class PaintPane extends BorderPane {
 			try{
 				Toggle selected= tools.getSelectedToggle();
 				Buttons aux=(Buttons) selected.getUserData();
-				newFigure = aux.draw(startPoint, endPoint, fillColorPicker.getValue(), gc);
+				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), gc);
+				figureColorMap.put(newFigure, fillColorPicker.getValue());
+				canvasState.addFigure(newFigure);
 			}catch (Exception ex){
 				System.out.println("No hay figura selecionada para su creacion");
 			}
 			//FALTAN CHEQUEOS
-			figureColorMap.put(newFigure, fillColorPicker.getValue());
-			canvasState.addFigure(newFigure);
+
 			startPoint = null;
 			redrawCanvas();
 		});
@@ -128,7 +139,7 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
-			for(Figure figure : canvasState.figures()) {
+			for(DrawFigure figure : canvasState.figures()) {
 				if(figureBelongs(figure, eventPoint)) {
 					found = true;
 					label.append(figure.toString());
@@ -146,7 +157,7 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (Figure figure : canvasState.figures()) {
+				for (DrawFigure figure : canvasState.figures()) {
 					if(figureBelongs(figure, eventPoint)) {
 						found = true;
 						selectedFigure = figure;
@@ -188,7 +199,7 @@ public class PaintPane extends BorderPane {
 
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		for(Figure figure : canvasState.figures()) {
+		for(DrawFigure figure : canvasState.figures()) {
 			if(figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 				gc.setStroke(Color.RED);
 				selectedFigure.setShadow(shadowComboBox.getValue(), figureColorMap.get(selectedFigure));
@@ -199,7 +210,7 @@ public class PaintPane extends BorderPane {
 
 			//ver devuelta
 			if(figure != null) {
-				figure.FillFigure(gc, figureColorMap.get(figure));
+				figure.FillFigure(figureColorMap.get(figure));
 			}
 			/*if(figure instanceof Rectangle) {
 				Rectangle rectangle = (Rectangle) figure;
@@ -226,7 +237,7 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
-	boolean figureBelongs(Figure figure, Point eventPoint) {
+	boolean figureBelongs(DrawFigure figure, Point eventPoint) {
 		if(figure != null){
 			return figure.belongs(eventPoint);
 		}

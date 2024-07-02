@@ -6,13 +6,28 @@ import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DrawCircle extends DrawFigure{
+import java.util.Objects;
+
+public class DrawCircle extends DrawEllipse{
+
+private Circle circle;
+public DrawCircle(Point point, Double Radius, Color color, GraphicsContext gc){
+    super(point, Radius, Radius, color, gc);
+    circle = new Circle(point, Radius);
+}
 
     @Override
-    public Figure draw(Point startPoint, Point endPoint, Color color, GraphicsContext gc) {
-        canDraw(startPoint,endPoint);
-        double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-        return new Circle(startPoint, circleRadius);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        DrawCircle that = (DrawCircle) o;
+        return Objects.equals(circle, that.circle);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(circle);
+    }
 }
+

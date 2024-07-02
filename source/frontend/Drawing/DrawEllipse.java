@@ -6,16 +6,50 @@ import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Objects;
+
 public class DrawEllipse extends DrawFigure{
 
-    @Override
-    public Figure draw(Point startPoint, Point endPoint, Color color, GraphicsContext gc) {
-        canDraw(startPoint,endPoint);
-        Point centerPoint = new Point(Math.abs(endPoint.x + startPoint.x) / 2, (Math.abs((endPoint.y + startPoint.y)) / 2));
-        double sMayorAxis = Math.abs(endPoint.x - startPoint.x);
-        double sMinorAxis = Math.abs(endPoint.y - startPoint.y);
-       return new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
+    private Ellipse ellipse;
+
+    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, GraphicsContext gc){
+        super(gc);
+        ellipse = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
+        ellipse.setColor(color);
     }
 
+    public Figure getFigure(){
+        return ellipse;
+    }
+    public void addDiff(double diffX, double diffY){
+        ellipse.addDiff(diffX, diffY);
+    }
+    @Override
+    public void FillFigure(Color col) {
+        double difX = ellipse.DiffX();
+        double difY = ellipse.DiffY();
 
+        gc.setFill(ellipse.getShadowColor());
+        gc.fillOval(ellipse.getType().move(difX, MOVEMENT),
+                ellipse.getType().move(difY, MOVEMENT), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+
+        gc.setFill(col);
+
+        gc.strokeOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+        gc.fillOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DrawEllipse that = (DrawEllipse) o;
+        return Objects.equals(ellipse, that.ellipse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ellipse);
+    }
 }

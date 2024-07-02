@@ -57,17 +57,7 @@ public class Ellipse implements Figure {
         getCenterPoint().y += diffY;
     }
 
-    @Override
-    public void FillFigure(GraphicsContext gc, Color col) {
-        gc.setFill(type.checkColor(color));
-        gc.fillOval(type.move(getCenterPoint().getX()- sMayorAxis/2, MOVEMENT),
-                type.move(getCenterPoint().getY() - sMinorAxis/2, MOVEMENT), sMayorAxis, sMinorAxis);
 
-        gc.setFill(col);
-        gc.strokeOval(getCenterPoint().getX() - (getsMayorAxis() / 2), getCenterPoint().getY() - (getsMinorAxis() / 2), getsMayorAxis(), getsMinorAxis());
-        gc.fillOval(getCenterPoint().getX() - (getsMayorAxis() / 2), getCenterPoint().getY() - (getsMinorAxis() / 2), getsMayorAxis(), getsMinorAxis());
-
-    }
 
     @Override
     public boolean belongs(Point eventPoint) {
@@ -75,9 +65,33 @@ public class Ellipse implements Figure {
                 (Math.pow(eventPoint.getY() - getCenterPoint().getY(), 2) / Math.pow(getsMinorAxis(), 2))) <= 0.30;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setType(ShadowType type) {
+        this.type = type;
+    }
+
+    public Color getShadowColor(){
+        return type.checkColor(color);
+    }
+
+    public ShadowType getType() {
+        return type;
+    }
+
+    public double DiffX(){
+        return centerPoint.getX() - (sMayorAxis / 2);
+    }
+    public double DiffY(){
+        return centerPoint.getY() - (sMinorAxis / 2);
+    }
+
     @Override
     public void setShadow(ShadowType type, Color color){
-        this.color = color;
-        this.type = type;
+        setColor(color);
+        setType(type);
+
     }
 }

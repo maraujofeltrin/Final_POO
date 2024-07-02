@@ -14,39 +14,28 @@ public class DrawRectangle extends DrawFigure {
 
    public DrawRectangle(Point startPoint, Point endPoint, Color color, GraphicsContext gc){
        super(gc);
-       rectangle=new Rectangle(startPoint, endPoint);
+       figure=new Rectangle(startPoint, endPoint);
+       rectangle=(Rectangle) figure;
        rectangle.setColor(color);
    }
-   public Color getColor(){
-       return rectangle.getColor();
-   }
-    public void addDiff(double diffX, double diffY){
-        rectangle.addDiff(diffX, diffY);
-    }
-    public boolean belongs(Point eventPoint){
-        return rectangle.belongs(eventPoint);
-    }
-    public void setShadow(ShadowType type, Color color){
-        rectangle.setShadow(type, color);
-    }
+
 
 
     @Override
-    public void FillFigure( Color col) {
-        gc.setFill(rectangle.getShadowColor());
-        Double difX= rectangle.DiffX();
-        Double difY= rectangle.DiffY();
+    protected void ShadowFigure(double difX, double difY) {
         gc.fillRect(rectangle.getType().move(rectangle.getTopLeft().getX(), MOVEMENT),
                 rectangle.getType().move(rectangle.getTopLeft().getY(), MOVEMENT),
                 difX,difY);
+    }
 
-        gc.setFill(col);
+    @Override
+    protected void FillFigureAux(double difX, double difY) {
         gc.fillRect(rectangle.getTopLeft().getX(), rectangle.getTopLeft().getY(),
                 difX,difY);
-
         gc.strokeRect(rectangle.getTopLeft().getX(),rectangle.getTopLeft().getY(),
                 difX, difY);
     }
+
 
     @Override
     public boolean equals(Object o) {

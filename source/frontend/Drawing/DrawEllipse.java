@@ -15,38 +15,24 @@ public class DrawEllipse extends DrawFigure{
 
     public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, GraphicsContext gc){
         super(gc);
-        ellipse = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
+        figure = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
+        ellipse=(Ellipse) figure;
         ellipse.setColor(color);
     }
 
+    //CHEQUEAR SI LO USAMOS
     public Figure getFigure(){
         return ellipse;
     }
-    public void addDiff(double diffX, double diffY){
-        ellipse.addDiff(diffX, diffY);
-    }
-    public void setShadow(ShadowType type, Color color){
-        ellipse.setShadow(type, color);
-    }
-    public Color getColor(){
-        return ellipse.getColor();
-    }
-    public boolean belongs(Point eventPoint){
-        return ellipse.belongs(eventPoint);
-    }
-    @Override
-    public void FillFigure(Color col) {
-        double difX = ellipse.DiffX();
-        double difY = ellipse.DiffY();
 
-        gc.setFill(ellipse.getShadowColor());
-        gc.fillOval(ellipse.getType().move(difX, MOVEMENT),
-                ellipse.getType().move(difY, MOVEMENT), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
 
-        gc.setFill(col);
-
+    protected void FillFigureAux(double difX, double difY){
         gc.strokeOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
         gc.fillOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+    }
+    protected void ShadowFigure(double difX, double difY){
+        gc.fillOval(ellipse.getType().move(difX, MOVEMENT),
+                ellipse.getType().move(difY, MOVEMENT), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
 
     }
 

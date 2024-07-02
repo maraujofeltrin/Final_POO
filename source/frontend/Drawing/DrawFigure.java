@@ -11,13 +11,39 @@ import javafx.scene.paint.Color;
      protected GraphicsContext gc;
      protected Figure figure;
 
-     public abstract void setShadow(ShadowType type, Color color);
-     public abstract Color getColor();
-     public abstract boolean belongs(Point eventPoint);
+     public  void setShadow(ShadowType type, Color color){
+         figure.setShadow(type, color);
+     }
+     public Color getColor(){
+         return figure.getColor();
+     }
+     public  boolean belongs(Point eventPoint){
+         return figure.belongs(eventPoint);
+     }
+     public void FillFigure(Color col) {
+         double difX = figure.DiffX();
+         double difY = figure.DiffY();
+         setFill(figure.getShadowColor());
+         ShadowFigure(difX, difY);
+         setFill(col);
+         FillFigureAux(difX,difY);
+     }
+     protected abstract void ShadowFigure(double difX, double difY);
+     protected abstract void FillFigureAux(double difX, double difY);
+     public void setFill(Color color){
+         gc.setFill(color);
+     }
+     public void Diff(){
+         double difX = figure.DiffX();
+         double difY = figure.DiffY();
+     }
      public DrawFigure(GraphicsContext gc){
          this.gc=gc;
+
      }
-     public abstract void FillFigure( Color col);
-     public abstract void addDiff(double num1, double num2);
+
+     public void addDiff(double num1, double num2){
+         figure.addDiff(num1, num2);
+     }
 
 }

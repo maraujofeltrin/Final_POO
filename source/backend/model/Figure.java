@@ -10,6 +10,9 @@ public interface Figure {
 
     void addDiff(double incX, double incY);
     Color getColor();
+    Color getShadowColor();
+    double DiffX();
+    double DiffY();
 
     boolean belongs(Point eventPoint);
 

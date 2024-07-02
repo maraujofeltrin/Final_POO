@@ -13,5 +13,6 @@ import javafx.scene.paint.Color;
          this.gc=gc;
      }
     public abstract void FillFigure(Color col);
+     public abstract void addDiff(double num1, double num2);
 
 }

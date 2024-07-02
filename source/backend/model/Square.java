@@ -13,4 +13,8 @@ public class Square extends Rectangle {
         return String.format("Cuadrado [ %s , %s ]", getTopLeft(), getBottomRight());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Square square && super.equals(o); //chequear el super
+    }
 }

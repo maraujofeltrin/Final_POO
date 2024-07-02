@@ -40,12 +40,11 @@ public class DrawEllipse extends DrawFigure{
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DrawEllipse that = (DrawEllipse) o;
-        return Objects.equals(ellipse, that.ellipse);
+
+      @Override
+     public boolean equals(Object o) {
+        return o instanceof DrawEllipse Dellipse &&
+                this.ellipse.equals(Dellipse.ellipse);
     }
 
     @Override

@@ -42,11 +42,8 @@ public class DrawSquare extends DrawFigure {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        DrawSquare that = (DrawSquare) o;
-        return Objects.equals(square, that.square);
+        return o instanceof DrawSquare Dsquare &&
+                this.square.equals(Dsquare.square);
     }
 
     @Override

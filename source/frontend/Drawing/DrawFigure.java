@@ -7,7 +7,9 @@ import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
- public abstract class DrawFigure {
+import java.util.Objects;
+
+public abstract class DrawFigure {
      final static double MOVEMENT = 10.0;
      protected GraphicsContext gc;
      protected Figure figure;

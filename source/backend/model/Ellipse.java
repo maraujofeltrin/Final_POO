@@ -2,6 +2,7 @@ package backend.model;
 
 import backend.BorderType;
 import backend.ShadowType;
+import frontend.Drawing.DrawEllipse;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -32,10 +33,10 @@ public class Ellipse implements Figure {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ellipse ellipse = (Ellipse) o;
-        return Double.compare(sMayorAxis, ellipse.sMayorAxis) == 0 && Double.compare(sMinorAxis, ellipse.sMinorAxis) == 0 && Objects.equals(centerPoint, ellipse.centerPoint);
+        return o instanceof Ellipse ellipse &&
+                Double.compare(sMayorAxis, ellipse.sMayorAxis) == 0
+                && Double.compare(sMinorAxis, ellipse.sMinorAxis) == 0 &&
+              centerPoint.equals(ellipse.centerPoint);
     }
 
     @Override

@@ -25,11 +25,8 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        DrawCircle that = (DrawCircle) o;
-        return Objects.equals(circle, that.circle);
+        return o instanceof DrawCircle Dcircle &&
+                circle.equals(Dcircle.circle);
     }
 
     protected void FillFigureAux(double difX, double difY){

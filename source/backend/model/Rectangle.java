@@ -34,10 +34,8 @@ public class Rectangle implements Figure {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rectangle rectangle = (Rectangle) o;
-        return Objects.equals(topLeft, rectangle.topLeft) && Objects.equals(bottomRight, rectangle.bottomRight);
+        return o instanceof Rectangle rectangle && topLeft.equals(rectangle.topLeft)
+                && bottomRight.equals(rectangle.bottomRight);
     }
 
     @Override

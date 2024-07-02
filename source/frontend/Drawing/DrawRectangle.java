@@ -43,10 +43,8 @@ public class DrawRectangle extends DrawFigure {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DrawRectangle that = (DrawRectangle) o;
-        return Objects.equals(rectangle, that.rectangle);
+            return o instanceof DrawRectangle Drectangle &&
+                    this.rectangle.equals(Drectangle.rectangle);
     }
 
     @Override

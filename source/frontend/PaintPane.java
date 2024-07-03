@@ -14,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
@@ -78,6 +79,17 @@ public class PaintPane extends BorderPane {
 	private Map<DrawFigure, Color> figureColorMap = new HashMap<>();
 	private SortedMap<Integer,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
 
+	private Label layer = new Label("Capas");
+	private ChoiceBox<String> layerChoiceBox = new ChoiceBox();
+
+	private RadioButton hideButton = new RadioButton("Ocultar");
+	private RadioButton showButton = new RadioButton("Mostrar");
+
+
+	private ToggleButton addLayerButton = new ToggleButton("Agregar Capa");
+	private ToggleButton deleteLayerButton = new ToggleButton("Eliminar Capa");
+
+
 
 	private void SetButtons(){
 		rectangleButton.setUserData(new RectangleButton());
@@ -121,6 +133,20 @@ public class PaintPane extends BorderPane {
 		graduationSlider.setShowTickLabels(true);
 		buttonsBox.getChildren().add(graduationSlider);
 		buttonsBox.getChildren().add(borderChoiceBox);
+
+		HBox headerBox = new HBox(10);
+		headerBox.getChildren().add(layer);
+		headerBox.getChildren().add(layerChoiceBox);
+		headerBox.getChildren().add(showButton);
+		headerBox.getChildren().add(hideButton);
+		headerBox.getChildren().add(addLayerButton);
+		headerBox.getChildren().add(deleteLayerButton);
+
+		headerBox.setPadding(new Insets(5));
+		headerBox.setStyle("-fx-background-color: #999");
+		headerBox.setPrefWidth(100);
+		setTop(headerBox);
+
 
 		ToggleButton[] advancedTools = {duplicateButton, divideButton, moveButton};
 		ToggleGroup advTools = new ToggleGroup();

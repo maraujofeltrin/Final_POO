@@ -150,7 +150,7 @@ public class Ellipse implements Figure {
         }
     }
     public Point[] divideCenterPoints(){
-        Double aux1= sMayorAxis/2.0;
+        Double aux1= sMayorAxis/4.0;
         Point[] res= {new Point(centerPoint.getX()+aux1, centerPoint.getY())
                 , new Point(centerPoint.getX()-aux1, centerPoint.getY())};
         return res;

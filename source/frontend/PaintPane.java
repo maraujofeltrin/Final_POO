@@ -172,7 +172,7 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(label.toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
-				selectedFigure = null;
+				//selectedFigure = null; <-- rompe el borrar
 			}
 		});
 
@@ -214,11 +214,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		deleteButton.setOnAction(event -> {
-			if (selectedFigure != null) {
-				canvasState.deleteFigure(selectedFigure);
-				selectedFigure = null;
-				redrawCanvas();
-			}
+			RemoveFigure();
 		});
 
 		divideButton.setOnAction(event -> {
@@ -227,7 +223,7 @@ public class PaintPane extends BorderPane {
 				Color coloraux = selectedFigure.getColor();
 				addFigure(divide[0], coloraux);
 				addFigure(divide[1], coloraux);
-				//RemoveFigure();
+				RemoveFigure();
 				redrawCanvas();
 			}
 		});
@@ -236,9 +232,13 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	/*void RemoveFigure(){
-
-	}*/
+	void RemoveFigure(){
+	if (selectedFigure != null) {
+				canvasState.deleteFigure(selectedFigure);
+				selectedFigure = null;
+				redrawCanvas();
+			}
+	}
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 

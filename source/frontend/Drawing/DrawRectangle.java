@@ -68,8 +68,10 @@ public class DrawRectangle extends DrawFigure {
 
     public DrawFigure[] divideFigure(){
        Point[] points = rectangle.divide();
-       DrawFigure res1=new DrawRectangle(points[0], points[1], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), figure.getBorderType(), figure.getBorderWidth());
-       DrawFigure res2=new DrawRectangle(points[2], points[3], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), figure.getBorderType(), figure.getBorderWidth());
+
+       DrawFigure res1=new DrawRectangle(points[0], points[1], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), rectangle.getBorderType(), rectangle.getBorderWidth());
+       DrawFigure res2=new DrawRectangle(points[2], points[3], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), rectangle.getBorderType(), rectangle.getBorderWidth());
+
        DrawFigure[] res ={res1, res2};
        return res;
     }

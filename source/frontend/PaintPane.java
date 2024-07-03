@@ -183,7 +183,6 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
@@ -222,12 +221,14 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+
 		shadowChoiceBox.setOnAction(event->{
 			if(selectedFigure!=null) {
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 				redrawCanvas();
 			}
 		});
+
 		borderChoiceBox.setOnAction(event->{
 			if(selectedFigure!=null) {
 				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
@@ -279,9 +280,9 @@ public class PaintPane extends BorderPane {
 
 		duplicateButton.setOnAction(actionEvent -> {
 			if(selectedFigure!=null){
-				DrawFigure duplicate = selectedFigure.clone();
+				DrawFigure duplicate = selectedFigure.duplicate();
 				canvasState.addFigure(duplicate);
-
+				figureColorMap.put(duplicate,duplicate.getColor());
 				redrawCanvas();
 			}
 		});

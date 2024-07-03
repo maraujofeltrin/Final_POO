@@ -75,4 +75,12 @@ public class DrawRectangle extends DrawFigure {
        DrawFigure[] res ={res1, res2};
        return res;
     }
+
+    @Override
+    public DrawFigure duplicate() {
+        Point aux = new Point(rectangle.getTopLeft().getX()+20,rectangle.getTopLeft().getY()+20);
+        Point aux2 = new Point(rectangle.getBottomRight().getX()+20,rectangle.getBottomRight().getY()+20);
+        DrawFigure res = new DrawRectangle(aux, aux2,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),rectangle.getBorderType(), rectangle.getBorderWidth());
+        return res;
+    }
 }

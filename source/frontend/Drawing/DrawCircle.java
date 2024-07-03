@@ -39,6 +39,13 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
     }
 
     @Override
+    public DrawFigure duplicate() {
+        Point aux = new Point(circle.getCenterPoint().getX()+20,circle.getCenterPoint().getY()+20);
+        DrawFigure res = new DrawCircle(aux, circle.getRadius(),circle.getColor(),circle.getSecondColor(),gc,circle.getType(),circle.getBorderType(), circle.getBorderWidth());
+        return res;
+    }
+
+    @Override
     public DrawFigure[] divideFigure() {
        Double[] radius= circle.divideAxis();
        Point[] points= circle.divideCenterPoints();

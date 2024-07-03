@@ -75,4 +75,12 @@ public class DrawSquare extends DrawFigure {
                 new Stop(1, col2));
         gc.setFill(linearGradient);
     }
+
+    @Override
+    public DrawFigure duplicate() {
+        Point aux = new Point(square.getTopLeft().getX()+20,square.getTopLeft().getY()+20);
+        Point aux2 = new Point(square.getBottomRight().getX()+20,square.getBottomRight().getY()+20);
+        DrawFigure res = new DrawRectangle(aux, aux2,square.getColor(),square.getSecondColor(),gc,square.getType(),square.getBorderType(), square.getBorderWidth());
+        return res;
+    }
 }

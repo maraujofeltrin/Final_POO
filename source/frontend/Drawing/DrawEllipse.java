@@ -59,9 +59,9 @@ public class DrawEllipse extends DrawFigure{
 
     }
 
-
       @Override
-     public boolean equals(Object o) {
+
+      public boolean equals(Object o) {
         return o instanceof DrawEllipse Dellipse &&
                 this.ellipse.equals(Dellipse.ellipse);
     }
@@ -80,5 +80,11 @@ public class DrawEllipse extends DrawFigure{
         gc.setFill(radialGradient);
     }
 
+    @Override
+    public DrawFigure duplicate() {
+        Point aux = new Point(ellipse.getCenterPoint().getX()+20,ellipse.getCenterPoint().getY()+20);
+        DrawFigure res = new DrawEllipse(aux, ellipse.getsMayorAxis(),ellipse.getsMinorAxis(),ellipse.getColor(),ellipse.getSecondColor(),gc,ellipse.getType(),ellipse.getBorderType(), ellipse.getBorderWidth());
+        return res;
+    }
 
 }

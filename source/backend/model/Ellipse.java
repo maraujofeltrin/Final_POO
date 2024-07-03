@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class Ellipse implements Figure {
 
-    protected final Point centerPoint;
+    protected Point centerPoint;
     protected final double sMayorAxis, sMinorAxis;
     protected Color color, secondaryColor;
     protected BorderType border;
@@ -127,5 +127,23 @@ public class Ellipse implements Figure {
     @Override
     public double getBorderWidth() {
         return borderWidth;
+    }
+
+    @Override
+    public Ellipse clone() {
+        try {
+            Ellipse copy = (Ellipse) super.clone();
+            // Realiza una copia profunda de los objetos mutables
+            copy.centerPoint = new Point(this.centerPoint.getX()-30, this.centerPoint.getY()+30);
+            // Copia otras propiedades necesarias
+            copy.color = color;
+            copy.secondaryColor = secondaryColor;
+            copy.borderWidth = borderWidth;
+            copy.border = border;
+            copy.type = type;
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Esto no debería suceder porque estamos implementando Cloneable
+        }
     }
 }

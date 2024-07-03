@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
-public abstract class DrawFigure {
+public abstract class DrawFigure implements Cloneable{
      final static double MOVEMENT = 10.0;
      protected GraphicsContext gc;
      protected Figure figure;
@@ -72,5 +72,17 @@ public abstract class DrawFigure {
          figure.setBorderType(type);
          figure.setBorderWidth(value);
      }
+
+    @Override
+    public DrawFigure clone() {
+        try {
+            DrawFigure cloned = (DrawFigure) super.clone();
+            cloned.figure = figure.clone(); // Clonación profunda de la figura
+            cloned.gc = gc;
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            // Manejar la excepción apropiadamente, por ejemplo:
+            throw new AssertionError();        }
+    }
 
  }

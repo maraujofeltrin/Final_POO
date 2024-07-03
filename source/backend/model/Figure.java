@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Map;
 
-public interface Figure {
+public interface Figure extends Cloneable{
 
     void addDiff(double incX, double incY);
     Color getColor();
@@ -31,4 +31,5 @@ public interface Figure {
     void setBorderWidth(double value);
 
     double getBorderWidth();
+    Figure clone();
 }

@@ -149,9 +149,7 @@ public class PaintPane extends BorderPane {
 				Toggle selected= tools.getSelectedToggle();
 				Buttons aux=(Buttons) selected.getUserData();
 				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(),gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue());
-				figureColorMap.put(newFigure, fillColorPicker.getValue());
-
-				canvasState.addFigure(newFigure);
+				addFigure(newFigure,fillColorPicker.getValue());
 			}catch (Exception ex){
 				System.out.println("No hay figura selecionada para su creacion");
 			}
@@ -216,17 +214,30 @@ public class PaintPane extends BorderPane {
 		});
 
 		deleteButton.setOnAction(event -> {
-			if (selectedFigure != null) {
-				canvasState.deleteFigure(selectedFigure);
-				selectedFigure = null;
-				redrawCanvas();
-			}
+			RemoveFigure();
+		});
+
+		divideButton.setOnAction(event -> {
+			DrawFigure[] divide= selectedFigure.divideFigure();
+			Color coloraux= selectedFigure.getColor();
+			addFigure(divide[0], coloraux);
+			addFigure(divide[1], coloraux);
+			RemoveFigure();
+
 		});
 
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
 
+	void RemoveFigure(){
+		if (selectedFigure != null) {
+			canvasState.deleteFigure(selectedFigure);
+			figureColorMap.remove(selectedFigure);
+			selectedFigure = null;
+			redrawCanvas();
+		}
+	}
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -238,8 +249,12 @@ public class PaintPane extends BorderPane {
 					figure.setSecondaryColor(secondFillColor.getValue());
 					selectedFigure.setShadow(shadowChoiceBox.getValue(), figure.getColor());
 					selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+					//CORREGIR RE IMPERATIVO
 					if(duplicateButton.isSelected()){
 						duplicate = figure.clone();
+					}
+					if(divideButton.isSelected()){
+
 					}
 				} else {
 					gc.setStroke(lineColor);
@@ -257,6 +272,10 @@ public class PaintPane extends BorderPane {
 
 	}
 
+	public void addFigure(DrawFigure figure, Color color){
+		figureColorMap.put(figure, color);
+		canvasState.addFigure(figure);
+	}
 	boolean figureBelongs(DrawFigure figure, Point eventPoint) {
 		if(figure != null){
 			return figure.belongs(eventPoint);

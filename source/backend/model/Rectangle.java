@@ -5,8 +5,11 @@ import backend.ShadowType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+
+import static java.lang.Math.abs;
 
 public class Rectangle implements Figure {
 
@@ -39,6 +42,7 @@ public class Rectangle implements Figure {
                 && bottomRight.equals(rectangle.bottomRight);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(topLeft, bottomRight);
@@ -50,6 +54,20 @@ public class Rectangle implements Figure {
 
     public Point getBottomRight() {
         return bottomRight;
+    }
+
+    public Point[] divide(){
+
+
+        double auxY= (Math.abs(topLeft.getY()-bottomRight.getY()))/4.0;
+        double auxX= (Math.abs(topLeft.getX()-bottomRight.getX()))/2.0;
+        Point res1= new Point(topLeft.getX(), topLeft.getY()+auxY);
+        Point res2= new Point(topLeft.getX()+auxX, topLeft.getY()+3*auxY);
+        Point res3= new Point(res2.getX(), res1.getY());
+        Point res4= new Point(res2.getX()+auxX,res2.getY());
+
+       Point [] res={res1, res2, res3, res4};
+       return res;
     }
 
     @Override
@@ -92,12 +110,12 @@ public class Rectangle implements Figure {
     }
 
     public double DiffX(){
-        return Math.abs(getTopLeft().getX() - getBottomRight().getX());
+        return abs(getTopLeft().getX() - getBottomRight().getX());
 
     }
 
     public double DiffY(){
-        return Math.abs(getTopLeft().getY() - getBottomRight().getY());
+        return abs(getTopLeft().getY() - getBottomRight().getY());
     }
 
     @Override

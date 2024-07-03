@@ -84,5 +84,6 @@ public abstract class DrawFigure implements Cloneable{
             // Manejar la excepción apropiadamente, por ejemplo:
             throw new AssertionError();        }
     }
+    public abstract DrawFigure[] divideFigure();
 
  }

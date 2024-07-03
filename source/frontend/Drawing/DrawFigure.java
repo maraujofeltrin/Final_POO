@@ -92,4 +92,7 @@ public abstract class DrawFigure implements Cloneable{
     }
     public abstract DrawFigure[] divideFigure();
 
- }
+    public Point getCenterPoint() {
+        return figure.getCenterPoint();
+    }
+}

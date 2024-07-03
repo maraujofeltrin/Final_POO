@@ -32,4 +32,5 @@ public interface Figure extends Cloneable{
 
     double getBorderWidth();
     Figure clone();
+    Point getCenterPoint();
 }

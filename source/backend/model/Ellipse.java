@@ -159,4 +159,5 @@ public class Ellipse implements Figure {
         Double[] res ={sMayorAxis/2.0, sMinorAxis/2.0};
         return res;
     }
+
 }

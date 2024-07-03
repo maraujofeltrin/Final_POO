@@ -164,4 +164,11 @@ public class Rectangle implements Figure {
             throw new AssertionError(); // Esto no debería suceder porque estamos implementando Cloneable
         }
     }
+
+
+    public Point getCenterPoint() {
+        double centerX = (topLeft.getX() + bottomRight.getX()) / 2;
+        double centerY = (topLeft.getY() + bottomRight.getY()) / 2;
+        return new Point(centerX, centerY);
+    }
 }

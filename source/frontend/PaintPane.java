@@ -228,6 +228,25 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		moveButton.setOnAction(event -> {
+			if (selectedFigure != null) {
+				double canvasWidth = canvas.getWidth();
+				double canvasHeight = canvas.getHeight();
+
+				double centerX = canvasWidth / 2;
+				double centerY = canvasHeight / 2;
+
+				Point figureCenter = selectedFigure.getCenterPoint();
+
+				double diffX = centerX - figureCenter.getX();
+				double diffY = centerY - figureCenter.getY();
+
+				selectedFigure.addDiff(diffX, diffY);
+
+				redrawCanvas();
+			}
+		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}

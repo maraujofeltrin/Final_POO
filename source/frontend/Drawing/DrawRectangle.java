@@ -18,12 +18,14 @@ public class DrawRectangle extends DrawFigure {
     private Rectangle rectangle;
 
    public DrawRectangle(Point startPoint, Point endPoint, Color color, Color secColor,GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc,border, width);
+       super(gc);
        figure=new Rectangle(startPoint, endPoint);
        rectangle=(Rectangle) figure;
        rectangle.setColor(color);
        rectangle.setSecondColor(secColor);
        rectangle.setType(shadow);
+       rectangle.setBorderWidth(width);
+       rectangle.setBorderType(border);
    }
 
 
@@ -63,12 +65,12 @@ public class DrawRectangle extends DrawFigure {
                 new Stop(1, col2));
         gc.setFill(linearGradient);
     }
-
+/*
     public DrawFigure[] divideFigure(){
        Point[] points = rectangle.divide();
        DrawFigure res1=new DrawRectangle(points[0], points[1], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), border,  width);
        DrawFigure res2=new DrawRectangle(points[2], points[3], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), border,  width);
        DrawFigure[] res ={res1, res2};
        return res;
-    }
+    }*/
 }

@@ -13,8 +13,8 @@ public abstract class DrawFigure implements Cloneable{
      final static double MOVEMENT = 10.0;
      protected GraphicsContext gc;
      protected Figure figure;
-     protected BorderType border;
-     protected double width;
+    //protected BorderType border;
+     //protected double width;
 
      public  void setShadow(ShadowType type, Color color){
          figure.setShadow(type, color);
@@ -37,7 +37,13 @@ public abstract class DrawFigure implements Cloneable{
          setGradiant(col, col2);
          FillFigureAux(difX,difY);
 
-         border.putBorder(gc, width);
+         int[] values = figure.getBorderType().BorderVec();
+         if(values.length == 1){
+             gc.setLineDashes(values[0]);
+         }else{
+             gc.setLineDashes(values[0], values[1],values[2],values[3]);
+         }
+         gc.setLineWidth(figure.getBorderWidth());;
      }
 
      protected abstract void setGradiant(Color col1, Color col2);
@@ -50,10 +56,10 @@ public abstract class DrawFigure implements Cloneable{
          double difX = figure.DiffX();
          double difY = figure.DiffY();
      }
-     public DrawFigure(GraphicsContext gc, BorderType border, double value){
+     public DrawFigure(GraphicsContext gc){
          this.gc=gc;
-         this.border = border;
-         this.width = value;
+         //this.border = border;
+         //this.width = value;
      }
 
      public void addDiff(double num1, double num2){

@@ -12,7 +12,8 @@ import java.util.Objects;
 public class Ellipse implements Figure {
 
     protected Point centerPoint;
-    protected final double sMayorAxis, sMinorAxis;
+    protected double sMayorAxis;
+    protected double sMinorAxis;
     protected Color color, secondaryColor;
     protected BorderType border;
     protected ShadowType type;
@@ -134,8 +135,10 @@ public class Ellipse implements Figure {
         try {
             Ellipse copy = (Ellipse) super.clone();
             // Realiza una copia profunda de los objetos mutables
-            copy.centerPoint = new Point(this.centerPoint.getX()-30, this.centerPoint.getY()+30);
+            copy.centerPoint = new Point(this.centerPoint.getX()+30, this.centerPoint.getY()+30);
             // Copia otras propiedades necesarias
+            copy.sMinorAxis = sMinorAxis;
+            copy.sMayorAxis = sMayorAxis;
             copy.color = color;
             copy.secondaryColor = secondaryColor;
             copy.borderWidth = borderWidth;

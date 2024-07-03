@@ -4,9 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 public enum BorderType {
     NORMAL{
-        public void putBorder(GraphicsContext gc, double value){
-            gc.setLineDashes(0);
-            gc.setLineWidth(value);
+        public int[] BorderVec(){
+            int[] resp = new int[] {0};
+            return resp;
         }
 
         @Override
@@ -15,10 +15,11 @@ public enum BorderType {
         }
     },
     DOTTED_SIMPLE{
-        public void putBorder(GraphicsContext gc, double value){
-            gc.setLineDashes(10);
-            gc.setLineWidth(value);
+        public int[] BorderVec(){
+            int[] resp = new int[] {10};
+            return resp;
         }
+
 
         @Override
         public String toString(){
@@ -26,9 +27,9 @@ public enum BorderType {
         }
     },
     DOTTED_COMPLEX{
-        public void putBorder(GraphicsContext gc, double value){
-            gc.setLineDashes(30, 10, 15, 10);
-            gc.setLineWidth(value);
+        public int[] BorderVec(){
+            int[] resp = new int[] {30,10,15,10};
+            return resp;
         }
         @Override
         public String toString(){
@@ -36,5 +37,5 @@ public enum BorderType {
         }
     };
 
-    public abstract void putBorder(GraphicsContext gc, double value);
+    public abstract int[] BorderVec();
 }

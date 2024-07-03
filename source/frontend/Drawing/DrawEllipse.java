@@ -18,18 +18,20 @@ public class DrawEllipse extends DrawFigure{
     private Ellipse ellipse;
 
     public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-        super(gc,border,width);
+        super(gc);
         figure = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
         ellipse=(Ellipse) figure;
         ellipse.setColor(color);
         ellipse.setSecondColor(secColor);
         ellipse.setType(shadow);
+        ellipse.setBorderWidth(width);
+        ellipse.setBorderType(border);
     }
 
     //CHEQUEAR SI LO USAMOS
-    public Figure getFigure(){
+    /*public Figure getFigure(){
         return ellipse;
-    }
+    }*/
 
 
     protected void FillFigureAux(double difX, double difY){

@@ -253,6 +253,7 @@ public class PaintPane extends BorderPane {
 					//CORREGIR RE IMPERATIVO
 					if(duplicateButton.isSelected()){
 						duplicate = figure.clone();
+						canvasState.addFigure(duplicate);
 					}
 
 				} else {

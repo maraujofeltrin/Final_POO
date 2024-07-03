@@ -6,6 +6,8 @@ import backend.ShadowType;
 import backend.model.*;
 import frontend.Drawing.*;
 import frontend.Drawing.drawButton.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Translate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +51,7 @@ public class PaintPane extends BorderPane {
 	private Label border = new Label("Borde");
 
 	Slider graduationSlider = new Slider(0, 10, 5);
+	Translate translate =new Translate();
 	private ChoiceBox<BorderType> borderChoiceBox = new ChoiceBox<>();
 
 	// Selector de color de relleno
@@ -130,6 +134,8 @@ public class PaintPane extends BorderPane {
 			Toggle selected= tools.getSelectedToggle();
 			try{
 				Buttons aux=(Buttons) selected.getUserData();
+				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
+				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
 			}catch(Exception ex){
 				System.out.println("Seleccionar algun boton");
 			}
@@ -183,22 +189,26 @@ public class PaintPane extends BorderPane {
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (DrawFigure figure : canvasState.figures()) {
-					if(figureBelongs(figure, eventPoint)) {
+					if(figureBelongs(figure, eventPoint)  ) {
 						found = true;
 						selectedFigure = figure;
 						label.append(figure.toString());
+
 					}
 				}
 				if (found) {
 					statusPane.updateStatus(label.toString());
+
 				} else {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
+				//me da rari haberlo sacado pero funciona
+				//redrawCanvas();
 
-				redrawCanvas();
 			}
 		});
+
 
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected() && selectedFigure != null) {
@@ -212,6 +222,26 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+		shadowChoiceBox.setOnAction(event->{
+			if(selectedFigure!=null) {
+				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
+				redrawCanvas();
+			}
+		});
+		borderChoiceBox.setOnAction(event->{
+			if(selectedFigure!=null) {
+				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+				redrawCanvas();
+			}
+		});
+
+		graduationSlider.setOnMouseDragged(event->{
+			if(selectedFigure!=null) {
+				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+				redrawCanvas();
+			}
+		});
+
 
 		deleteButton.setOnAction(event -> {
 			RemoveFigure();
@@ -260,6 +290,8 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
+
+
 	void RemoveFigure(){
 	if (selectedFigure != null) {
 				canvasState.deleteFigure(selectedFigure);
@@ -276,8 +308,6 @@ public class PaintPane extends BorderPane {
 					gc.setStroke(Color.RED);
 					figure.setPrimaryColor(fillColorPicker.getValue());
 					figure.setSecondaryColor(secondFillColor.getValue());
-					selectedFigure.setShadow(shadowChoiceBox.getValue(), figure.getColor());
-					selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
 
 				} else {
 					gc.setStroke(lineColor);

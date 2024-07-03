@@ -214,30 +214,31 @@ public class PaintPane extends BorderPane {
 		});
 
 		deleteButton.setOnAction(event -> {
-			RemoveFigure();
+			if (selectedFigure != null) {
+				canvasState.deleteFigure(selectedFigure);
+				selectedFigure = null;
+				redrawCanvas();
+			}
 		});
 
 		divideButton.setOnAction(event -> {
-			DrawFigure[] divide= selectedFigure.divideFigure();
-			Color coloraux= selectedFigure.getColor();
-			addFigure(divide[0], coloraux);
-			addFigure(divide[1], coloraux);
-			RemoveFigure();
-
+			if(selectedFigure!=null) {
+				DrawFigure[] divide = selectedFigure.divideFigure();
+				Color coloraux = selectedFigure.getColor();
+				addFigure(divide[0], coloraux);
+				addFigure(divide[1], coloraux);
+				//RemoveFigure();
+				redrawCanvas();
+			}
 		});
 
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
 
-	void RemoveFigure(){
-		if (selectedFigure != null) {
-			canvasState.deleteFigure(selectedFigure);
-			figureColorMap.remove(selectedFigure);
-			selectedFigure = null;
-			redrawCanvas();
-		}
-	}
+	/*void RemoveFigure(){
+
+	}*/
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -253,9 +254,7 @@ public class PaintPane extends BorderPane {
 					if(duplicateButton.isSelected()){
 						duplicate = figure.clone();
 					}
-					if(divideButton.isSelected()){
 
-					}
 				} else {
 					gc.setStroke(lineColor);
 				}

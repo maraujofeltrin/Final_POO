@@ -36,6 +36,18 @@ public class DrawEllipse extends DrawFigure{
         gc.strokeOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
         gc.fillOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
     }
+
+    @Override
+    public DrawFigure[] divideFigure() {
+        Point[] points = ellipse.divideCenterPoints();
+        Double[] Axis= ellipse.divideAxis();
+        //chequear repite codigo
+        DrawFigure res1=new DrawEllipse(points[0], Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), border,  width);
+        DrawFigure res2=new DrawEllipse(points[1],Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), border,  width);
+        DrawFigure[] res ={res1, res2};
+        return res;
+    }
+
     protected void ShadowFigure(double difX, double difY){
         gc.fillOval(ellipse.getType().move(difX, MOVEMENT),
                 ellipse.getType().move(difY, MOVEMENT), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());

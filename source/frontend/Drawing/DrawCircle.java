@@ -35,6 +35,17 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
         gc.strokeOval(difX, difY, circle.getsMayorAxis(), circle.getsMinorAxis());
         gc.fillOval(difX, difY, circle.getsMayorAxis(), circle.getsMinorAxis());
     }
+
+    @Override
+    public DrawFigure[] divideFigure() {
+       Double[] radius= circle.divideAxis();
+       Point[] points= circle.divideCenterPoints();
+       DrawFigure res1= new DrawCircle(points[0],radius[0], circle.getColor(),circle.getSecondColor(), gc, circle.getType(), border, width);
+       DrawFigure res2= new DrawCircle(points[1],radius[0], circle.getColor(),circle.getSecondColor(), gc, circle.getType(), border, width);
+       DrawFigure[] res={res1, res2};
+       return res;
+}
+
     protected void ShadowFigure(double difX, double difY){
         gc.fillOval(circle.getType().move(difX, MOVEMENT),
                 circle.getType().move(difY, MOVEMENT), circle.getsMayorAxis(), circle.getsMinorAxis());

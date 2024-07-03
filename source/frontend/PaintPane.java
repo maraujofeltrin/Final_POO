@@ -236,12 +236,13 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-		graduationSlider.setOnMouseDragged(event->{
-			if(selectedFigure!=null) {
-				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+		graduationSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (selectedFigure != null) {
+				selectedFigure.setBorder(borderChoiceBox.getValue(), newValue.doubleValue());
 				redrawCanvas();
 			}
 		});
+
 
 
 		deleteButton.setOnAction(event -> {

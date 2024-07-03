@@ -65,12 +65,12 @@ public class DrawRectangle extends DrawFigure {
                 new Stop(1, col2));
         gc.setFill(linearGradient);
     }
-/*
+
     public DrawFigure[] divideFigure(){
        Point[] points = rectangle.divide();
-       DrawFigure res1=new DrawRectangle(points[0], points[1], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), border,  width);
-       DrawFigure res2=new DrawRectangle(points[2], points[3], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), border,  width);
+       DrawFigure res1=new DrawRectangle(points[0], points[1], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), figure.getBorderType(), figure.getBorderWidth());
+       DrawFigure res2=new DrawRectangle(points[2], points[3], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), figure.getBorderType(), figure.getBorderWidth());
        DrawFigure[] res ={res1, res2};
        return res;
-    }*/
+    }
 }

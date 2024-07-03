@@ -46,8 +46,8 @@ public class DrawSquare extends DrawFigure {
     public DrawFigure[] divideFigure() {
 
             Point[] points = square.divide();
-            DrawFigure res1=new DrawSquare(points[0], points[1], square.getColor(), square.getSecondColor(), gc, square.getType(), border,  width);
-            DrawFigure res2=new DrawSquare(points[2], points[3], square.getColor(), square.getSecondColor(), gc, square.getType(), border,  width);
+            DrawFigure res1=new DrawSquare(points[0], points[1], square.getColor(), square.getSecondColor(), gc, square.getType(), figure.getBorderType(), figure.getBorderWidth());
+            DrawFigure res2=new DrawSquare(points[2], points[3], square.getColor(), square.getSecondColor(), gc, square.getType(), figure.getBorderType(), figure.getBorderWidth());
             DrawFigure[] res ={res1, res2};
             return res;
 

@@ -44,8 +44,8 @@ public class DrawEllipse extends DrawFigure{
         Point[] points = ellipse.divideCenterPoints();
         Double[] Axis= ellipse.divideAxis();
         //chequear repite codigo
-        DrawFigure res1=new DrawEllipse(points[0], Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), border,  width);
-        DrawFigure res2=new DrawEllipse(points[1],Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), border,  width);
+        DrawFigure res1=new DrawEllipse(points[0], Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), figure.getBorderType(), figure.getBorderWidth());
+        DrawFigure res2=new DrawEllipse(points[1],Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), figure.getBorderType(), figure.getBorderWidth());
         DrawFigure[] res ={res1, res2};
         return res;
     }

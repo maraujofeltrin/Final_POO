@@ -247,6 +247,15 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		duplicateButton.setOnAction(actionEvent -> {
+			if(selectedFigure!=null){
+				DrawFigure duplicate = selectedFigure.clone();
+				canvasState.addFigure(duplicate);
+
+				redrawCanvas();
+			}
+		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -262,18 +271,13 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 			for (DrawFigure figure : canvasState.figures()) {
-				DrawFigure duplicate = null;
+
 				if (figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 					gc.setStroke(Color.RED);
 					figure.setPrimaryColor(fillColorPicker.getValue());
 					figure.setSecondaryColor(secondFillColor.getValue());
 					selectedFigure.setShadow(shadowChoiceBox.getValue(), figure.getColor());
 					selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
-					//CORREGIR RE IMPERATIVO
-					if(duplicateButton.isSelected()){
-						duplicate = figure.clone();
-						canvasState.addFigure(duplicate);
-					}
 
 				} else {
 					gc.setStroke(lineColor);
@@ -282,9 +286,6 @@ public class PaintPane extends BorderPane {
 				//ver devuelta
 				if (figure != null) {
 					figure.FillFigure(figure.getColor(), figure.getSecondColor());
-					if(duplicateButton.isSelected() && duplicate != null){
-						duplicate.FillFigure(duplicate.getColor(), duplicate.getSecondColor());
-					}
 				}
 
 			}

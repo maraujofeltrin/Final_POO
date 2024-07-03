@@ -1,5 +1,6 @@
 package frontend.Drawing;
 
+import backend.BorderType;
 import backend.ShadowType;
 import backend.model.Ellipse;
 import backend.model.Figure;
@@ -16,12 +17,15 @@ public class DrawEllipse extends DrawFigure{
 
     private Ellipse ellipse;
 
-    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc){
+    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
         super(gc);
         figure = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
         ellipse=(Ellipse) figure;
         ellipse.setColor(color);
         ellipse.setSecondColor(secColor);
+        ellipse.setBorderType(border);
+        ellipse.setType(shadow);
+        ellipse.setBorderWidth(width);
     }
 
     //CHEQUEAR SI LO USAMOS

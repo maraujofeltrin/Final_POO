@@ -39,7 +39,7 @@ public class PaintPane extends BorderPane {
 	private ToggleButton deleteButton = new ToggleButton("Borrar");
 
 	private Label shadowLabel = new Label("Sombras");
-	private ComboBox<ShadowType> shadowComboBox = new ComboBox<>();
+	private ChoiceBox<ShadowType> shadowChoiceBox = new ChoiceBox<>();
 
 	private Label fillerColor = new Label("Relleno");
 	private ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
@@ -48,7 +48,7 @@ public class PaintPane extends BorderPane {
 	private Label border = new Label("Borde");
 
 	Slider graduationSlider = new Slider(0, 10, 5);
-	private ComboBox<BorderType> borderComboBox = new ComboBox<>();
+	private ChoiceBox<BorderType> borderChoiceBox = new ChoiceBox<>();
 
 	// Selector de color de relleno
 
@@ -81,11 +81,11 @@ public class PaintPane extends BorderPane {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 
-		shadowComboBox.getItems().addAll(ShadowType.SIMPLE, ShadowType.COLORED, ShadowType.SIMPLE_INVERSED, ShadowType.COLORED_INVERSED, ShadowType.NONE);
-		shadowComboBox.setValue(ShadowType.NONE);  // Valor por defecto
+		shadowChoiceBox.getItems().addAll(ShadowType.SIMPLE, ShadowType.COLORED, ShadowType.SIMPLE_INVERSED, ShadowType.COLORED_INVERSED, ShadowType.NONE);
+		shadowChoiceBox.setValue(ShadowType.NONE);  // Valor por defecto
 
-		borderComboBox.getItems().addAll(BorderType.NORMAL, BorderType.DOTTED_SIMPLE, BorderType.DOTTED_COMPLEX);
-		borderComboBox.setValue(BorderType.NORMAL); //Valor por defecto
+		borderChoiceBox.getItems().addAll(BorderType.NORMAL, BorderType.DOTTED_SIMPLE, BorderType.DOTTED_COMPLEX);
+		borderChoiceBox.setValue(BorderType.NORMAL); //Valor por defecto
 
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
@@ -98,7 +98,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().addAll(toolsArr);
 
 		buttonsBox.getChildren().add(shadowLabel);
-		buttonsBox.getChildren().add(shadowComboBox);
+		buttonsBox.getChildren().add(shadowChoiceBox);
 
 		buttonsBox.getChildren().add(fillerColor);
 		buttonsBox.getChildren().add(fillColorPicker);
@@ -107,7 +107,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(border);
 		graduationSlider.setShowTickLabels(true);
 		buttonsBox.getChildren().add(graduationSlider);
-		buttonsBox.getChildren().add(borderComboBox);
+		buttonsBox.getChildren().add(borderChoiceBox);
 
 		ToggleButton[] advancedTools = {duplicateButton, divideButton, moveButton};
 		ToggleGroup advTools = new ToggleGroup();
@@ -148,7 +148,7 @@ public class PaintPane extends BorderPane {
 			try{
 				Toggle selected= tools.getSelectedToggle();
 				Buttons aux=(Buttons) selected.getUserData();
-				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(),gc);
+				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(),gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue());
 				figureColorMap.put(newFigure, fillColorPicker.getValue());
 
 				canvasState.addFigure(newFigure);
@@ -234,8 +234,8 @@ public class PaintPane extends BorderPane {
 					gc.setStroke(Color.RED);
 					figure.setPrimaryColor(fillColorPicker.getValue());
 					figure.setSecondaryColor(secondFillColor.getValue());
-					selectedFigure.setShadow(shadowComboBox.getValue(), figure.getColor());
-					selectedFigure.setBorder(borderComboBox.getValue());
+					selectedFigure.setShadow(shadowChoiceBox.getValue(), figure.getColor());
+					selectedFigure.setBorder(borderChoiceBox.getValue());
 					selectedFigure.setBorderWidth(graduationSlider.getValue());
 				} else {
 					gc.setStroke(lineColor);

@@ -16,15 +16,13 @@ import java.util.Objects;
 public class DrawSquare extends DrawFigure {
     private Square square;
    public DrawSquare(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc);
+       super(gc,border,width);
        double size = Math.abs(endPoint.getX() - startPoint.getX());
        figure=new Square(startPoint, size);
        square=(Square)figure;
        square.setColor(color);
        square.setSecondColor(secColor);
-       square.setBorderType(border);
        square.setType(shadow);
-       square.setBorderWidth(width);
    }
 
        @Override

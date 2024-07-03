@@ -17,14 +17,12 @@ public class DrawCircle extends DrawFigure{
 
 private Circle circle;
 public DrawCircle(Point point, Double Radius, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-    super(gc);
+    super(gc,border,width);
     figure = new Circle(point, Radius);
     circle=(Circle) figure;
     circle.setColor(color);
     circle.setSecondColor(secColor);
-    circle.setBorderType(border);
     circle.setType(shadow);
-    circle.setBorderWidth(width);
 }
 
     @Override

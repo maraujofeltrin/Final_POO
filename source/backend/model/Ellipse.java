@@ -116,7 +116,7 @@ public class Ellipse implements Figure {
     }
 
     @Override
-    public BorderType getBorder() {
+    public BorderType getBorderType() {
         return border;
     }
 

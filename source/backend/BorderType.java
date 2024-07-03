@@ -6,6 +6,7 @@ public enum BorderType {
     NORMAL{
         public void putBorder(GraphicsContext gc, double value){
             gc.setLineDashes(0);
+            gc.setLineWidth(value);
         }
 
         @Override

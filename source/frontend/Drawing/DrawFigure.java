@@ -13,6 +13,8 @@ public abstract class DrawFigure {
      final static double MOVEMENT = 10.0;
      protected GraphicsContext gc;
      protected Figure figure;
+     protected BorderType border;
+     protected double width;
 
      public  void setShadow(ShadowType type, Color color){
          figure.setShadow(type, color);
@@ -35,7 +37,7 @@ public abstract class DrawFigure {
          setGradiant(col, col2);
          FillFigureAux(difX,difY);
 
-         figure.getBorder().putBorder(gc, figure.getBorderWidth());
+         border.putBorder(gc, width);
      }
 
      protected abstract void setGradiant(Color col1, Color col2);
@@ -48,9 +50,10 @@ public abstract class DrawFigure {
          double difX = figure.DiffX();
          double difY = figure.DiffY();
      }
-     public DrawFigure(GraphicsContext gc){
+     public DrawFigure(GraphicsContext gc, BorderType border, double value){
          this.gc=gc;
-
+         this.border = border;
+         this.width = value;
      }
 
      public void addDiff(double num1, double num2){
@@ -65,11 +68,9 @@ public abstract class DrawFigure {
          figure.setColor(col);
      }
 
-     public void setBorder(BorderType type) {
+     public void setBorder(BorderType type, double value) {
          figure.setBorderType(type);
-     }
-
-     public void setBorderWidth(double value) {
          figure.setBorderWidth(value);
      }
+
  }

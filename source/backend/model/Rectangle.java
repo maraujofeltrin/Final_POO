@@ -114,7 +114,7 @@ public class Rectangle implements Figure {
     }
 
     @Override
-    public BorderType getBorder() {
+    public BorderType getBorderType() {
         return border;
     }
 

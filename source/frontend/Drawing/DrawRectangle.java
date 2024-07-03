@@ -17,14 +17,12 @@ public class DrawRectangle extends DrawFigure {
     private Rectangle rectangle;
 
    public DrawRectangle(Point startPoint, Point endPoint, Color color, Color secColor,GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc);
+       super(gc,border, width);
        figure=new Rectangle(startPoint, endPoint);
        rectangle=(Rectangle) figure;
        rectangle.setColor(color);
        rectangle.setSecondColor(secColor);
-       rectangle.setBorderType(border);
        rectangle.setType(shadow);
-       rectangle.setBorderWidth(width);
    }
 
 

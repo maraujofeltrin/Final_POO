@@ -20,6 +20,8 @@ import javafx.scene.transform.Translate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class PaintPane extends BorderPane {
 
@@ -74,12 +76,19 @@ public class PaintPane extends BorderPane {
 
 	// Colores de relleno de cada figura
 	private Map<DrawFigure, Color> figureColorMap = new HashMap<>();
+	private SortedMap<Integer,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
+
 
 	private void SetButtons(){
 		rectangleButton.setUserData(new RectangleButton());
 		circleButton.setUserData(new CircleButton());
 		squareButton.setUserData(new SquareButton());
 		ellipseButton.setUserData(new EllipseButton());
+	}
+	private void SetMapLayers(){
+		LayersMap.put(1, new HashMap<>());
+		LayersMap.put(2, new HashMap<>());
+		LayersMap.put(3, new HashMap<>());
 	}
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
@@ -127,8 +136,8 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(1);
-
-
+		SetButtons();
+		SetMapLayers();
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 			Toggle selected= tools.getSelectedToggle();
@@ -143,7 +152,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseReleased(event -> {
-			SetButtons();
+
 			Point endPoint = new Point(event.getX(), event.getY());
 			DrawFigure newFigure = null;
 			//HAY QUE CAMBIARLO IMPERATIVO
@@ -178,7 +187,6 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(label.toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
-				//selectedFigure = null; <-- rompe el borrar
 			}
 		});
 

@@ -1,5 +1,7 @@
 package frontend;
 
+import java.util.Objects;
+
 public class Layers {
     private boolean on;
     private Integer num;
@@ -23,5 +25,15 @@ public class Layers {
 
     public void offLayer(){
         on = false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(num,on);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Layers l && l.num == num && l.on == on;
     }
 }

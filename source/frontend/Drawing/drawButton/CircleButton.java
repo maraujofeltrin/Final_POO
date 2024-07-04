@@ -1,6 +1,6 @@
 package frontend.Drawing.drawButton;
 
-import backend.BorderType;
+import frontend.Drawing.BorderType;
 import backend.ShadowType;
 import backend.model.Point;
 import frontend.Drawing.DrawCircle;

@@ -1,8 +1,6 @@
 package frontend.Drawing;
 
-import backend.BorderType;
 import backend.ShadowType;
-import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
@@ -11,22 +9,19 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class DrawRectangle extends DrawFigure {
     private Rectangle rectangle;
 
    public DrawRectangle(Point startPoint, Point endPoint, Color color, Color secColor,GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc);
+       super(gc, border, width);
        figure=new Rectangle(startPoint, endPoint);
        rectangle=(Rectangle) figure;
        rectangle.setColor(color);
        rectangle.setSecondColor(secColor);
        rectangle.setType(shadow);
-       rectangle.setBorderWidth(width);
-       rectangle.setBorderType(border);
+
    }
 
 
@@ -84,7 +79,7 @@ public class DrawRectangle extends DrawFigure {
     }
 
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){
-       return new DrawRectangle(topLeft, bottomRigh,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),rectangle.getBorderType(), rectangle.getBorderWidth());
+       return new DrawRectangle(topLeft, bottomRigh,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),getBorderType(), getBorderWidth());
 
     }
 }

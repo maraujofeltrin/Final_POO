@@ -1,12 +1,9 @@
 package backend.model;
 
-import backend.BorderType;
+import frontend.Drawing.BorderType;
 import backend.ShadowType;
-import frontend.Drawing.DrawEllipse;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class Ellipse implements Figure {
@@ -15,16 +12,12 @@ public class Ellipse implements Figure {
     protected double sMayorAxis;
     protected double sMinorAxis;
     protected Color color, secondaryColor;
-    protected BorderType border;
     protected ShadowType type;
-    protected double borderWidth;
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
         this.type = ShadowType.NONE;
-        this.border = BorderType.NORMAL;
-        borderWidth = 1;
     }
 
     @Override
@@ -112,43 +105,6 @@ public class Ellipse implements Figure {
         this.secondaryColor = newCol;
     }
 
-    public void setBorderType(BorderType newType){
-        this.border = newType;
-    }
-
-    @Override
-    public BorderType getBorderType() {
-        return border;
-    }
-
-    public void setBorderWidth(double value){
-        this.borderWidth = value;
-    }
-
-    @Override
-    public double getBorderWidth() {
-        return borderWidth;
-    }
-
-    @Override
-    public Ellipse clone() {
-        try {
-            Ellipse copy = (Ellipse) super.clone();
-            // Realiza una copia profunda de los objetos mutables
-            copy.centerPoint = new Point(this.centerPoint.getX()+30, this.centerPoint.getY()+30);
-            // Copia otras propiedades necesarias
-            copy.sMinorAxis = sMinorAxis;
-            copy.sMayorAxis = sMayorAxis;
-            copy.color = color;
-            copy.secondaryColor = secondaryColor;
-            copy.borderWidth = borderWidth;
-            copy.border = border;
-            copy.type = type;
-            return copy;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError(); // Esto no debería suceder porque estamos implementando Cloneable
-        }
-    }
     protected double addToCenterPoint(){
         return sMayorAxis/4.0;
     }

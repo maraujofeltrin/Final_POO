@@ -1,9 +1,7 @@
 package frontend.Drawing;
 
-import backend.BorderType;
 import backend.ShadowType;
 import backend.model.Ellipse;
-import backend.model.Figure;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -18,20 +16,14 @@ public class DrawEllipse extends DrawFigure{
     private Ellipse ellipse;
 
     public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-        super(gc);
+        super(gc, border, width);
         figure = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
         ellipse=(Ellipse) figure;
         ellipse.setColor(color);
         ellipse.setSecondColor(secColor);
         ellipse.setType(shadow);
-        ellipse.setBorderWidth(width);
-        ellipse.setBorderType(border);
     }
 
-    //CHEQUEAR SI LO USAMOS
-    /*public Figure getFigure(){
-        return ellipse;
-    }*/
 
 
     protected void FillFigureAux(double difX, double difY){
@@ -51,7 +43,7 @@ public class DrawEllipse extends DrawFigure{
     }
 
     private DrawFigure createFigure(Point center, double MayorAxis, double MinorAxis){
-        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), ellipse.getBorderType(), ellipse.getBorderWidth());
+        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), getBorderType(), getBorderWidth());
     }
 
     protected void ShadowFigure(double difX, double difY){

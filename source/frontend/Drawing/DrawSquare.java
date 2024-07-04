@@ -1,8 +1,6 @@
 package frontend.Drawing;
 
-import backend.BorderType;
 import backend.ShadowType;
-import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Square;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,15 +14,13 @@ import java.util.Objects;
 public class DrawSquare extends DrawFigure {
     private Square square;
    public DrawSquare(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc);
+       super(gc, border, width);
        double size = Math.abs(endPoint.getX() - startPoint.getX());
        figure=new Square(startPoint, size);
        square=(Square)figure;
        square.setColor(color);
        square.setSecondColor(secColor);
        square.setType(shadow);
-       square.setBorderWidth(width);
-       square.setBorderType(border);
    }
 
        @Override
@@ -53,7 +49,7 @@ public class DrawSquare extends DrawFigure {
 
     }
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){
-        return new DrawSquare(topLeft, bottomRigh,square.getColor(),square.getSecondColor(),gc,square.getType(),square.getBorderType(), square.getBorderWidth());
+        return new DrawSquare(topLeft, bottomRigh,square.getColor(),square.getSecondColor(),gc,square.getType(),getBorderType(), getBorderWidth());
 
     }
 

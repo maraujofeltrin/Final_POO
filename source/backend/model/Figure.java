@@ -1,13 +1,10 @@
 package backend.model;
 
-import backend.BorderType;
+import frontend.Drawing.BorderType;
 import backend.ShadowType;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Map;
-
-public interface Figure extends Cloneable{
+public interface Figure {
 
     void addDiff(double incX, double incY);
     Color getColor();
@@ -23,14 +20,5 @@ public interface Figure extends Cloneable{
     void setSecondColor(Color newCol);
 
     void setColor(Color col);
-
-    void setBorderType(BorderType type);
-
-    BorderType getBorderType();
-
-    void setBorderWidth(double value);
-
-    double getBorderWidth();
-    Figure clone();
     Point getCenterPoint();
 }

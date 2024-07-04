@@ -1,20 +1,17 @@
 package frontend.Drawing;
 
-import backend.BorderType;
 import backend.ShadowType;
 import backend.model.Figure;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Objects;
-
 public abstract class DrawFigure{
      final static double MOVEMENT = 10.0;
      protected GraphicsContext gc;
      protected Figure figure;
-    //protected BorderType border;
-     //protected double width;
+     private BorderType border;
+     private double width;
 
      public  void setShadow(ShadowType type, Color color){
          figure.setShadow(type, color);
@@ -37,29 +34,26 @@ public abstract class DrawFigure{
          setGradiant(col, col2);
          FillFigureAux(difX,difY);
 
-         int[] values = figure.getBorderType().BorderVec();
-         if(values.length == 1){
-             gc.setLineDashes(values[0]);
-         }else{
-             gc.setLineDashes(values[0], values[1],values[2],values[3]);
-         }
-         gc.setLineWidth(figure.getBorderWidth());;
+         border.setBorder(gc, width);
      }
 
      protected abstract void setGradiant(Color col1, Color col2);
+     protected BorderType getBorderType(){
+         return border;
+     }
+     protected double getBorderWidth(){
+         return width;
+     }
      protected abstract void ShadowFigure(double difX, double difY);
      protected abstract void FillFigureAux(double difX, double difY);
      public void setFill(Color color){
          gc.setFill(color);
      }
-     public void Diff(){ //CHEQUEAR PQ NO APARECE EN AZUL
-         double difX = figure.DiffX();
-         double difY = figure.DiffY();
-     }
-     public DrawFigure(GraphicsContext gc){
+     public DrawFigure(GraphicsContext gc, BorderType border, double width){
          this.gc=gc;
-         //this.border = border;
-         //this.width = value;
+         this.border=border;
+         this.width=width;
+
      }
 
      public void addDiff(double num1, double num2){
@@ -75,8 +69,8 @@ public abstract class DrawFigure{
      }
 
      public void setBorder(BorderType type, double value) {
-         figure.setBorderType(type);
-         figure.setBorderWidth(value);
+         this.border = type;
+         this.width = value;
      }
 
      public abstract DrawFigure duplicate();

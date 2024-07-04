@@ -194,8 +194,11 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 			try{
+
+				if(selectedFigure != null){
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+				}
 			}catch(Exception ex){
 				System.out.println("Seleccionar algun boton");
 			}
@@ -211,10 +214,12 @@ public class PaintPane extends BorderPane {
 			}
 			//CORREGIR ERRORES
 			try{
-				Toggle selected= tools.getSelectedToggle();
-				Buttons aux=(Buttons) selected.getUserData();
-				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(),gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue());
-				addFigure(newFigure,fillColorPicker.getValue());
+					Toggle selected = tools.getSelectedToggle();
+					Buttons aux = (Buttons) selected.getUserData();
+					if(!selectionButton.isSelected()) {
+						newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(), gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue());
+						addFigure(newFigure, fillColorPicker.getValue());
+					}
 			}catch (Exception ex){
 				System.out.println("No hay figura selecionada para su creacion");
 			}
@@ -256,7 +261,6 @@ public class PaintPane extends BorderPane {
 								found = true;
 								selectedFigure = figure;
 								label.append(figure.toString());
-
 							}
 						}
 					}
@@ -268,9 +272,7 @@ public class PaintPane extends BorderPane {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
-				//me da rari haberlo sacado pero funciona
 				redrawCanvas();
-
 			}
 		});
 
@@ -451,7 +453,8 @@ public class PaintPane extends BorderPane {
 						gc.setStroke(Color.RED);
 						figure.setPrimaryColor(fillColorPicker.getValue());
 						figure.setSecondaryColor(secondFillColor.getValue());
-
+						figure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
+						figure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
 					} else {
 						gc.setStroke(lineColor);
 					}

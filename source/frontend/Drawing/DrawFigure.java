@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public abstract class DrawFigure{
-     final static double MOVEMENT = 10.0;
+     protected final static double MOVEMENT = 10.0;
      protected GraphicsContext gc;
      protected Figure figure;
      private BorderType border;

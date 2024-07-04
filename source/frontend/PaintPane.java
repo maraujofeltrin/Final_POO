@@ -1,6 +1,6 @@
 package frontend;
 
-import backend.BorderType;
+import frontend.Drawing.BorderType;
 import backend.CanvasState;
 import backend.ShadowType;
 import backend.model.*;

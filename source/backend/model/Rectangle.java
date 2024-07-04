@@ -1,12 +1,9 @@
 package backend.model;
 
-import backend.BorderType;
+import frontend.Drawing.BorderType;
 import backend.ShadowType;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 import static java.lang.Math.abs;
@@ -16,16 +13,12 @@ public class Rectangle implements Figure {
     private Point topLeft;
     private Point bottomRight;
     private ShadowType type;
-    private BorderType border;
     private Color color, secondaryColor;
-    private double borderWidth;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
         this.type = ShadowType.NONE;
-        this.border = BorderType.NORMAL;
-        this.borderWidth = 1;
     }
 
     public Color getColor() {
@@ -126,43 +119,6 @@ public class Rectangle implements Figure {
 
     public void setSecondColor(Color secColor) {
         this.secondaryColor = secColor;
-    }
-
-    public void setBorderType(BorderType newType){
-        this.border = newType;
-    }
-
-    @Override
-    public BorderType getBorderType() {
-        return border;
-    }
-
-    public void setBorderWidth(double value){
-        this.borderWidth = value;
-    }
-
-    @Override
-    public double getBorderWidth() {
-        return borderWidth;
-    }
-
-    @Override
-    public Rectangle clone() {
-        try {
-            Rectangle copy = (Rectangle) super.clone();
-            // Realiza una copia profunda de los objetos mutables
-            copy.topLeft = new Point(this.topLeft.getX()+30,this.topLeft.getY()+30);
-            copy.bottomRight = new Point(this.bottomRight.getX()+30,this.bottomRight.getY()+30);
-            // Copia otras propiedades necesarias
-            copy.color = color;
-            copy.secondaryColor = secondaryColor;
-            copy.borderWidth = borderWidth;
-            copy.border = border;
-            copy.type = type;
-            return copy;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError(); // Esto no debería suceder porque estamos implementando Cloneable
-        }
     }
 
 

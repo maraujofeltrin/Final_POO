@@ -1,8 +1,7 @@
 package frontend.Drawing.drawButton;
 
-import backend.BorderType;
+import frontend.Drawing.BorderType;
 import backend.ShadowType;
-import backend.model.Figure;
 import backend.model.Point;
 import frontend.Drawing.DrawFigure;
 import javafx.scene.canvas.GraphicsContext;

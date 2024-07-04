@@ -1,9 +1,7 @@
 package frontend.Drawing;
 
-import backend.BorderType;
 import backend.ShadowType;
 import backend.model.Circle;
-import backend.model.Figure;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -17,14 +15,12 @@ public class DrawCircle extends DrawFigure{
 
 private Circle circle;
 public DrawCircle(Point point, Double Radius, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-    super(gc);
+    super(gc, border, width);
     figure = new Circle(point, Radius);
     circle=(Circle) figure;
     circle.setColor(color);
     circle.setSecondColor(secColor);
     circle.setType(shadow);
-    circle.setBorderWidth(width);
-    circle.setBorderType(border);
 }
 
     @Override
@@ -55,7 +51,7 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
        return res;
 }
     private DrawFigure createFigure(Point center, double radius){
-    return new DrawCircle(center,radius, circle.getColor(),circle.getSecondColor(), gc, circle.getType(), circle.getBorderType(), circle.getBorderWidth());
+    return new DrawCircle(center,radius, circle.getColor(),circle.getSecondColor(), gc, circle.getType(), getBorderType(), getBorderWidth());
     }
     protected void ShadowFigure(double difX, double difY){
         gc.fillOval(circle.getType().move(difX, MOVEMENT),

@@ -36,4 +36,13 @@ public class Layers {
     public boolean equals(Object o) {
         return o instanceof Layers l && l.num == num && l.on == on;
     }
+
+
+    public int getID() {
+        return num;
+    }
+
+    public void setOn(boolean selected) {
+        this.on = selected;
+    }
 }

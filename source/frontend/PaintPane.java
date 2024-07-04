@@ -76,7 +76,7 @@ public class PaintPane extends BorderPane {
 	//private SortedMap<Layers,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
 
 	//Seguimiento de las capas
-	private Set<Layers> set = new TreeSet<>();
+	private Set<Layers> layers = new TreeSet<>();
 	private Label layer = new Label("Capas");
 	private ChoiceBox<Integer> layerChoiceBox = new ChoiceBox();
 
@@ -360,19 +360,29 @@ public class PaintPane extends BorderPane {
 		});
 
 		showButton.setOnAction(event ->{
-			
+			setVisiblility(true);
 		});
 
 		hideButton.setOnAction(event ->{
-
+			setVisiblility(false);
 		});
-
-
 
 	}
 
+	private void setVisiblility(boolean condition){
+		for(Layers layer : layers){
+			if(layer.getID() == layerChoiceBox.getValue()){
+				layer.setOn(condition);
+				return;
+			}
+		}
+	}
+
 	private void AddLayers() {
-		layerChoiceBox.getItems().addAll(LayersMap.keySet());
+		for(Layers layer : layers){
+			layerChoiceBox.getItems().addAll(layer.getID());
+		}
+
 		for(int i = 1; i<=3; i++){
 			if(!layerChoiceBox.getItems().contains(i)){
 				layerChoiceBox.getItems().add(i);

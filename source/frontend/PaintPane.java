@@ -18,11 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
+import javafx.util.StringConverter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class PaintPane extends BorderPane {
 
@@ -80,7 +78,7 @@ public class PaintPane extends BorderPane {
 	private SortedMap<Integer,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
 
 	private Label layer = new Label("Capas");
-	private ChoiceBox<String> layerChoiceBox = new ChoiceBox();
+	private ChoiceBox<Integer> layerChoiceBox = new ChoiceBox();
 
 	private RadioButton hideButton = new RadioButton("Ocultar");
 	private RadioButton showButton = new RadioButton("Mostrar");
@@ -136,7 +134,21 @@ public class PaintPane extends BorderPane {
 
 		HBox headerBox = new HBox(10);
 		headerBox.getChildren().add(layer);
+		layerChoiceBox.setConverter(new StringConverter<Integer>() {
+			@Override
+			public String toString(Integer integer) {
+				return "Capa %d".formatted(integer);
+			}
+
+			@Override
+			public Integer fromString(String s) {
+				return null;
+			}
+		});
+
+		AddLayers();
 		headerBox.getChildren().add(layerChoiceBox);
+
 		headerBox.getChildren().add(showButton);
 		headerBox.getChildren().add(hideButton);
 		headerBox.getChildren().add(addLayerButton);
@@ -341,6 +353,16 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
+	private void AddLayers() {
+		layerChoiceBox.getItems().addAll(LayersMap.keySet());
+		for(int i = 1; i<=3; i++){
+			if(!layerChoiceBox.getItems().contains(i)){
+				layerChoiceBox.getItems().add(i);
+			}
+		}
+		layerChoiceBox.getItems().sort(Comparator.naturalOrder());
+		layerChoiceBox.setValue(1);
+	}
 
 
 	void RemoveFigure(){

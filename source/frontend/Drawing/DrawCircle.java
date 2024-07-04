@@ -41,8 +41,7 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
     @Override
     public DrawFigure duplicate() {
         Point aux = new Point(circle.getCenterPoint().getX()+20,circle.getCenterPoint().getY()+20);
-        DrawFigure res = new DrawCircle(aux, circle.getRadius(),circle.getColor(),circle.getSecondColor(),gc,circle.getType(),circle.getBorderType(), circle.getBorderWidth());
-        return res;
+        return createFigure(aux, circle.getRadius());
     }
 
     @Override
@@ -50,13 +49,14 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
        Double[] radius= circle.divideAxis();
        Point[] points= circle.divideCenterPoints();
 
-       DrawFigure res1= new DrawCircle(points[0],radius[0], circle.getColor(),circle.getSecondColor(), gc, circle.getType(), figure.getBorderType(), figure.getBorderWidth());
-       DrawFigure res2= new DrawCircle(points[1],radius[0], circle.getColor(),circle.getSecondColor(), gc, circle.getType(), figure.getBorderType(), figure.getBorderWidth());
-
+       DrawFigure res1= createFigure(points[0],radius[0]);
+       DrawFigure res2= createFigure(points[1],radius[0]);
        DrawFigure[] res={res1, res2};
        return res;
 }
-
+    private DrawFigure createFigure(Point center, double radius){
+    return new DrawCircle(center,radius, circle.getColor(),circle.getSecondColor(), gc, circle.getType(), circle.getBorderType(), circle.getBorderWidth());
+    }
     protected void ShadowFigure(double difX, double difY){
         gc.fillOval(circle.getType().move(difX, MOVEMENT),
                 circle.getType().move(difY, MOVEMENT), circle.getsMayorAxis(), circle.getsMinorAxis());

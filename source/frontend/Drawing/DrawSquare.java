@@ -46,12 +46,14 @@ public class DrawSquare extends DrawFigure {
     public DrawFigure[] divideFigure() {
 
             Point[] points = square.divide();
-
-            DrawFigure res1=new DrawSquare(points[0], points[1], square.getColor(), square.getSecondColor(), gc, square.getType(), square.getBorderType(),  square.getBorderWidth());
-            DrawFigure res2=new DrawSquare(points[2], points[3], square.getColor(), square.getSecondColor(), gc, square.getType(), square.getBorderType(),  square.getBorderWidth());
-
+            DrawFigure res1=createFigure(points[0], points[1]);
+            DrawFigure res2=createFigure(points[2], points[3]);
             DrawFigure[] res ={res1, res2};
             return res;
+
+    }
+    private DrawFigure createFigure(Point topLeft, Point bottomRigh){
+        return new DrawSquare(topLeft, bottomRigh,square.getColor(),square.getSecondColor(),gc,square.getType(),square.getBorderType(), square.getBorderWidth());
 
     }
 
@@ -80,7 +82,6 @@ public class DrawSquare extends DrawFigure {
     public DrawFigure duplicate() {
         Point aux = new Point(square.getTopLeft().getX()+20,square.getTopLeft().getY()+20);
         Point aux2 = new Point(square.getBottomRight().getX()+20,square.getBottomRight().getY()+20);
-        DrawFigure res = new DrawRectangle(aux, aux2,square.getColor(),square.getSecondColor(),gc,square.getType(),square.getBorderType(), square.getBorderWidth());
-        return res;
+        return createFigure(aux, aux2);
     }
 }

@@ -149,8 +149,11 @@ public class Ellipse implements Figure {
             throw new AssertionError(); // Esto no debería suceder porque estamos implementando Cloneable
         }
     }
+    protected double addToCenterPoint(){
+        return sMayorAxis/4.0;
+    }
     public Point[] divideCenterPoints(){
-        Double aux1= sMayorAxis/4.0;
+        Double aux1= addToCenterPoint();
         Point[] res= {new Point(centerPoint.getX()+aux1, centerPoint.getY())
                 , new Point(centerPoint.getX()-aux1, centerPoint.getY())};
         return res;

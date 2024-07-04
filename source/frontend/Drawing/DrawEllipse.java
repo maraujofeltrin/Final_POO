@@ -43,14 +43,15 @@ public class DrawEllipse extends DrawFigure{
     public DrawFigure[] divideFigure() {
         Point[] points = ellipse.divideCenterPoints();
         Double[] Axis= ellipse.divideAxis();
-        //chequear repite codigo
 
-
-        DrawFigure res1=new DrawEllipse(points[0], Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), ellipse.getBorderType(), ellipse.getBorderWidth());
-        DrawFigure res2=new DrawEllipse(points[1],Axis[0], Axis[1], ellipse.getColor(), ellipse.getSecondColor(), gc, ellipse.getType(), ellipse.getBorderType(), ellipse.getBorderWidth());
-
+        DrawFigure res1=createFigure(points[0], Axis[0], Axis[1]);
+        DrawFigure res2=createFigure(points[1],Axis[0], Axis[1]);
         DrawFigure[] res ={res1, res2};
         return res;
+    }
+
+    private DrawFigure createFigure(Point center, double MayorAxis, double MinorAxis){
+        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), ellipse.getBorderType(), ellipse.getBorderWidth());
     }
 
     protected void ShadowFigure(double difX, double difY){
@@ -83,8 +84,7 @@ public class DrawEllipse extends DrawFigure{
     @Override
     public DrawFigure duplicate() {
         Point aux = new Point(ellipse.getCenterPoint().getX()+20,ellipse.getCenterPoint().getY()+20);
-        DrawFigure res = new DrawEllipse(aux, ellipse.getsMayorAxis(),ellipse.getsMinorAxis(),ellipse.getColor(),ellipse.getSecondColor(),gc,ellipse.getType(),ellipse.getBorderType(), ellipse.getBorderWidth());
-        return res;
+        return createFigure(aux, ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
     }
 
 }

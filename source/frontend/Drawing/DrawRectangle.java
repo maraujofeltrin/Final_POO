@@ -11,6 +11,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -69,9 +70,8 @@ public class DrawRectangle extends DrawFigure {
     public DrawFigure[] divideFigure(){
        Point[] points = rectangle.divide();
 
-       DrawFigure res1=new DrawRectangle(points[0], points[1], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), rectangle.getBorderType(), rectangle.getBorderWidth());
-       DrawFigure res2=new DrawRectangle(points[2], points[3], rectangle.getColor(), rectangle.getSecondColor(), gc, rectangle.getType(), rectangle.getBorderType(), rectangle.getBorderWidth());
-
+       DrawFigure res1=createFigure(points[0], points[1]);
+       DrawFigure res2=createFigure(points[2], points[3]);
        DrawFigure[] res ={res1, res2};
        return res;
     }
@@ -80,7 +80,11 @@ public class DrawRectangle extends DrawFigure {
     public DrawFigure duplicate() {
         Point aux = new Point(rectangle.getTopLeft().getX()+20,rectangle.getTopLeft().getY()+20);
         Point aux2 = new Point(rectangle.getBottomRight().getX()+20,rectangle.getBottomRight().getY()+20);
-        DrawFigure res = new DrawRectangle(aux, aux2,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),rectangle.getBorderType(), rectangle.getBorderWidth());
-        return res;
+        return createFigure(aux, aux2);
+    }
+
+    private DrawFigure createFigure(Point topLeft, Point bottomRigh){
+       return new DrawRectangle(topLeft, bottomRigh,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),rectangle.getBorderType(), rectangle.getBorderWidth());
+
     }
 }

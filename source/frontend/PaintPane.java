@@ -51,7 +51,6 @@ public class PaintPane extends BorderPane {
 	private Label border = new Label("Borde");
 
 	Slider graduationSlider = new Slider(0, 10, 5);
-	Translate translate =new Translate();
 	private ChoiceBox<BorderType> borderChoiceBox = new ChoiceBox<>();
 
 	// Selector de color de relleno

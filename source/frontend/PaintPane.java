@@ -73,8 +73,10 @@ public class PaintPane extends BorderPane {
 
 	// Colores de relleno de cada figura
 	private Map<DrawFigure, Color> figureColorMap = new HashMap<>();
-	private SortedMap<Layers,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
+	//private SortedMap<Layers,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
 
+	//Seguimiento de las capas
+	private Set<Layers> set = new TreeSet<>();
 	private Label layer = new Label("Capas");
 	private ChoiceBox<Integer> layerChoiceBox = new ChoiceBox();
 
@@ -181,7 +183,7 @@ public class PaintPane extends BorderPane {
 
 		gc.setLineWidth(1);
 		SetButtons();
-		SetMapLayers();
+		//SetMapLayers();
 		setLeft(buttonsBox);
 		setRight(canvas);
 

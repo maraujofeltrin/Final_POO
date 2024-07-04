@@ -2,24 +2,34 @@ package backend;
 
 import backend.model.Figure;
 import frontend.Drawing.DrawFigure;
+import frontend.Layers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CanvasState {
 
-    private final List<DrawFigure> list = new ArrayList<>();
+    private SortedMap<Layers, List<DrawFigure>> map = new TreeMap<>();
+    //private final List<DrawFigure> list = new ArrayList<>();
 
-    public void addFigure(DrawFigure figure) {
-        list.add(figure);
+    public void addLayer(){
+        Integer aux = map.lastKey().getNumLayer() +1;
+        map.put(new Layers(aux), new ArrayList<>());
     }
 
-    public void deleteFigure(DrawFigure figure) {
-        list.remove(figure);
+    public void addFigure(Layers layer,DrawFigure figure) {
+        if(layer != null && layer.isOn()){
+            map.get(layer).add(figure);
+        }
     }
 
-    public Iterable<DrawFigure> figures() {
-        return new ArrayList<>(list);
+    public void deleteFigure(Layers layer,DrawFigure figure) {
+        if(layer != null && layer.isOn()){
+            map.get(layer).remove(figure);
+        }
+    }
+
+    public Iterable<DrawFigure> figures(Layers layer) {
+        return map.get(layer);
     }
 
 }

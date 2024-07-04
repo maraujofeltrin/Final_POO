@@ -6,9 +6,8 @@ import backend.ShadowType;
 import backend.model.*;
 import frontend.Drawing.*;
 import frontend.Drawing.drawButton.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -157,6 +156,7 @@ public class PaintPane extends BorderPane {
 		headerBox.setPadding(new Insets(5));
 		headerBox.setStyle("-fx-background-color: #999");
 		headerBox.setPrefWidth(100);
+		headerBox.setAlignment(Pos.CENTER);
 		setTop(headerBox);
 
 

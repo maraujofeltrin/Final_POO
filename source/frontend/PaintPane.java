@@ -74,7 +74,7 @@ public class PaintPane extends BorderPane {
 
 	// Colores de relleno de cada figura
 	private Map<DrawFigure, Color> figureColorMap = new HashMap<>();
-	private SortedMap<Integer,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
+	private SortedMap<Layers,Map<DrawFigure, Color>> LayersMap =new TreeMap<>();
 
 	private Label layer = new Label("Capas");
 	private ChoiceBox<Integer> layerChoiceBox = new ChoiceBox();
@@ -94,11 +94,11 @@ public class PaintPane extends BorderPane {
 		squareButton.setUserData(new SquareButton());
 		ellipseButton.setUserData(new EllipseButton());
 	}
-	private void SetMapLayers(){
+	/*private void SetMapLayers(){
 		LayersMap.put(1, new HashMap<>());
 		LayersMap.put(2, new HashMap<>());
 		LayersMap.put(3, new HashMap<>());
-	}
+	}*/
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
@@ -303,8 +303,6 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
-
-
 
 		deleteButton.setOnAction(event -> {
 			RemoveFigure();

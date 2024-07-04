@@ -200,10 +200,8 @@ public class PaintPane extends BorderPane {
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
 			}catch(Exception ex){
-				System.out.println(ex);
 				System.out.println("Seleccionar algun boton");
 			}
-
 		});
 
 		canvas.setOnMouseReleased(event -> {
@@ -383,9 +381,10 @@ public class PaintPane extends BorderPane {
 		});
 
 		addLayerButton.setOnAction(event ->{
-			layers.add(new Layers(canvasState.getLayers()));
+			layers.add(new Layers(canvasState.getLayers()+1));
 			canvasState.addLayer();
 			layerChoiceBox.getItems().add(canvasState.getLayers());
+			redrawCanvas();
 		});
 
 		deleteLayerButton.setOnAction(event->{
@@ -399,6 +398,7 @@ public class PaintPane extends BorderPane {
 
 				layerChoiceBox.getItems().remove(layerChoiceBox.getValue());
 				layerChoiceBox.setValue(1);
+				redrawCanvas();
 			}
 		});
 

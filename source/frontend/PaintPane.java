@@ -227,10 +227,12 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
-			for(DrawFigure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
-					found = true;
-					label.append(figure.toString());
+			for(Layers l : layers) {
+				for (DrawFigure figure : canvasState.figures(l)) {
+					if (figureBelongs(figure, eventPoint)) {
+						found = true;
+						label.append(figure.toString());
+					}
 				}
 			}
 			if(found) {
@@ -245,7 +247,7 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (DrawFigure figure : canvasState.figures()) {
+				for (DrawFigure figure : canvasState.figures(new Layers(layerChoiceBox.getValue()))) {
 					if(figureBelongs(figure, eventPoint)  ) {
 						found = true;
 						selectedFigure = figure;
@@ -353,7 +355,7 @@ public class PaintPane extends BorderPane {
 		duplicateButton.setOnAction(actionEvent -> {
 			if(selectedFigure!=null){
 				DrawFigure duplicate = selectedFigure.duplicate();
-				canvasState.addFigure(duplicate);
+				canvasState.addFigure(new Layers(layerChoiceBox.getValue()),duplicate);
 				figureColorMap.put(duplicate,duplicate.getColor());
 				redrawCanvas();
 			}
@@ -395,7 +397,7 @@ public class PaintPane extends BorderPane {
 
 	void RemoveFigure(){
 	if (selectedFigure != null) {
-				canvasState.deleteFigure(selectedFigure);
+				canvasState.deleteFigure(new Layers(layerChoiceBox.getValue()),selectedFigure);
 				selectedFigure = null;
 				redrawCanvas();
 			}
@@ -403,7 +405,9 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-			for (DrawFigure figure : canvasState.figures()) {
+		for(Layers l : layers) {
+
+			for (DrawFigure figure : canvasState.figures(l)) {
 
 				if (figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 					gc.setStroke(Color.RED);
@@ -420,12 +424,12 @@ public class PaintPane extends BorderPane {
 				}
 
 			}
-
+		}
 	}
 
 	public void addFigure(DrawFigure figure, Color color){
 		figureColorMap.put(figure, color);
-		canvasState.addFigure(figure);
+		canvasState.addFigure(new Layers(layerChoiceBox.getValue()),figure);
 	}
 	boolean figureBelongs(DrawFigure figure, Point eventPoint) {
 		if(figure != null){

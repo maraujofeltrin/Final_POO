@@ -28,6 +28,7 @@ public class CanvasState {
         }
     }
 
+
     public Iterable<DrawFigure> figures(Layers layer) {
         return map.get(layer);
     }

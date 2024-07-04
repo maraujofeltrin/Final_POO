@@ -2,7 +2,7 @@ package frontend;
 
 import java.util.Objects;
 
-public class Layers {
+public class Layers implements Comparable<Layers>{
     private boolean on;
     private Integer num;
 
@@ -44,5 +44,14 @@ public class Layers {
 
     public void setOn(boolean selected) {
         this.on = selected;
+    }
+
+    @Override
+    public int compareTo(Layers o) {
+        int cmp = Integer.compare(num,o.num);
+        if(cmp == 0){
+            return Boolean.compare(on,o.on);
+        }
+        return cmp;
     }
 }

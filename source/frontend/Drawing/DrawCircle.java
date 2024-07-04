@@ -45,8 +45,8 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
        Double[] radius= circle.divideAxis();
        Point[] points= circle.divideCenterPoints();
 
-       DrawFigure res1= createFigure(points[0],radius[0]);
-       DrawFigure res2= createFigure(points[1],radius[0]);
+       DrawFigure res1= createFigure(points[0],radius[0]/2);
+       DrawFigure res2= createFigure(points[1],radius[0]/2);
        DrawFigure[] res={res1, res2};
        return res;
 }

@@ -154,7 +154,6 @@ public class PaintPane extends BorderPane {
 		headerBox.getChildren().add(layerChoiceBox);
 
 		showButton.setSelected(true);
-		hideButton.setSelected(false);
 		ToggleGroup statusButtons = new ToggleGroup();
 		showButton.setToggleGroup(statusButtons);
 		hideButton.setToggleGroup(statusButtons);
@@ -194,9 +193,7 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
-			Toggle selected= tools.getSelectedToggle();
 			try{
-				Buttons aux=(Buttons) selected.getUserData();
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
 			}catch(Exception ex){
@@ -387,6 +384,10 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
+		layerChoiceBox.setOnAction(event -> {
+			redrawCanvas();
+		});
+
 		deleteLayerButton.setOnAction(event->{
 			if(layerChoiceBox.getValue() >3){
 				for(Layers l : layers){
@@ -439,6 +440,10 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		for(Layers l : layers) {
+			if(l.getID() ==layerChoiceBox.getValue()){
+				showButton.setSelected(l.isOn());
+				hideButton.setSelected(!l.isOn());
+			}
 			if(l.isOn()) {
 				for (DrawFigure figure : canvasState.figures(l)) {
 

@@ -148,8 +148,14 @@ public class PaintPane extends BorderPane {
 		AddLayers();
 		headerBox.getChildren().add(layerChoiceBox);
 
+		showButton.setSelected(true);
+		hideButton.setSelected(false);
+		ToggleGroup statusButtons = new ToggleGroup();
+		showButton.setToggleGroup(statusButtons);
+		hideButton.setToggleGroup(statusButtons);
 		headerBox.getChildren().add(showButton);
 		headerBox.getChildren().add(hideButton);
+
 		headerBox.getChildren().add(addLayerButton);
 		headerBox.getChildren().add(deleteLayerButton);
 
@@ -173,9 +179,14 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
+
 		gc.setLineWidth(1);
 		SetButtons();
 		SetMapLayers();
+		setLeft(buttonsBox);
+		setRight(canvas);
+
+
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 			Toggle selected= tools.getSelectedToggle();
@@ -347,8 +358,16 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-		setLeft(buttonsBox);
-		setRight(canvas);
+		showButton.setOnAction(event ->{
+			
+		});
+
+		hideButton.setOnAction(event ->{
+
+		});
+
+
+
 	}
 
 	private void AddLayers() {

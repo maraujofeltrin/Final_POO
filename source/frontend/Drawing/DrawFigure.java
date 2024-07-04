@@ -80,7 +80,7 @@ public abstract class DrawFigure{
      }
 
      public abstract DrawFigure duplicate();
-     
+
     public abstract DrawFigure[] divideFigure();
 
     public Point getCenterPoint() {

@@ -256,6 +256,21 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		fillColorPicker.setOnAction(event->{
+			if(selectedFigure != null){
+				selectedFigure.setPrimaryColor(fillColorPicker.getValue());
+				redrawCanvas();
+			}
+		});
+
+		secondFillColor.setOnAction(event->{
+			if(selectedFigure != null){
+				selectedFigure.setSecondaryColor(secondFillColor.getValue());
+				redrawCanvas();
+			}
+		});
+
+
 		shadowChoiceBox.setOnAction(event->{
 			if(selectedFigure!=null) {
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());

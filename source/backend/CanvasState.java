@@ -12,12 +12,21 @@ public class CanvasState {
     //private final List<DrawFigure> list = new ArrayList<>();
 
     public void addLayer(){
-        Integer aux = map.lastKey().getNumLayer() +1;
+        Integer aux;
+        if(map.isEmpty()){
+            aux = 1;
+        }else{
+            aux = map.lastKey().getNumLayer() +1;
+        }
+
         map.put(new Layers(aux), new ArrayList<>());
     }
 
     public void addFigure(Layers layer,DrawFigure figure) {
         if(layer != null && layer.isOn()){
+            if(!map.containsKey(layer)){
+                addLayer();
+            }
             map.get(layer).add(figure);
         }
     }
@@ -33,4 +42,11 @@ public class CanvasState {
         return map.get(layer);
     }
 
+    public int getLayers(){
+        return map.lastKey().getNumLayer();
+    }
+
+    public void deleteLayer(Layers l){
+        map.remove(l);
+    }
 }

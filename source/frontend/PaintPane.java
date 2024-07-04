@@ -95,11 +95,15 @@ public class PaintPane extends BorderPane {
 		squareButton.setUserData(new SquareButton());
 		ellipseButton.setUserData(new EllipseButton());
 	}
-	/*private void SetMapLayers(){
-		LayersMap.put(1, new HashMap<>());
-		LayersMap.put(2, new HashMap<>());
-		LayersMap.put(3, new HashMap<>());
-	}*/
+	private void SetMapLayers(){
+		for(int i=1 ; i<=3 ; i++){
+			Layers aux = new Layers(i);
+			layers.add(aux);
+			canvasState.addLayer();
+		}
+
+
+	}
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
@@ -183,7 +187,7 @@ public class PaintPane extends BorderPane {
 
 		gc.setLineWidth(1);
 		SetButtons();
-		//SetMapLayers();
+		SetMapLayers();
 		setLeft(buttonsBox);
 		setRight(canvas);
 
@@ -196,6 +200,7 @@ public class PaintPane extends BorderPane {
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
 			}catch(Exception ex){
+				System.out.println(ex);
 				System.out.println("Seleccionar algun boton");
 			}
 
@@ -228,10 +233,12 @@ public class PaintPane extends BorderPane {
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
 			for(Layers l : layers) {
-				for (DrawFigure figure : canvasState.figures(l)) {
-					if (figureBelongs(figure, eventPoint)) {
-						found = true;
-						label.append(figure.toString());
+				if(l.isOn()) {
+					for (DrawFigure figure : canvasState.figures(l)) {
+						if (figureBelongs(figure, eventPoint)) {
+							found = true;
+							label.append(figure.toString());
+						}
 					}
 				}
 			}
@@ -247,12 +254,16 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (DrawFigure figure : canvasState.figures(new Layers(layerChoiceBox.getValue()))) {
-					if(figureBelongs(figure, eventPoint)  ) {
-						found = true;
-						selectedFigure = figure;
-						label.append(figure.toString());
+				for(Layers layer : layers) {
+					if(layer.isOn()) {
+						for (DrawFigure figure : canvasState.figures(layer)) {
+							if (figureBelongs(figure, eventPoint) && layer.isOn()) {
+								found = true;
+								selectedFigure = figure;
+								label.append(figure.toString());
 
+							}
+						}
 					}
 				}
 				if (found) {
@@ -263,7 +274,7 @@ public class PaintPane extends BorderPane {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				//me da rari haberlo sacado pero funciona
-				//redrawCanvas();
+				redrawCanvas();
 
 			}
 		});
@@ -363,10 +374,32 @@ public class PaintPane extends BorderPane {
 
 		showButton.setOnAction(event ->{
 			setVisiblility(true);
+			redrawCanvas();
 		});
 
 		hideButton.setOnAction(event ->{
 			setVisiblility(false);
+			redrawCanvas();
+		});
+
+		addLayerButton.setOnAction(event ->{
+			layers.add(new Layers(canvasState.getLayers()));
+			canvasState.addLayer();
+			layerChoiceBox.getItems().add(canvasState.getLayers());
+		});
+
+		deleteLayerButton.setOnAction(event->{
+			if(layerChoiceBox.getValue() >3){
+				for(Layers l : layers){
+					if(l.getID() == layerChoiceBox.getValue()){
+						layers.remove(l);
+						canvasState.deleteLayer(l);
+					}
+				}
+
+				layerChoiceBox.getItems().remove(layerChoiceBox.getValue());
+				layerChoiceBox.setValue(1);
+			}
 		});
 
 	}
@@ -406,23 +439,24 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		for(Layers l : layers) {
+			if(l.isOn()) {
+				for (DrawFigure figure : canvasState.figures(l)) {
 
-			for (DrawFigure figure : canvasState.figures(l)) {
+					if (figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
+						gc.setStroke(Color.RED);
+						figure.setPrimaryColor(fillColorPicker.getValue());
+						figure.setSecondaryColor(secondFillColor.getValue());
 
-				if (figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
-					gc.setStroke(Color.RED);
-					figure.setPrimaryColor(fillColorPicker.getValue());
-					figure.setSecondaryColor(secondFillColor.getValue());
+					} else {
+						gc.setStroke(lineColor);
+					}
 
-				} else {
-					gc.setStroke(lineColor);
+					//ver devuelta
+					if (figure != null) {
+						figure.FillFigure(figure.getColor(), figure.getSecondColor());
+					}
+
 				}
-
-				//ver devuelta
-				if (figure != null) {
-					figure.FillFigure(figure.getColor(), figure.getSecondColor());
-				}
-
 			}
 		}
 	}

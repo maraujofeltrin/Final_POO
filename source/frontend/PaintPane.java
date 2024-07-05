@@ -50,7 +50,7 @@ public class PaintPane extends BorderPane {
 
 	private Label border = new Label("Borde");
 
-	Slider graduationSlider = new Slider(0, 10, 5);
+	private Slider graduationSlider = new Slider(0, 10, 5);
 	private ChoiceBox<BorderType> borderChoiceBox = new ChoiceBox<>();
 
 	// Selector de color de relleno
@@ -258,7 +258,7 @@ public class PaintPane extends BorderPane {
 				for(Layers layer : layers) {
 					if(layer.isOn()) {
 						for (DrawFigure figure : canvasState.figures(layer)) {
-							if (figureBelongs(figure, eventPoint) && layer.isOn()) {
+							if (figureBelongs(figure, eventPoint) && layer.isOn() && !found) {
 								found = true;
 								selectedFigure = figure;
 								label.append(figure.toString());

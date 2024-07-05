@@ -86,4 +86,7 @@ public abstract class DrawFigure{
     public ShadowType getShadowType(){
        return figure.getShadowType();
     }
+    public String toString(){
+        return figure.toString();
+    }
 }

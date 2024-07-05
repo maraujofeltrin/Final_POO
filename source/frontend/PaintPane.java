@@ -177,13 +177,13 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
-				if(selectedFigure != null){
+				/*if(selectedFigure != null){
 					selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 					selectedFigure.setBorder(borderChoiceBox.getValue());
 					selectedFigure.setWidth(graduationSlider.getValue());
 				}else if(!selectionButton.isSelected()){
 					statusPane.updateStatus("Seleccionar algun boton");
-				}
+				}*/
 		});
 
 		canvas.setOnMouseReleased(event -> {

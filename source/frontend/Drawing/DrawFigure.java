@@ -28,13 +28,15 @@ public abstract class DrawFigure{
      public void FillFigure(Color col, Color col2) {
          double difX = figure.DiffX();
          double difY = figure.DiffY();
+
+         border.setBorder(gc, width);
+
          setFill(figure.getShadowColor());
          ShadowFigure(difX, difY);
 
          setGradiant(col, col2);
          FillFigureAux(difX,difY);
 
-         border.setBorder(gc, width);
      }
 
      protected abstract void setGradiant(Color col1, Color col2);

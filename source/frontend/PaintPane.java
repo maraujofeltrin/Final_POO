@@ -197,7 +197,8 @@ public class PaintPane extends BorderPane {
 
 				if(selectedFigure != null){
 				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
-				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+				selectedFigure.setBorder(borderChoiceBox.getValue());
+				selectedFigure.setWidth(graduationSlider.getValue());
 				}
 			}catch(Exception ex){
 				System.out.println("Seleccionar algun boton");
@@ -314,14 +315,14 @@ public class PaintPane extends BorderPane {
 
 		borderChoiceBox.setOnAction(event->{
 			if(selectedFigure!=null) {
-				selectedFigure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+				selectedFigure.setBorder(borderChoiceBox.getValue());
 				redrawCanvas();
 			}
 		});
 
 		graduationSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (selectedFigure != null) {
-				selectedFigure.setBorder(borderChoiceBox.getValue(), newValue.doubleValue());
+				selectedFigure.setWidth(newValue.doubleValue());
 				redrawCanvas();
 			}
 		});

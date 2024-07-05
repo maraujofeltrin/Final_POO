@@ -68,8 +68,11 @@ public abstract class DrawFigure{
          figure.setColor(col);
      }
 
-     public void setBorder(BorderType type, double value) {
+     public void setBorder(BorderType type) {
          this.border = type;
+     }
+
+     public void setWidth(double value){
          this.width = value;
      }
 

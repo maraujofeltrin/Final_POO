@@ -6,20 +6,24 @@ import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
-public class Ellipse implements Figure {
+public class Ellipse extends Figure {
+    private Point centerPoint;
+    private double sMayorAxis,sMinorAxis;
 
-    protected Point centerPoint;
-    protected double sMayorAxis;
-    protected double sMinorAxis;
-    protected Color color, secondaryColor;
-    protected ShadowType type;
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
+        super(ShadowType.NONE);
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
-        this.type = ShadowType.NONE;
     }
 
+    public double getsMayorAxis() {
+        return sMayorAxis;
+    }
+
+    public double getsMinorAxis() {
+        return sMinorAxis;
+    }
     @Override
     public String toString() {
         return String.format("Elipse [Centro: %s, DMayor: %.2f, DMenor: %.2f]", centerPoint, sMayorAxis, sMinorAxis);
@@ -38,49 +42,26 @@ public class Ellipse implements Figure {
         return Objects.hash(centerPoint, sMayorAxis, sMinorAxis);
     }
 
+    @Override
     public Point getCenterPoint() {
         return centerPoint;
     }
 
-    public Color getColor(){
-        return color;
-    }
-    public double getsMayorAxis() {
-        return sMayorAxis;
-    }
 
-    public double getsMinorAxis() {
-        return sMinorAxis;
-    }
 
     @Override
     public void addDiff(double diffX, double diffY) {
-        getCenterPoint().x += diffX;
-        getCenterPoint().y += diffY;
+       double y= getCenterPoint().getY() +diffY;
+        double x=getCenterPoint().getX()+diffX;
+        getCenterPoint().setX(x);
+        getCenterPoint().setY(y);
     }
-
 
 
     @Override
     public boolean belongs(Point eventPoint) {
         return ((Math.pow(eventPoint.getX() - getCenterPoint().getX(), 2) / Math.pow(getsMayorAxis(), 2)) +
                 (Math.pow(eventPoint.getY() - getCenterPoint().getY(), 2) / Math.pow(getsMinorAxis(), 2))) <= 0.30;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public void setType(ShadowType type) {
-        this.type = type;
-    }
-
-    public Color getShadowColor(){
-        return type.checkColor(color);
-    }
-
-    public ShadowType getType() {
-        return type;
     }
 
     public double DiffX(){
@@ -90,20 +71,7 @@ public class Ellipse implements Figure {
         return centerPoint.getY() - (sMinorAxis / 2);
     }
 
-    @Override
-    public void setShadow(ShadowType type, Color color){
-        setColor(color);
-        setType(type);
 
-    }
-
-    public Color getSecondColor() {
-        return secondaryColor;
-    }
-
-    public void setSecondColor(Color newCol){
-        this.secondaryColor = newCol;
-    }
 
     protected double addToCenterPoint(){
         return sMayorAxis/4.0;

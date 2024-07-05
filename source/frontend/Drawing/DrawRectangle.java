@@ -24,8 +24,6 @@ public class DrawRectangle extends DrawFigure {
 
    }
 
-
-
     @Override
     protected void ShadowFigure(double difX, double difY) {
         gc.fillRect(rectangle.getType().move(rectangle.getTopLeft().getX(), MOVEMENT),

@@ -272,8 +272,8 @@ public class PaintPane extends BorderPane {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
-				redrawCanvas();
 			}
+			redrawCanvas();
 		});
 
 
@@ -451,10 +451,11 @@ public class PaintPane extends BorderPane {
 
 					if (figure == selectedFigure && figure != null && figureColorMap.get(selectedFigure) != null) {
 						gc.setStroke(Color.RED);
-						figure.setPrimaryColor(fillColorPicker.getValue());
-						figure.setSecondaryColor(secondFillColor.getValue());
-						figure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
-						figure.setBorder(borderChoiceBox.getValue(), graduationSlider.getValue());
+						fillColorPicker.setValue(figure.getColor());
+						secondFillColor.setValue(figure.getSecondColor());
+						shadowChoiceBox.setValue(figure.getShadowType());
+						borderChoiceBox.setValue(figure.getBorderType());
+						graduationSlider.setValue(figure.getBorderWidth());
 					} else {
 						gc.setStroke(lineColor);
 					}

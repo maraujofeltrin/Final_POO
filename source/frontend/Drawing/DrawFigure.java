@@ -38,10 +38,10 @@ public abstract class DrawFigure{
      }
 
      protected abstract void setGradiant(Color col1, Color col2);
-     protected BorderType getBorderType(){
+     public BorderType getBorderType(){
          return border;
      }
-     protected double getBorderWidth(){
+     public double getBorderWidth(){
          return width;
      }
      protected abstract void ShadowFigure(double difX, double difY);
@@ -79,5 +79,8 @@ public abstract class DrawFigure{
 
     public Point getCenterPoint() {
         return figure.getCenterPoint();
+    }
+    public ShadowType getShadowType(){
+       return figure.getShadowType();
     }
 }

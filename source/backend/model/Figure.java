@@ -1,24 +1,58 @@
 package backend.model;
 
-import frontend.Drawing.BorderType;
 import backend.ShadowType;
 import javafx.scene.paint.Color;
 
-public interface Figure {
+import static java.lang.Math.abs;
 
-    void addDiff(double incX, double incY);
-    Color getColor();
-    Color getShadowColor();
-    Color getSecondColor();
-    double DiffX();
-    double DiffY();
+public abstract class Figure {
+    private ShadowType type;
+    private Color color, secondaryColor;
 
-    boolean belongs(Point eventPoint);
+    public Figure(ShadowType type){
+        this.type=type;
+    }
+    public Color getColor(){
+       return color;
+    }
 
-    void setShadow(ShadowType type, Color color);
+    public Color getSecondColor(){
+       return this.secondaryColor;
+    }
 
-    void setSecondColor(Color newCol);
+    public void setShadow(ShadowType newType, Color newColor){
+        setType(newType);
+        setColor(newColor);
+    }
 
-    void setColor(Color col);
-    Point getCenterPoint();
+    public void setSecondColor(Color secColor) {
+        this.secondaryColor = secColor;
+    }
+
+    public void setColor(Color col){
+        this.color = col;
+    }
+
+    public void setType(ShadowType type){
+        this.type =type;
+    }
+
+    public Color getShadowColor(){
+        return type.checkColor(color);
+    }
+
+    public ShadowType getType() {
+        return type;
+    }
+
+    public abstract double DiffY();
+    public abstract double DiffX();
+
+    public abstract void addDiff(double incX, double incY);
+    public abstract boolean belongs(Point eventPoint);
+    public abstract Point getCenterPoint();
+    public ShadowType getShadowType(){
+        return type;
+    }
+
 }

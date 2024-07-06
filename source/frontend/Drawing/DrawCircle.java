@@ -23,15 +23,25 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
     circle.setType(shadow);
 }
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof DrawCircle Dcircle &&
-                circle.equals(Dcircle.circle);
-    }
 
+
+    //Drawing Methods:
     protected void FillFigureAux(double difX, double difY){
         gc.strokeOval(difX, difY, circle.getsMayorAxis(), circle.getsMinorAxis());
         gc.fillOval(difX, difY, circle.getsMayorAxis(), circle.getsMinorAxis());
+    }
+    @Override
+    protected void setGradiant(Color col1, Color col2){
+        RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, col1),
+                new Stop(1, col2));
+        gc.setFill(radialGradient);
+    }
+    protected void ShadowFigure(double difX, double difY){
+        gc.fillOval(circle.getType().move(difX, MOVEMENT),
+                circle.getType().move(difY, MOVEMENT), circle.getsMayorAxis(), circle.getsMinorAxis());
+
     }
 
     @Override
@@ -53,23 +63,15 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
     private DrawFigure createFigure(Point center, double radius){
     return new DrawCircle(center,radius, circle.getColor(),circle.getSecondColor(), gc, circle.getType(), getBorderType(), getBorderWidth(), getLayer());
     }
-    protected void ShadowFigure(double difX, double difY){
-        gc.fillOval(circle.getType().move(difX, MOVEMENT),
-                circle.getType().move(difY, MOVEMENT), circle.getsMayorAxis(), circle.getsMinorAxis());
 
-    }
     @Override
     public int hashCode() {
         return Objects.hash(circle);
     }
-
     @Override
-    protected void setGradiant(Color col1, Color col2){
-        RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
-                CycleMethod.NO_CYCLE,
-                new Stop(0, col1),
-                new Stop(1, col2));
-        gc.setFill(radialGradient);
+    public boolean equals(Object o) {
+        return o instanceof DrawCircle Dcircle &&
+                circle.equals(Dcircle.circle);
     }
 }
 

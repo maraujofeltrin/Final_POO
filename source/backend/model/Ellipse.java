@@ -50,7 +50,7 @@ public class Ellipse extends Figure {
 
 
     @Override
-    public void addDiff(double diffX, double diffY) {
+    public void Move(double diffX, double diffY) {
        double y= getCenterPoint().getY() +diffY;
         double x=getCenterPoint().getX()+diffX;
         getCenterPoint().setX(x);

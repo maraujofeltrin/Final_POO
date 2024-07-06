@@ -187,20 +187,21 @@ public class PaintPane extends BorderPane {
 
 			Point endPoint = new Point(event.getX(), event.getY());
 			DrawFigure newFigure = null;
-			//HAY QUE CAMBIARLO IMPERATIVO
-			if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY() || tools.getSelectedToggle()==null) {
+			if(startPoint == null || tools.getSelectedToggle()==null) {
+				if(endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()){
+					AlertDirectionofDrawing();
+				}
 				return ;
 			}
-			//CORREGIR ERRORE
 			Toggle selected = tools.getSelectedToggle();
 			Buttons aux = (Buttons) selected.getUserData();
-			//con la condicion de can draw se asegura que no dibuje en una capa oculta
-			if(!selectionButton.isSelected() && CanDraw(layerChoiceBox.getValue())) { //CHEQUER SI TIRAR ALERTA
+			//Condition to draw in a visible layer
+			if(!selectionButton.isSelected() && CanDraw(layerChoiceBox.getValue())) {
 				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(), gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue(),layerChoiceBox.getValue());
 				addFigure(newFigure, fillColorPicker.getValue(), layerChoiceBox.getValue());
+			}else{
+				AlertselectedLayerHidden();
 			}
-
-			//FALTAN CHEQUEOS
 			startPoint = null;
 			redrawCanvas();
 		});
@@ -260,7 +261,7 @@ public class PaintPane extends BorderPane {
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
 
-				selectedFigure.addDiff(diffX,diffY);
+				selectedFigure.Move(diffX,diffY);
 				figureColorMap.put(selectedFigure, selectedFigure.getColor());
 				redrawCanvas();
 			}
@@ -302,6 +303,7 @@ public class PaintPane extends BorderPane {
 		deleteLayerButton.setOnAction(event->{deleteLayerAction();});
 
 	}
+
 	private void setVisiblility(boolean condition){
 		for(Layers layer : layers){
 			if(layer.getID() == layerChoiceBox.getValue()){
@@ -315,7 +317,6 @@ public class PaintPane extends BorderPane {
 		for(Layers layer : layers){
 			layerChoiceBox.getItems().addAll(layer.getID());
 		}
-
 		for(int i = 1; i<=3; i++){
 			if(!layerChoiceBox.getItems().contains(i)){
 				layerChoiceBox.getItems().add(i);
@@ -325,14 +326,16 @@ public class PaintPane extends BorderPane {
 		layerChoiceBox.setValue(1);
 	}
 
-
 	private void RemoveFigure(){
-		if (selectedFigure != null) {
+		if(selectedFigure != null) {
 				canvasState.deleteFigure(new Layers(selectedFigure.getLayer()),selectedFigure);
 				selectedFigure = null;
 				redrawCanvas();
-			}
+		}else{
+			AlertNotSelectedFigure();
+		}
 	}
+	//Draws all the figures in the canvas
 	private void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Layers l : layers) {
@@ -401,24 +404,32 @@ public class PaintPane extends BorderPane {
 		if(selectedFigure != null){
 			selectedFigure.setPrimaryColor(fillColorPicker.getValue());
 			redrawCanvas();
+		}else{
+			AlertNotSelectedFigure();
 		}
 	}
 	private void SecondaryColorPicker(){
 		if(selectedFigure != null){
 			selectedFigure.setSecondaryColor(secondFillColor.getValue());
 			redrawCanvas();
+		}else{
+			AlertNotSelectedFigure();
 		}
 	}
 	private void chooseShadow(){
 		if(selectedFigure!=null) {
 			selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 			redrawCanvas();
+		}else{
+			AlertNotSelectedFigure();
 		}
 	}
 	private void chooseBorder(){
 		if(selectedFigure!=null) {
 			selectedFigure.setBorder(borderChoiceBox.getValue());
 			redrawCanvas();
+		}else{
+			AlertNotSelectedFigure();
 		}
 	}
 	private void divideAction(){
@@ -429,6 +440,8 @@ public class PaintPane extends BorderPane {
 			addFigure(divide[1], coloraux, selectedFigure.getLayer());
 			RemoveFigure();
 			redrawCanvas();
+		}else{
+			AlertNotSelectedFigure();
 		}
 	}
 	private void moveToCenterAction(){
@@ -440,7 +453,7 @@ public class PaintPane extends BorderPane {
 			Point figureCenter = selectedFigure.getCenterPoint();
 			double diffX = centerX - figureCenter.getX();
 			double diffY = centerY - figureCenter.getY();
-			selectedFigure.addDiff(diffX, diffY);
+			selectedFigure.Move(diffX, diffY);
 			redrawCanvas();
 		}
 	}
@@ -450,6 +463,8 @@ public class PaintPane extends BorderPane {
 			canvasState.addFigure(new Layers(layerChoiceBox.getValue()),duplicate);
 			figureColorMap.put(duplicate,duplicate.getColor());
 			redrawCanvas();
+		}else{
+			AlertNotSelectedFigure();
 		}
 	}
 	private void AddLayerAction(){
@@ -474,6 +489,24 @@ public class PaintPane extends BorderPane {
 			layerChoiceBox.setValue(1);
 			redrawCanvas();
 		}
+
+	}
+
+	//ALERTS FUNCTIONS:
+	private void AlertNotSelectedFigure(){
+		WarningAlert("Seleccione una figura");
+	}
+	private void AlertselectedLayerHidden(){
+		WarningAlert("La capa esta oculta, para dibujar pongala visible");
+	}
+	private void AlertDirectionofDrawing(){
+		WarningAlert("Dibujar de Izquierda a derecha y de arriba hacia abajo");
+	}
+	private void WarningAlert(String msg){
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("ERROR");
+		alert.setHeaderText(msg);
+		alert.showAndWait();
 	}
 
 }

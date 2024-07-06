@@ -25,10 +25,23 @@ public class DrawEllipse extends DrawFigure{
     }
 
 
-
+    //Drawing Methods:
     protected void FillFigureAux(double difX, double difY){
         gc.strokeOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
         gc.fillOval(difX, difY, ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+    }
+    protected void ShadowFigure(double difX, double difY){
+        gc.fillOval(ellipse.getType().move(difX, MOVEMENT),
+                ellipse.getType().move(difY, MOVEMENT), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
+
+    }
+    @Override
+    protected void setGradiant(Color col1, Color col2){
+        RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, col1),
+                new Stop(1, col2));
+        gc.setFill(radialGradient);
     }
 
     @Override
@@ -41,42 +54,23 @@ public class DrawEllipse extends DrawFigure{
         DrawFigure[] res ={res1, res2};
         return res;
     }
-
-    private DrawFigure createFigure(Point center, double MayorAxis, double MinorAxis){
-        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), getBorderType(), getBorderWidth(), this.getLayer());
-    }
-
-    protected void ShadowFigure(double difX, double difY){
-        gc.fillOval(ellipse.getType().move(difX, MOVEMENT),
-                ellipse.getType().move(difY, MOVEMENT), ellipse.getsMayorAxis(), ellipse.getsMinorAxis());
-
-    }
-
-      @Override
-
-      public boolean equals(Object o) {
-        return o instanceof DrawEllipse Dellipse &&
-                this.ellipse.equals(Dellipse.ellipse);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ellipse);
-    }
-
-    @Override
-    protected void setGradiant(Color col1, Color col2){
-        RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
-                CycleMethod.NO_CYCLE,
-                new Stop(0, col1),
-                new Stop(1, col2));
-        gc.setFill(radialGradient);
-    }
-
     @Override
     public DrawFigure duplicate() {
         Point aux = new Point(ellipse.getCenterPoint().getX()+20,ellipse.getCenterPoint().getY()+20);
         return createFigure(aux, ellipse.getsMayorAxis(),ellipse.getsMinorAxis());
+    }
+    private DrawFigure createFigure(Point center, double MayorAxis, double MinorAxis){
+        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), getBorderType(), getBorderWidth(), this.getLayer());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof DrawEllipse Dellipse &&
+                this.ellipse.equals(Dellipse.ellipse);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(ellipse);
     }
 
 }

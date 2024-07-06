@@ -25,18 +25,6 @@ public class Rectangle extends Figure {
     public Point getBottomRight() {
         return bottomRight;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof Rectangle rectangle && topLeft.equals(rectangle.topLeft)
-                && bottomRight.equals(rectangle.bottomRight);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(topLeft, bottomRight);
-    }
-
     public Point[] divide(){
 
         double auxY= (Math.abs(DiffY()))/4.0;
@@ -46,18 +34,15 @@ public class Rectangle extends Figure {
         Point res3= new Point(res2.getX(), res1.getY());
         Point res4= new Point(res2.getX()+auxX,res2.getY());
 
-       Point [] res={res1, res2, res3, res4};
-       return res;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
+        Point [] res={res1, res2, res3, res4};
+        return res;
     }
 
 
+
+
     @Override
-    public void addDiff(double diffX, double diffY) {
+    public void Move(double diffX, double diffY) {
         topLeft.setX(topLeft.getX() + diffX);
         bottomRight.setX(bottomRight.getX() + diffX);
         topLeft.setY(topLeft.getY() + diffY);
@@ -86,5 +71,21 @@ public class Rectangle extends Figure {
         double centerX = (topLeft.getX() + bottomRight.getX()) / 2;
         double centerY = (topLeft.getY() + bottomRight.getY()) / 2;
         return new Point(centerX, centerY);
+    }
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Rectangle rectangle && topLeft.equals(rectangle.topLeft)
+                && bottomRight.equals(rectangle.bottomRight);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(topLeft, bottomRight);
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
     }
 }

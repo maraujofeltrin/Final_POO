@@ -19,6 +19,14 @@ public abstract class Figure {
     public Color getSecondColor(){
        return this.secondaryColor;
     }
+    public Color getShadowColor(){
+        return type.checkColor(color);
+    }
+
+    public ShadowType getType() {
+        return type;
+    }
+    public abstract Point getCenterPoint();
 
     public void setShadow(ShadowType newType, Color newColor){
         setType(newType);
@@ -37,20 +45,13 @@ public abstract class Figure {
         this.type =type;
     }
 
-    public Color getShadowColor(){
-        return type.checkColor(color);
-    }
-
-    public ShadowType getType() {
-        return type;
-    }
 
     public abstract double DiffY();
     public abstract double DiffX();
 
-    public abstract void addDiff(double incX, double incY);
+    public abstract void Move(double incX, double incY);
     public abstract boolean belongs(Point eventPoint);
-    public abstract Point getCenterPoint();
+
     public ShadowType getShadowType(){
         return type;
     }

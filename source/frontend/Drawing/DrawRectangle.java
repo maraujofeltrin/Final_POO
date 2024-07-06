@@ -24,6 +24,7 @@ public class DrawRectangle extends DrawFigure {
 
    }
 
+   //Drawing Methods:
     @Override
     protected void ShadowFigure(double difX, double difY) {
         gc.fillRect(rectangle.getType().move(rectangle.getTopLeft().getX(), MOVEMENT),
@@ -38,19 +39,6 @@ public class DrawRectangle extends DrawFigure {
         gc.strokeRect(rectangle.getTopLeft().getX(),rectangle.getTopLeft().getY(),
                 difX, difY);
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-            return o instanceof DrawRectangle Drectangle &&
-                    this.rectangle.equals(Drectangle.rectangle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rectangle);
-    }
-
     @Override
     protected void setGradiant(Color col1, Color col2){
         LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true,
@@ -59,6 +47,10 @@ public class DrawRectangle extends DrawFigure {
                 new Stop(1, col2));
         gc.setFill(linearGradient);
     }
+
+
+
+
 
     public DrawFigure[] divideFigure(){
        Point[] points = rectangle.divide();
@@ -78,6 +70,14 @@ public class DrawRectangle extends DrawFigure {
 
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){
        return new DrawRectangle(topLeft, bottomRigh,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),getBorderType(), getBorderWidth(), this.getLayer());
-
+    }
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof DrawRectangle Drectangle &&
+                this.rectangle.equals(Drectangle.rectangle);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(rectangle);
     }
 }

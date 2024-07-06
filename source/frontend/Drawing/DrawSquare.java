@@ -23,13 +23,14 @@ public class DrawSquare extends DrawFigure {
        square.setType(shadow);
    }
 
+
+   //Drawing Methods:
        @Override
-    protected void ShadowFigure(double difX, double difY) {
+   protected void ShadowFigure(double difX, double difY) {
         gc.fillRect(square.getType().move(square.getTopLeft().getX(), MOVEMENT),
                 square.getType().move(square.getTopLeft().getY(), MOVEMENT),
                 difX,difY);
-    }
-
+   }
     @Override
     protected void FillFigureAux(double difX, double difY) {
         gc.fillRect(square.getTopLeft().getX(), square.getTopLeft().getY(),
@@ -37,10 +38,17 @@ public class DrawSquare extends DrawFigure {
         gc.strokeRect(square.getTopLeft().getX(),square.getTopLeft().getY(),
                 difX, difY);
     }
+    @Override
+    protected void setGradiant(Color col1, Color col2){
+        LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, col1),
+                new Stop(1, col2));
+        gc.setFill(linearGradient);
+    }
 
     @Override
     public DrawFigure[] divideFigure() {
-
             Point[] points = square.divide();
             DrawFigure res1=createFigure(points[0], points[1]);
             DrawFigure res2=createFigure(points[2], points[3]);
@@ -50,7 +58,14 @@ public class DrawSquare extends DrawFigure {
     }
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){
         return new DrawSquare(topLeft, bottomRigh,square.getColor(),square.getSecondColor(),gc,square.getType(),getBorderType(), getBorderWidth(), getLayer());
+    }
 
+
+    @Override
+    public DrawFigure duplicate() {
+        Point aux = new Point(square.getTopLeft().getX()+20,square.getTopLeft().getY()+20);
+        Point aux2 = new Point(square.getBottomRight().getX()+20,square.getBottomRight().getY()+20);
+        return createFigure(aux, aux2);
     }
 
 
@@ -65,19 +80,5 @@ public class DrawSquare extends DrawFigure {
         return Objects.hash(square);
     }
 
-    @Override
-    protected void setGradiant(Color col1, Color col2){
-        LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true,
-                CycleMethod.NO_CYCLE,
-                new Stop(0, col1),
-                new Stop(1, col2));
-        gc.setFill(linearGradient);
-    }
 
-    @Override
-    public DrawFigure duplicate() {
-        Point aux = new Point(square.getTopLeft().getX()+20,square.getTopLeft().getY()+20);
-        Point aux2 = new Point(square.getBottomRight().getX()+20,square.getBottomRight().getY()+20);
-        return createFigure(aux, aux2);
-    }
 }

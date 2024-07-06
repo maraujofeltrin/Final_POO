@@ -47,24 +47,39 @@ public abstract class DrawFigure{
 
      }
 
-     protected abstract void setGradiant(Color col1, Color col2);
+
+     //Getters:
      public BorderType getBorderType(){
          return border;
      }
      public double getBorderWidth(){
          return width;
      }
+    public Point getCenterPoint() {
+        return figure.getCenterPoint();
+    }
+    public ShadowType getShadowType(){
+        return figure.getShadowType();
+    }
+    public Integer getLayer(){
+        return layer;
+    }
+
+    //Drawing Methods:
      protected abstract void ShadowFigure(double difX, double difY);
      protected abstract void FillFigureAux(double difX, double difY);
      public void setFill(Color color){
          gc.setFill(color);
      }
+    protected abstract void setGradiant(Color col1, Color col2);
 
 
-     public void addDiff(double num1, double num2){
-         figure.addDiff(num1, num2);
+     //Moves figure num1 in X and num2 in Y
+     public void Move(double num1, double num2){
+         figure.Move(num1, num2);
      }
 
+     //Setters:
      public void setSecondaryColor(Color color) {
          figure.setSecondColor(color);
      }
@@ -85,16 +100,8 @@ public abstract class DrawFigure{
 
     public abstract DrawFigure[] divideFigure();
 
-    public Point getCenterPoint() {
-        return figure.getCenterPoint();
-    }
-    public ShadowType getShadowType(){
-       return figure.getShadowType();
-    }
     public String toString(){
         return figure.toString();
     }
-    public Integer getLayer(){
-        return layer;
-    }
+
 }

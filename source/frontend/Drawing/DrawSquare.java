@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class DrawSquare extends DrawFigure {
     private Square square;
-   public DrawSquare(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc, border, width);
+   public DrawSquare(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
+       super(gc, border, width, layer);
        double size = Math.abs(endPoint.getX() - startPoint.getX());
        figure=new Square(startPoint, size);
        square=(Square)figure;
@@ -49,7 +49,7 @@ public class DrawSquare extends DrawFigure {
 
     }
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){
-        return new DrawSquare(topLeft, bottomRigh,square.getColor(),square.getSecondColor(),gc,square.getType(),getBorderType(), getBorderWidth());
+        return new DrawSquare(topLeft, bottomRigh,square.getColor(),square.getSecondColor(),gc,square.getType(),getBorderType(), getBorderWidth(), getLayer());
 
     }
 

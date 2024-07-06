@@ -14,8 +14,8 @@ import java.util.Objects;
 public class DrawRectangle extends DrawFigure {
     private Rectangle rectangle;
 
-   public DrawRectangle(Point startPoint, Point endPoint, Color color, Color secColor,GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-       super(gc, border, width);
+   public DrawRectangle(Point startPoint, Point endPoint, Color color, Color secColor,GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
+       super(gc, border, width, layer);
        figure=new Rectangle(startPoint, endPoint);
        rectangle=(Rectangle) figure;
        rectangle.setColor(color);
@@ -77,7 +77,7 @@ public class DrawRectangle extends DrawFigure {
     }
 
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){
-       return new DrawRectangle(topLeft, bottomRigh,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),getBorderType(), getBorderWidth());
+       return new DrawRectangle(topLeft, bottomRigh,rectangle.getColor(),rectangle.getSecondColor(),gc,rectangle.getType(),getBorderType(), getBorderWidth(), this.getLayer());
 
     }
 }

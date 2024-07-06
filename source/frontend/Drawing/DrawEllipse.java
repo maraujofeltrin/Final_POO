@@ -15,8 +15,8 @@ public class DrawEllipse extends DrawFigure{
 
     private Ellipse ellipse;
 
-    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width){
-        super(gc, border, width);
+    public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
+        super(gc, border, width, layer);
         figure = new Ellipse(centerPoint,sMayorAxis,sMinorAxis);
         ellipse=(Ellipse) figure;
         ellipse.setColor(color);
@@ -43,7 +43,7 @@ public class DrawEllipse extends DrawFigure{
     }
 
     private DrawFigure createFigure(Point center, double MayorAxis, double MinorAxis){
-        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), getBorderType(), getBorderWidth());
+        return new DrawEllipse(center,MayorAxis, MinorAxis, ellipse.getColor(),ellipse.getSecondColor(), gc, ellipse.getType(), getBorderType(), getBorderWidth(), this.getLayer());
     }
 
     protected void ShadowFigure(double difX, double difY){

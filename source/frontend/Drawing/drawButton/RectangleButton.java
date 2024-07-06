@@ -11,9 +11,9 @@ import javafx.scene.paint.Color;
 public class RectangleButton implements Buttons{
 
     @Override
-    public DrawFigure ButtonToAction(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width) {
+    public DrawFigure ButtonToAction(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer) {
         canDraw(startPoint,endPoint);
-        DrawRectangle rectangle = new DrawRectangle(startPoint, endPoint, color, secColor, gc, shadow, border,width);
+        DrawRectangle rectangle = new DrawRectangle(startPoint, endPoint, color, secColor, gc, shadow, border,width, layer);
         return rectangle;
     }
 

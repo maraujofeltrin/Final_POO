@@ -196,8 +196,8 @@ public class PaintPane extends BorderPane {
 			Buttons aux = (Buttons) selected.getUserData();
 			//con la condicion de can draw se asegura que no dibuje en una capa oculta
 			if(!selectionButton.isSelected() && CanDraw(layerChoiceBox.getValue())) { //CHEQUER SI TIRAR ALERTA
-				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(), gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue());
-				addFigure(newFigure, fillColorPicker.getValue());
+				newFigure = aux.ButtonToAction(startPoint, endPoint, fillColorPicker.getValue(), secondFillColor.getValue(), gc, shadowChoiceBox.getValue(), borderChoiceBox.getValue(), graduationSlider.getValue(),layerChoiceBox.getValue());
+				addFigure(newFigure, fillColorPicker.getValue(), layerChoiceBox.getValue());
 			}
 
 			//FALTAN CHEQUEOS
@@ -328,7 +328,7 @@ public class PaintPane extends BorderPane {
 
 	private void RemoveFigure(){
 		if (selectedFigure != null) {
-				canvasState.deleteFigure(new Layers(layerChoiceBox.getValue()),selectedFigure);
+				canvasState.deleteFigure(new Layers(selectedFigure.getLayer()),selectedFigure);
 				selectedFigure = null;
 				redrawCanvas();
 			}
@@ -387,9 +387,9 @@ public class PaintPane extends BorderPane {
 		graduationSlider.setValue(figure.getBorderWidth());
 	}
 
-	public void addFigure(DrawFigure figure, Color color){
+	public void addFigure(DrawFigure figure, Color color, Integer layer){
 		figureColorMap.put(figure, color);
-		canvasState.addFigure(new Layers(layerChoiceBox.getValue()),figure);
+		canvasState.addFigure(new Layers(layer),figure);
 	}
 	private boolean figureBelongs(DrawFigure figure, Point eventPoint) {
 		if(figure != null){
@@ -425,8 +425,8 @@ public class PaintPane extends BorderPane {
 		if(selectedFigure!=null) {
 			DrawFigure[] divide = selectedFigure.divideFigure();
 			Color coloraux = selectedFigure.getColor();
-			addFigure(divide[0], coloraux);
-			addFigure(divide[1], coloraux);
+			addFigure(divide[0], coloraux, selectedFigure.getLayer());
+			addFigure(divide[1], coloraux, selectedFigure.getLayer());
 			RemoveFigure();
 			redrawCanvas();
 		}

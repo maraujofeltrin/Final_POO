@@ -12,6 +12,14 @@ public abstract class DrawFigure{
      protected Figure figure;
      private BorderType border;
      private double width;
+     private Integer layer;
+
+    public DrawFigure(GraphicsContext gc, BorderType border, double width, Integer layer){
+        this.gc=gc;
+        this.border=border;
+        this.width=width;
+        this.layer=layer;
+    }
 
      public  void setShadow(ShadowType type, Color color){
          figure.setShadow(type, color);
@@ -51,12 +59,7 @@ public abstract class DrawFigure{
      public void setFill(Color color){
          gc.setFill(color);
      }
-     public DrawFigure(GraphicsContext gc, BorderType border, double width){
-         this.gc=gc;
-         this.border=border;
-         this.width=width;
 
-     }
 
      public void addDiff(double num1, double num2){
          figure.addDiff(num1, num2);
@@ -90,5 +93,8 @@ public abstract class DrawFigure{
     }
     public String toString(){
         return figure.toString();
+    }
+    public Integer getLayer(){
+        return layer;
     }
 }

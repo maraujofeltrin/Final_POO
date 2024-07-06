@@ -31,6 +31,7 @@ public class PaintPane extends BorderPane {
 	private GraphicsContext gc = canvas.getGraphicsContext2D();
 	private Color lineColor = Color.BLACK;
 	private Color defaultFillColor = Color.YELLOW;
+	private Color defaultSecondColor= Color.BLUE;
 
 	// Botones Barra Izquierda
 	private ToggleButton selectionButton = new ToggleButton("Seleccionar");
@@ -46,7 +47,7 @@ public class PaintPane extends BorderPane {
 
 	private Label fillerColor = new Label("Relleno");
 	private ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
-	private ColorPicker secondFillColor = new ColorPicker(defaultFillColor);
+	private ColorPicker secondFillColor = new ColorPicker(defaultSecondColor);
 
 	private Label border = new Label("Borde");
 
@@ -86,7 +87,6 @@ public class PaintPane extends BorderPane {
 
 	private Button addLayerButton = new Button("Agregar Capa");
 	private Button deleteLayerButton = new Button("Eliminar Capa");
-
 
 
 
@@ -177,13 +177,10 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
-				/*if(selectedFigure != null){
-					selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
-					selectedFigure.setBorder(borderChoiceBox.getValue());
-					selectedFigure.setWidth(graduationSlider.getValue());
-				}else if(!selectionButton.isSelected()){
+			//CHEQUEAR
+				 if(!selectionButton.isSelected()){
 					statusPane.updateStatus("Seleccionar algun boton");
-				}*/
+				}
 		});
 
 		canvas.setOnMouseReleased(event -> {
@@ -256,7 +253,6 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
-
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected() && selectedFigure != null) {
 				figureColorMap.remove(selectedFigure);
@@ -269,35 +265,12 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
-
-		fillColorPicker.setOnAction(event->{
-			if(selectedFigure != null){
-				selectedFigure.setPrimaryColor(fillColorPicker.getValue());
-				redrawCanvas();
-			}
-		});
-
-		secondFillColor.setOnAction(event->{
-			if(selectedFigure != null){
-				selectedFigure.setSecondaryColor(secondFillColor.getValue());
-				redrawCanvas();
-			}
-		});
-
-
-		shadowChoiceBox.setOnAction(event->{
-			if(selectedFigure!=null) {
-				selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
-				redrawCanvas();
-			}
-		});
-
-		borderChoiceBox.setOnAction(event->{
-			if(selectedFigure!=null) {
-				selectedFigure.setBorder(borderChoiceBox.getValue());
-				redrawCanvas();
-			}
-		});
+		//COLOR PICKERS
+		fillColorPicker.setOnAction(event->{PrimaryColorPicker();});
+		secondFillColor.setOnAction(event->{SecondaryColorPicker();});
+		//CHOOSE FIGURE SETTINGS
+		shadowChoiceBox.setOnAction(event->{chooseShadow();});
+		borderChoiceBox.setOnAction(event->{chooseBorder();});
 
 		graduationSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (selectedFigure != null) {
@@ -305,91 +278,30 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+		deleteButton.setOnAction(event -> {RemoveFigure();});
 
-		deleteButton.setOnAction(event -> {
-			RemoveFigure();
-		});
+		divideButton.setOnAction(event -> {divideAction();});
 
-		divideButton.setOnAction(event -> {
-			if(selectedFigure!=null) {
-				DrawFigure[] divide = selectedFigure.divideFigure();
-				Color coloraux = selectedFigure.getColor();
-				addFigure(divide[0], coloraux);
-				addFigure(divide[1], coloraux);
-				RemoveFigure();
-				redrawCanvas();
-			}
-		});
+		moveButton.setOnAction(event -> {moveToCenterAction();});
 
-		moveButton.setOnAction(event -> {
-			if (selectedFigure != null) {
-				double canvasWidth = canvas.getWidth();
-				double canvasHeight = canvas.getHeight();
+		duplicateButton.setOnAction(actionEvent -> {duplicateAction();});
 
-				double centerX = canvasWidth / 2;
-				double centerY = canvasHeight / 2;
-
-				Point figureCenter = selectedFigure.getCenterPoint();
-
-				double diffX = centerX - figureCenter.getX();
-				double diffY = centerY - figureCenter.getY();
-
-				selectedFigure.addDiff(diffX, diffY);
-
-				redrawCanvas();
-			}
-		});
-
-		duplicateButton.setOnAction(actionEvent -> {
-			if(selectedFigure!=null){
-				DrawFigure duplicate = selectedFigure.duplicate();
-				canvasState.addFigure(new Layers(layerChoiceBox.getValue()),duplicate);
-				figureColorMap.put(duplicate,duplicate.getColor());
-				redrawCanvas();
-			}
-		});
-
+		//LAYERS SETTINGS:
 		showButton.setOnAction(event ->{
 			setVisiblility(true);
 			redrawCanvas();
 		});
-
 		hideButton.setOnAction(event ->{
 			setVisiblility(false);
 			redrawCanvas();
 		});
+		addLayerButton.setOnAction(event ->{AddLayerAction();});
 
-		addLayerButton.setOnAction(event ->{
-			layers.add(new Layers(canvasState.getLayers()+1));
-			canvasState.addLayer();
-			layerChoiceBox.getItems().add(canvasState.getLayers());
-			redrawCanvas();
-		});
+		layerChoiceBox.setOnAction(event -> {redrawCanvas();});
 
-		layerChoiceBox.setOnAction(event -> {
-			redrawCanvas();
-		});
-
-		deleteLayerButton.setOnAction(event->{
-			if(layerChoiceBox.getValue() >3){
-				Iterator<Layers> iterator = layers.iterator();
-				while (iterator.hasNext()) {
-					Layers l = iterator.next();
-					if (l.getID() == layerChoiceBox.getValue()) {
-						iterator.remove();
-						canvasState.deleteLayer(l);
-					}
-				}
-				redrawCanvas();
-
-				layerChoiceBox.getItems().remove(layerChoiceBox.getValue());
-				layerChoiceBox.setValue(1);
-				redrawCanvas();
-			}
-		});
+		deleteLayerButton.setOnAction(event->{deleteLayerAction();});
 
 	}
-
 	private void setVisiblility(boolean condition){
 		for(Layers layer : layers){
 			if(layer.getID() == layerChoiceBox.getValue()){
@@ -485,4 +397,83 @@ public class PaintPane extends BorderPane {
 		}
 		return false;
 	}
+	private void PrimaryColorPicker(){
+		if(selectedFigure != null){
+			selectedFigure.setPrimaryColor(fillColorPicker.getValue());
+			redrawCanvas();
+		}
+	}
+	private void SecondaryColorPicker(){
+		if(selectedFigure != null){
+			selectedFigure.setSecondaryColor(secondFillColor.getValue());
+			redrawCanvas();
+		}
+	}
+	private void chooseShadow(){
+		if(selectedFigure!=null) {
+			selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
+			redrawCanvas();
+		}
+	}
+	private void chooseBorder(){
+		if(selectedFigure!=null) {
+			selectedFigure.setBorder(borderChoiceBox.getValue());
+			redrawCanvas();
+		}
+	}
+	private void divideAction(){
+		if(selectedFigure!=null) {
+			DrawFigure[] divide = selectedFigure.divideFigure();
+			Color coloraux = selectedFigure.getColor();
+			addFigure(divide[0], coloraux);
+			addFigure(divide[1], coloraux);
+			RemoveFigure();
+			redrawCanvas();
+		}
+	}
+	private void moveToCenterAction(){
+		if (selectedFigure != null) {
+			double canvasWidth = canvas.getWidth();
+			double canvasHeight = canvas.getHeight();
+			double centerX = canvasWidth / 2;
+			double centerY = canvasHeight / 2;
+			Point figureCenter = selectedFigure.getCenterPoint();
+			double diffX = centerX - figureCenter.getX();
+			double diffY = centerY - figureCenter.getY();
+			selectedFigure.addDiff(diffX, diffY);
+			redrawCanvas();
+		}
+	}
+	private void duplicateAction(){
+		if(selectedFigure!=null){
+			DrawFigure duplicate = selectedFigure.duplicate();
+			canvasState.addFigure(new Layers(layerChoiceBox.getValue()),duplicate);
+			figureColorMap.put(duplicate,duplicate.getColor());
+			redrawCanvas();
+		}
+	}
+	private void AddLayerAction(){
+		layers.add(new Layers(canvasState.getLayers()+1));
+		canvasState.addLayer();
+		layerChoiceBox.getItems().add(canvasState.getLayers());
+		redrawCanvas();
+	}
+	private void deleteLayerAction(){
+		if(layerChoiceBox.getValue() >3){
+			Iterator<Layers> iterator = layers.iterator();
+			while (iterator.hasNext()) {
+				Layers l = iterator.next();
+				if (l.getID() == layerChoiceBox.getValue()) {
+					iterator.remove();
+					canvasState.deleteLayer(l);
+				}
+			}
+			redrawCanvas();
+
+			layerChoiceBox.getItems().remove(layerChoiceBox.getValue());
+			layerChoiceBox.setValue(1);
+			redrawCanvas();
+		}
+	}
+
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class DrawEllipse extends DrawFigure{
 
-    private Ellipse ellipse;
+    private final Ellipse ellipse;
 
     public DrawEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
         super(gc, border, width, layer);
@@ -51,8 +51,7 @@ public class DrawEllipse extends DrawFigure{
 
         DrawFigure res1=createFigure(points[0], Axis[0], Axis[1]);
         DrawFigure res2=createFigure(points[1],Axis[0], Axis[1]);
-        DrawFigure[] res ={res1, res2};
-        return res;
+        return new DrawFigure[]{res1, res2};
     }
     @Override
     public DrawFigure duplicate() {

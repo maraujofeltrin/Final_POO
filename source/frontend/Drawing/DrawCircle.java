@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class DrawCircle extends DrawFigure{
 
-private Circle circle;
+private final Circle circle;
 public DrawCircle(Point point, Double Radius, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
     super(gc, border, width, layer);
     figure = new Circle(point, Radius);
@@ -57,8 +57,7 @@ public DrawCircle(Point point, Double Radius, Color color, Color secColor, Graph
 
        DrawFigure res1= createFigure(points[0],radius[0]/2);
        DrawFigure res2= createFigure(points[1],radius[0]/2);
-       DrawFigure[] res={res1, res2};
-       return res;
+        return new DrawFigure[]{res1, res2};
 }
     private DrawFigure createFigure(Point center, double radius){
     return new DrawCircle(center,radius, circle.getColor(),circle.getSecondColor(), gc, circle.getType(), getBorderType(), getBorderWidth(), getLayer());

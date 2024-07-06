@@ -1,6 +1,5 @@
 package backend;
 
-import backend.model.Figure;
 import frontend.Drawing.DrawFigure;
 import frontend.Layers;
 
@@ -8,11 +7,10 @@ import java.util.*;
 
 public class CanvasState {
 
-    private SortedMap<Layers, List<DrawFigure>> map = new TreeMap<>();
-    //private final List<DrawFigure> list = new ArrayList<>();
+    private final SortedMap<Layers, List<DrawFigure>> map = new TreeMap<>();
 
     public void addLayer(){
-        Integer aux;
+        int aux;
         if(map.isEmpty()){
             aux = 1;
         }else{

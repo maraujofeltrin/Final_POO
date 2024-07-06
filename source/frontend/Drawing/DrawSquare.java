@@ -12,7 +12,7 @@ import javafx.scene.paint.Stop;
 import java.util.Objects;
 
 public class DrawSquare extends DrawFigure {
-    private Square square;
+    private final Square square;
    public DrawSquare(Point startPoint, Point endPoint, Color color, Color secColor, GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
        super(gc, border, width, layer);
        double size = Math.abs(endPoint.getX() - startPoint.getX());
@@ -52,8 +52,7 @@ public class DrawSquare extends DrawFigure {
             Point[] points = square.divide();
             DrawFigure res1=createFigure(points[0], points[1]);
             DrawFigure res2=createFigure(points[2], points[3]);
-            DrawFigure[] res ={res1, res2};
-            return res;
+        return new DrawFigure[]{res1, res2};
 
     }
     private DrawFigure createFigure(Point topLeft, Point bottomRigh){

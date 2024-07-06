@@ -12,7 +12,7 @@ import javafx.scene.paint.Stop;
 import java.util.Objects;
 
 public class DrawRectangle extends DrawFigure {
-    private Rectangle rectangle;
+    private final Rectangle rectangle;
 
    public DrawRectangle(Point startPoint, Point endPoint, Color color, Color secColor,GraphicsContext gc, ShadowType shadow, BorderType border, double width, Integer layer){
        super(gc, border, width, layer);
@@ -57,8 +57,7 @@ public class DrawRectangle extends DrawFigure {
 
        DrawFigure res1=createFigure(points[0], points[1]);
        DrawFigure res2=createFigure(points[2], points[3]);
-       DrawFigure[] res ={res1, res2};
-       return res;
+        return new DrawFigure[]{res1, res2};
     }
 
     @Override

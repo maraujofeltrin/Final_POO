@@ -1,17 +1,13 @@
 package backend.model;
 
-import frontend.Drawing.BorderType;
 import backend.ShadowType;
-import javafx.scene.paint.Color;
-
 import java.util.Objects;
-
 import static java.lang.Math.abs;
 
 public class Rectangle extends Figure {
 
-    private Point topLeft;
-    private Point bottomRight;
+    private final Point topLeft;
+    private final Point bottomRight;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         super(ShadowType.NONE);
@@ -34,8 +30,7 @@ public class Rectangle extends Figure {
         Point res3= new Point(res2.getX(), res1.getY());
         Point res4= new Point(res2.getX()+auxX,res2.getY());
 
-        Point [] res={res1, res2, res3, res4};
-        return res;
+        return new Point[]{res1, res2, res3, res4};
     }
 
 

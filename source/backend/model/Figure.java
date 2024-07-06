@@ -3,7 +3,6 @@ package backend.model;
 import backend.ShadowType;
 import javafx.scene.paint.Color;
 
-import static java.lang.Math.abs;
 
 public abstract class Figure {
     private ShadowType type;

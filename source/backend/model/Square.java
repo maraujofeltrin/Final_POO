@@ -15,6 +15,6 @@ public class Square extends Rectangle {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Square square && super.equals(o); //chequear el super
+        return o instanceof Square square && super.equals(o);
     }
 }

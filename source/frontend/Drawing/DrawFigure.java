@@ -12,7 +12,7 @@ public abstract class DrawFigure{
      protected Figure figure;
      private BorderType border;
      private double width;
-     private Integer layer;
+     private final Integer layer;
 
     public DrawFigure(GraphicsContext gc, BorderType border, double width, Integer layer){
         this.gc=gc;

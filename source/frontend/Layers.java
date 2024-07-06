@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Layers implements Comparable<Layers>{
     private boolean on;
-    private Integer num;
+    private final Integer num;
 
     public Layers(Integer num){
         this.on = true;
@@ -19,14 +19,6 @@ public class Layers implements Comparable<Layers>{
         return num;
     }
 
-    public void onLayer(){
-        on = true;
-    }
-
-    public void offLayer(){
-        on = false;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(num,on);
@@ -34,7 +26,7 @@ public class Layers implements Comparable<Layers>{
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Layers l && l.num == num && l.on == on;
+        return o instanceof Layers l && Objects.equals(l.num, num) && l.on == on;
     }
 
 

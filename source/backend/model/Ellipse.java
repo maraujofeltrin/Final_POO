@@ -1,14 +1,13 @@
 package backend.model;
 
-import frontend.Drawing.BorderType;
 import backend.ShadowType;
-import javafx.scene.paint.Color;
+
 
 import java.util.Objects;
 
 public class Ellipse extends Figure {
-    private Point centerPoint;
-    private double sMayorAxis,sMinorAxis;
+    private final Point centerPoint;
+    private final double sMayorAxis,sMinorAxis;
 
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         super(ShadowType.NONE);
@@ -77,14 +76,12 @@ public class Ellipse extends Figure {
         return sMayorAxis/4.0;
     }
     public Point[] divideCenterPoints(){
-        Double aux1= addToCenterPoint();
-        Point[] res= {new Point(centerPoint.getX()+aux1, centerPoint.getY())
+        double aux1= addToCenterPoint();
+        return new Point[]{new Point(centerPoint.getX()+aux1, centerPoint.getY())
                 , new Point(centerPoint.getX()-aux1, centerPoint.getY())};
-        return res;
     }
     public Double[] divideAxis(){
-        Double[] res ={sMayorAxis/2.0, sMinorAxis/2.0};
-        return res;
+        return new Double[]{sMayorAxis/2.0, sMinorAxis/2.0};
     }
 
 }

@@ -48,10 +48,6 @@ public class DrawRectangle extends DrawFigure {
         gc.setFill(linearGradient);
     }
 
-
-
-
-
     public DrawFigure[] divideFigure(){
        Point[] points = rectangle.divide();
 

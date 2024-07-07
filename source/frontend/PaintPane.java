@@ -90,10 +90,10 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 
 		shadowChoiceBox.getItems().addAll(ShadowType.SIMPLE, ShadowType.COLORED, ShadowType.SIMPLE_INVERSED, ShadowType.COLORED_INVERSED, ShadowType.NONE);
-		shadowChoiceBox.setValue(ShadowType.NONE);  // Valor por defecto
+		shadowChoiceBox.setValue(ShadowType.NONE);  // The shadow starts off by default
 
 		borderChoiceBox.getItems().addAll(BorderType.NORMAL, BorderType.DOTTED_SIMPLE, BorderType.DOTTED_COMPLEX);
-		borderChoiceBox.setValue(BorderType.NORMAL); //Valor por defecto
+		borderChoiceBox.setValue(BorderType.NORMAL); //The border starts set to normal.
 
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
@@ -169,7 +169,7 @@ public class PaintPane extends BorderPane {
 		setLeft(buttonsBox);
 		setRight(canvas);
 
-
+		//It sets the first point to start drawing.
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 			//CHEQUEAR
@@ -178,6 +178,7 @@ public class PaintPane extends BorderPane {
 				}
 		});
 
+		//Creates the figure once the mouse is released.
 		canvas.setOnMouseReleased(event -> {
 
 			Point endPoint = new Point(event.getX(), event.getY());
@@ -204,6 +205,7 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
+		//If the mouse is moved around the canvas, it shows if it's hovering over a figure.
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
@@ -225,6 +227,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		//Once the mouse is clicked, it shows if a figure is selected.
 		canvas.setOnMouseClicked(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
@@ -252,6 +255,7 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
+		//If a figure is selected, it can be moved in the canvas.
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected() && selectedFigure != null) {
 				Point eventPoint = new Point(event.getX(), event.getY());
@@ -269,6 +273,7 @@ public class PaintPane extends BorderPane {
 		shadowChoiceBox.setOnAction(event->chooseShadow());
 		borderChoiceBox.setOnAction(event->chooseBorder());
 
+		//Sets the border width of a figure.
 		graduationSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (selectedFigure != null) {
 				selectedFigure.setWidth(newValue.doubleValue());
@@ -300,6 +305,7 @@ public class PaintPane extends BorderPane {
 
 	}
 
+	//Sets the visibility of a Layer to the condition given.
 	private void setVisiblility(boolean condition){
 		for(Layers layer : layers){
 			if(layer.getID() == layerChoiceBox.getValue()){
@@ -309,6 +315,7 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
+	//Adds the initials three layers to the canvas.
 	private void AddLayers() {
 		for(Layers layer : layers){
 			layerChoiceBox.getItems().addAll(layer.getID());
@@ -322,6 +329,7 @@ public class PaintPane extends BorderPane {
 		layerChoiceBox.setValue(1);
 	}
 
+	//Removes a figure from the layer and from the canvas.
 	private void RemoveFigure(){
 		if(selectedFigure != null) {
 				canvasState.deleteFigure(new Layers(selectedFigure.getLayer()),selectedFigure);
@@ -331,7 +339,8 @@ public class PaintPane extends BorderPane {
 			AlertNotSelectedFigure();
 		}
 	}
-	//Draws all the figures in the canvas
+
+	//Draws all the figures in the canvas taking into account the layers selected.
 	private void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Layers l : layers) {
@@ -355,12 +364,15 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
+	//Initializes the Buttons.
 	private void SetButtons(){
 		rectangleButton.setUserData(new RectangleButton());
 		circleButton.setUserData(new CircleButton());
 		squareButton.setUserData(new SquareButton());
 		ellipseButton.setUserData(new EllipseButton());
 	}
+
+	//Initializes the first three fixed Layers.
 	private void SetMapLayers(){
 		for(int i=1 ; i<=3 ; i++){
 			Layers aux = new Layers(i);
@@ -369,6 +381,7 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
+	//Checks if the layer is visible, so the user can draw in it.
 	private boolean CanDraw(int num){
 		for(Layers l:layers){
 			if(l.getNumLayer() == num){
@@ -378,6 +391,7 @@ public class PaintPane extends BorderPane {
 		return false;
 	}
 
+	//Sets the menu for a specific figure.
 	private void setMenu(DrawFigure figure){
 		fillColorPicker.setValue(figure.getColor());
 		secondFillColor.setValue(figure.getSecondColor());
@@ -386,39 +400,52 @@ public class PaintPane extends BorderPane {
 		graduationSlider.setValue(figure.getBorderWidth());
 	}
 
+	//Adds a figure to the Map in the backEnd.
 	private void addFigure(DrawFigure figure, Integer layer){
 		canvasState.addFigure(new Layers(layer),figure);
 	}
+
+	//Checks if the point belongs in the figure.
 	private boolean figureBelongs(DrawFigure figure, Point eventPoint) {
 		if(figure != null){
 			return figure.belongs(eventPoint);
 		}
 		return false;
 	}
+
+	//Sets the primary color.
 	private void PrimaryColorPicker(){
 		if(selectedFigure != null){
 			selectedFigure.setPrimaryColor(fillColorPicker.getValue());
 			redrawCanvas();
 		}
 	}
+
+	//Sets the secondary color.
 	private void SecondaryColorPicker(){
 		if(selectedFigure != null){
 			selectedFigure.setSecondaryColor(secondFillColor.getValue());
 			redrawCanvas();
 		}
 	}
+
+	//Sets the shadow type and color.
 	private void chooseShadow(){
 		if(selectedFigure!=null) {
 			selectedFigure.setShadow(shadowChoiceBox.getValue(), selectedFigure.getColor());
 			redrawCanvas();
 		}
 	}
+
+	//Sets the border type.
 	private void chooseBorder(){
 		if(selectedFigure!=null) {
 			selectedFigure.setBorder(borderChoiceBox.getValue());
 			redrawCanvas();
 		}
 	}
+
+	//Divides a figure into two smaller ones.
 	private void divideAction(){
 		if(selectedFigure!=null) {
 			DrawFigure[] divide = selectedFigure.divideFigure();
@@ -430,6 +457,8 @@ public class PaintPane extends BorderPane {
 			AlertNotSelectedFigure();
 		}
 	}
+
+	//Moves the figure to the center of the canvas.
 	private void moveToCenterAction(){
 		if (selectedFigure != null) {
 			double canvasWidth = canvas.getWidth();
@@ -445,6 +474,8 @@ public class PaintPane extends BorderPane {
 			AlertNotSelectedFigure();
 		}
 	}
+
+	//Creates a duplicate figure with the same characteristics.
 	private void duplicateAction(){
 		if(selectedFigure!=null){
 			DrawFigure duplicate = selectedFigure.duplicate();
@@ -454,12 +485,16 @@ public class PaintPane extends BorderPane {
 			AlertNotSelectedFigure();
 		}
 	}
+
+	//Adds a new Layer to the canvas.
 	private void AddLayerAction(){
 		layers.add(new Layers(canvasState.getLayers()+1));
 		canvasState.addLayer();
 		layerChoiceBox.getItems().add(canvasState.getLayers());
 		redrawCanvas();
 	}
+
+	//Removes a Layer is it's not one of the three fixed.
 	private void deleteLayerAction(){
 		if(layerChoiceBox.getValue() >3){
 			Iterator<Layers> iterator = layers.iterator();

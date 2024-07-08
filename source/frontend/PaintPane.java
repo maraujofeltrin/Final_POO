@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.Layers;
 import frontend.Drawing.BorderType;
 import backend.CanvasState;
 import backend.ShadowType;
@@ -22,17 +23,18 @@ import java.util.*;
 
 public class PaintPane extends BorderPane {
 
+
 	// BackEnd
 	private final CanvasState canvasState;
 
-	// Canvas y relacionados
+	// Canvas and related
 	private final Canvas canvas = new Canvas(800, 600);
 	private final GraphicsContext gc = canvas.getGraphicsContext2D();
 	private final Color lineColor = Color.BLACK;
 	private final Color defaultFillColor = Color.YELLOW;
 	private final Color defaultSecondColor= Color.BLUE;
 
-	// Botones Barra Izquierda
+	// Buttons on the Left
 	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
 	private final ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 
@@ -45,6 +47,8 @@ public class PaintPane extends BorderPane {
 	private final ChoiceBox<ShadowType> shadowChoiceBox = new ChoiceBox<>();
 
 	private final Label fillerColor = new Label("Relleno");
+
+	//Color pickers
 	private final ColorPicker fillColorPicker = new ColorPicker(defaultFillColor);
 	private final ColorPicker secondFillColor = new ColorPicker(defaultSecondColor);
 
@@ -53,36 +57,31 @@ public class PaintPane extends BorderPane {
 	private final Slider graduationSlider = new Slider(0.1, 10, 5);
 	private final ChoiceBox<BorderType> borderChoiceBox = new ChoiceBox<>();
 
-	// Selector de color de relleno
-
-
 	private final Label actions = new Label("Acciones");
 
 	private final Button duplicateButton = new Button("Duplicar");
 	private final Button divideButton = new Button("Dividir");
 	private final Button moveButton = new Button("Mov. Centro");
 
-	// Dibujar una figura
+	// Draw a figure
 	private Point startPoint;
 
-	// Seleccionar una figura
+	// Select a figure
 	private DrawFigure selectedFigure;
 
 	// StatusBar
 	private final StatusPane statusPane;
 
-	//Seguimiento de las capas
+	//Layer management
 	private final Set<Layers> layers = new TreeSet<>();
 	private final Label layer = new Label("Capas");
 	private final ChoiceBox<Integer> layerChoiceBox = new ChoiceBox<>();
-
 	private final RadioButton hideButton = new RadioButton("Ocultar");
 	private final RadioButton showButton = new RadioButton("Mostrar");
-
-
 	private final Button addLayerButton = new Button("Agregar Capa");
 	private final Button deleteLayerButton = new Button("Eliminar Capa");
 
+	private final int INITIAL_LAYER=3;
 
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
@@ -172,7 +171,6 @@ public class PaintPane extends BorderPane {
 		//It sets the first point to start drawing.
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
-			//CHEQUEAR
 				 if(!selectionButton.isSelected()){
 					statusPane.updateStatus("Seleccionar algun boton");
 				}
@@ -261,7 +259,6 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-
 				selectedFigure.Move(diffX,diffY);
 				redrawCanvas();
 			}
@@ -320,7 +317,7 @@ public class PaintPane extends BorderPane {
 		for(Layers layer : layers){
 			layerChoiceBox.getItems().addAll(layer.getID());
 		}
-		for(int i = 1; i<=3; i++){
+		for(int i = 1; i<=INITIAL_LAYER; i++){
 			if(!layerChoiceBox.getItems().contains(i)){
 				layerChoiceBox.getItems().add(i);
 			}
@@ -374,7 +371,7 @@ public class PaintPane extends BorderPane {
 
 	//Initializes the first three fixed Layers.
 	private void SetMapLayers(){
-		for(int i=1 ; i<=3 ; i++){
+		for(int i=1 ; i<=INITIAL_LAYER ; i++){
 			Layers aux = new Layers(i);
 			layers.add(aux);
 			canvasState.addLayer();
@@ -384,7 +381,7 @@ public class PaintPane extends BorderPane {
 	//Checks if the layer is visible, so the user can draw in it.
 	private boolean CanDraw(int num){
 		for(Layers l:layers){
-			if(l.getNumLayer() == num){
+			if(l.getID() == num){
 				return l.isOn();
 			}
 		}
@@ -510,6 +507,8 @@ public class PaintPane extends BorderPane {
 			layerChoiceBox.getItems().remove(layerChoiceBox.getValue());
 			layerChoiceBox.setValue(1);
 			redrawCanvas();
+		}else{
+			AlertDeleteDefaultLayer();
 		}
 
 	}
@@ -523,6 +522,9 @@ public class PaintPane extends BorderPane {
 	}
 	private void AlertDirectionofDrawing(){
 		WarningAlert("Dibujar de Izquierda a derecha y de arriba hacia abajo");
+	}
+	private void AlertDeleteDefaultLayer(){
+		WarningAlert("No se pueden eliminar las capas 1, 2 y 3");
 	}
 	private void WarningAlert(String msg){
 		Alert alert = new Alert(Alert.AlertType.WARNING);

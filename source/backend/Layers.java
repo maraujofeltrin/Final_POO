@@ -1,4 +1,4 @@
-package frontend;
+package backend;
 
 import java.util.Objects;
 
@@ -13,10 +13,6 @@ public class Layers implements Comparable<Layers>{
 
     public boolean isOn(){
         return on;
-    }
-
-    public Integer getNumLayer(){
-        return num;
     }
 
     @Override

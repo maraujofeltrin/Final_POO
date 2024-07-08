@@ -33,9 +33,6 @@ public class Rectangle extends Figure {
         return new Point[]{res1, res2, res3, res4};
     }
 
-
-
-
     @Override
     public void Move(double diffX, double diffY) {
         topLeft.setX(topLeft.getX() + diffX);

@@ -11,6 +11,7 @@ public abstract class Figure {
     public Figure(ShadowType type){
         this.type=type;
     }
+    //GETTERS:
     public Color getColor(){
        return color;
     }
@@ -26,6 +27,8 @@ public abstract class Figure {
         return type;
     }
     public abstract Point getCenterPoint();
+
+    //SETTERS:
 
     public void setShadow(ShadowType newType, Color newColor){
         setType(newType);

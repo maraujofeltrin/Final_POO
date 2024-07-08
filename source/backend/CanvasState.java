@@ -1,7 +1,6 @@
 package backend;
 
 import frontend.Drawing.DrawFigure;
-import frontend.Layers;
 
 import java.util.*;
 
@@ -14,7 +13,7 @@ public class CanvasState {
         if(map.isEmpty()){
             aux = 1;
         }else{
-            aux = map.lastKey().getNumLayer() +1;
+            aux = map.lastKey().getID() +1;
         }
 
         map.put(new Layers(aux), new ArrayList<>());
@@ -41,7 +40,7 @@ public class CanvasState {
     }
 
     public int getLayers(){
-        return map.lastKey().getNumLayer();
+        return map.lastKey().getID();
     }
 
     public void deleteLayer(Layers l){
